@@ -4,6 +4,10 @@ import numpy as np
 SHOP_FLOOR_IP = "10.0.0.2"  # hostname for the workshop floor, i.e. the Franka Emika Desk
 ROBOT_IP = "192.168.0.1"    # don't know if we ever need robot IP
 
+with open('sens.txt', 'r') as file:
+    username = file.readline().strip()
+    password = file.readline().strip()
+
 if __name__ == "__main__":
 
     print("Connecting to Desk")
