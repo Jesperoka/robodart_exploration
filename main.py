@@ -24,20 +24,20 @@ if __name__ == "__main__":
 
     panda = panda_py.Panda(SHOP_FLOOR_IP)
 
+    # Define some joint positions pretty close to panda_py.constants.JOINT_POSITION_START
+    pos0 = np.array([-0.1 , -0.79,  0.0 , -2.36,  0.0 , 1.57,  0.79])
+    pos1 = np.array([ 0.0 , -0.79,  0.0 , -2.36,  0.0 , 1.57,  0.79])
+    pos2 = np.array([ 0.0 , -0.89,  0.0 , -2.36,  0.0 , 1.57,  0.79])
+    pos3 = np.array([ 0.0 , -0.69,  0.1 , -2.36,  0.0 , 1.57,  0.79])
+    pos4 = np.array([ 0.0 , -0.69,  0.1 , -2.26,  0.0 , 1.57,  0.79])
+    pos5 = np.array([ 0.0 , -0.69,  0.1 , -2.26,  0.1 , 1.57,  0.79])
+    pos6 = np.array([ 0.0 , -0.69,  0.1 , -2.26,  0.1 , 1.67,  0.79])
+    pos7 = np.array([ 0.0 , -0.69,  0.1 , -2.26,  0.1 , 1.67,  0.89])
+
     input("Press any key to move arm")
 
     # Move to panda_py.constants.JOINT_POSITION_START
     panda.move_to_start()
-
-    # Define some joint positions pretty close to panda_py.constants.JOINT_POSITION_START
-    pos0 = np.array([-0.1 , -0.79,  0.  , -2.36,  0.  , 1.57,  0.79])
-    pos1 = np.array([ 0.  , -0.79,  0.  , -2.36,  0.  , 1.57,  0.79])
-    pos2 = np.array([ 0.1 , -0.79,  0.  , -2.36,  0.  , 1.57,  0.79])
-    pos3 = np.array([ 0.1 , -0.69,  0.  , -2.36,  0.  , 1.57,  0.79])
-    pos4 = np.array([ 0.1 , -0.69,  0.1 , -2.36,  0.  , 1.57,  0.79])
-    pos5 = np.array([ 0.1 , -0.69,  0.1 , -2.26,  0.  , 1.57,  0.79])
-    pos6 = np.array([ 0.1 , -0.69,  0.1 , -2.26,  0.1 , 1.57,  0.79])
-    pos7 = np.array([ 0.1 , -0.69,  0.1 , -2.26,  0.1 , 1.67,  0.79])
 
     # Move to the arm one joint at a time passing only a single 7x1 np.ndarray
     panda.move_to_joint_position(pos0)
@@ -48,6 +48,8 @@ if __name__ == "__main__":
     panda.move_to_joint_position(pos5)
     panda.move_to_joint_position(pos6)
     panda.move_to_joint_position(pos7)
+
+    panda.move_to_start()
 
     # Or pass a list of 7x1 np.ndarrays as waypoints for a motion
     waypoints = [pos0, pos1, pos2, pos3, pos4, pos5, pos6, pos7]
