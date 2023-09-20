@@ -3,6 +3,13 @@
 
 <h2 align="center"> -- Done since last time -- </h2>
 
+Got the robot working with libfranka and the panda-python wrapper library, and set up and showed the 3D printing group how to do the same.
+
+<h3 align="center"> Our First Programmatic Control of the Panda </h3>
+<p align="center">
+<img src="https://github.com/Jesperoka/robodart_exploration/blob/jesper_meeting_notes/imgs/first_movement.gif?raw=true" width=350>
+</p>
+
 I've read about reinforcement learning to learn MPC horizon and MPC recalculation timing, separately and jointly.
 Relevant because I need to frame the RL problem with reference to a controller or
 in general the arm motion. Also just helps with learning about how RL can be a framework
