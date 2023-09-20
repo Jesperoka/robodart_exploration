@@ -13,8 +13,11 @@ with open('sens.txt', 'r') as file:
     username = file.readline().strip()
     password = file.readline().strip()
 
-pos0 = np.array([-0.05826081972320875, 1.518139931452203, 0.015952493496804526, -1.9738094989538244, -0.00664670701821645, 2.1474642659134724, 0.8557886689255634])
-pos1 = np.array([-0.05363916656321649, -0.19706883226558733, 0.06755293216203388, -0.08941960363011611, -0.1320708698137767, 3.644003728793108, 0.7782894581576624])
+# pos0 = np.array([-0.05826081972320875, 1.518139931452203, 0.015952493496804526, -1.9738094989538244, -0.00664670701821645, 2.1474642659134724, 0.8557886689255634])
+
+pos0 = np.array([1.5626379539899802, 1.532415317099924, 0.12201101597045597, -0.6807262883288882, -0.2500981665254538, 2.786351022640864, 0.904867648030743])
+pos1 = np.array([2.8973, 1.218139931452203, 0.015952493496804526, -1.9738094989538244, -0.00664670701821645, 2.1474642659134724, 0.8557886689255634])
+pos2 = np.array([2.8973, -0.19706883226558733, 0.06755293216203388, -0.08941960363011611, -0.1320708698137767, 3.644003728793108, 0.7782894581576624])
 
 speed = np.array([1, 1, 1, 1, 1, 1, 1])
 
@@ -31,7 +34,7 @@ if __name__ == "__main__":
         q0 = panda.get_orientation()
         panda.start_controller(ctrl)
 
-        panda.move_to_start()
+        # panda.move_to_start()
 
         
 
@@ -39,16 +42,19 @@ if __name__ == "__main__":
             while ctx.ok():
                 #ctrl.set_control(pos0, speed)
                 time.sleep(1)
-                panda.move_to_joint_position(pos0, speed_factor=0.3)
-                panda.move_to_joint_position(pos1, speed_factor = 0.7)
+                panda.move_to_joint_position(pos0, speed_factor=0.4)
+                time.sleep(1)
+                panda.move_to_joint_position(pos1, speed_factor=0.4)
+                panda.move_to_joint_position(pos2, speed_factor = 0.7)
                 break
         #         x_d = x0.copy()
         #         x_d[1] += 0.2 * np.sin(ctrl.get_time())
         #         ctrl.set_control(x_d, q0)
 
     def grasp(gripper, runtime):
-        gripper.grasp(0, 0.2, 20)
         time.sleep(5)
+        gripper.grasp(0, 0.2, 20)
+        time.sleep(4)
         gripper.move(0.08, 0.2)
 
     runtime = 10
