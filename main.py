@@ -1,5 +1,5 @@
 import panda_py
-import numpy as np
+from spin_joint_7 import spin_test
 
 SHOP_FLOOR_IP = "10.0.0.2"  # hostname for the workshop floor, i.e. the Franka Emika Desk
 ROBOT_IP = "192.168.0.1"    # don't know if we ever need robot IP
@@ -24,36 +24,19 @@ if __name__ == "__main__":
 
     panda = panda_py.Panda(SHOP_FLOOR_IP)
 
-    # Define some joint positions pretty close to panda_py.constants.JOINT_POSITION_START
-    pos0 = np.array([-0.1 , -0.79,  0.0 , -2.36,  0.0 , 1.57,  0.79])
-    pos1 = np.array([ 0.0 , -0.79,  0.0 , -2.36,  0.0 , 1.57,  0.79])
-    pos2 = np.array([ 0.0 , -0.89,  0.0 , -2.36,  0.0 , 1.57,  0.79])
-    pos3 = np.array([ 0.0 , -0.69,  0.1 , -2.36,  0.0 , 1.57,  0.79])
-    pos4 = np.array([ 0.0 , -0.69,  0.1 , -2.26,  0.0 , 1.57,  0.79])
-    pos5 = np.array([ 0.0 , -0.69,  0.1 , -2.26,  0.1 , 1.57,  0.79])
-    pos6 = np.array([ 0.0 , -0.69,  0.1 , -2.26,  0.1 , 1.67,  0.79])
-    pos7 = np.array([ 0.0 , -0.69,  0.1 , -2.26,  0.1 , 1.67,  0.89])
+    torque1 = 0.09175
+    torque2 = 0.1835
+    torque3 = 0.3670
+    torque4 = 0.7340
+    torque5 = 1.468
+    torque6 = 2.936
+    torque7 = 5.872
+    torque8 = 11.744
+    torque9 = 12
+    torque10 = 12.1
 
-    input("Press any key to move arm")
+    spin_test(panda, torque1)
 
-    # Move to panda_py.constants.JOINT_POSITION_START
-    panda.move_to_start()
+    #torque_joint_5
+    #spin_test_move(panda, torque1, torque_joint_5)
 
-    # Move to the arm one joint at a time passing only a single 7x1 np.ndarray
-    panda.move_to_joint_position(pos0)
-    panda.move_to_joint_position(pos1)
-    panda.move_to_joint_position(pos2)
-    panda.move_to_joint_position(pos3)
-    panda.move_to_joint_position(pos4)
-    panda.move_to_joint_position(pos5)
-    panda.move_to_joint_position(pos6)
-    panda.move_to_joint_position(pos7)
-
-    panda.move_to_start()
-
-    # Or pass a list of 7x1 np.ndarrays as waypoints for a motion
-    waypoints = [pos0, pos1, pos2, pos3, pos4, pos5, pos6, pos7]
-    panda.move_to_joint_position(waypoints)
-
-    # Move back to the neutral position
-    panda.move_to_start()
