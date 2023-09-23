@@ -1,6 +1,10 @@
+<h1 align="left"> Table of contents </h1>
+
+[Meeting 21.09.2023](#m210923)
+
 
 <h1 align="center"> Meeting 21.09.2023 </h1>
-
+<a name="m210923"></a>
 <h2 align="center"> -- Done since last time -- </h2>
 
 Got the robot working with libfranka and the panda-python wrapper library, and set up and showed the 3D printing group how to do the same.
