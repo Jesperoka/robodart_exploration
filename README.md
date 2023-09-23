@@ -1,15 +1,27 @@
 <h1 align="left"> Table of contents </h1>
 
-[Meeting 21.09.2023](#m210923)
+---
 
+1. [Meeting 21.09.2023](#m210923)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1 [Done Since Last Time](#m210923-dslt)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1.1 [First Control](#m210923-fpc)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1.2 [Soft Actor Critic](#m210923-sac)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1.3 [Simulation Evironments](#m210923-sim)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1.4 [RL Implementation Tricks](#m210923-rltricks)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1.5 [Franka Emika Panda Max Velocity Issue](#m210923-velissue)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1.6 [Automatic Recording of Throw Results](#m210923-cam)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2  [Going Forward](#m210923-gf)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2.1 [Literature Search](#m210923-ls)<br><br>
+2. [Meeting 26.09.2023 (Extra Meeting)](#m260923)
 
-<h1 align="center"> Meeting 21.09.2023 </h1>
-<a name="m210923"></a>
-<h2 align="center"> -- Done since last time -- </h2>
+---
+
+<a name="m210923"></a><h1 align="center"> Meeting 21.09.2023 </h1>
+<a name="m210923-dslt"></a><h2 align="center"> -- Done since last time -- </h2>
 
 Got the robot working with libfranka and the panda-python wrapper library, and set up and showed the 3D printing group how to do the same.
 
-<h3 align="center"> Our First Programmatic Control of the Panda </h3>
+<a name="m210923-fpc"></a><h3 align="center"> Our First Programmatic Control of the Panda </h3>
 <p align="center">
 <img src="https://github.com/Jesperoka/robodart_exploration/blob/jesper_meeting_notes/imgs/first_movement.gif?raw=true" width=350>
 </p>
@@ -21,7 +33,7 @@ for optimization of controller parameters.
 
 That pointed me towards reading about some specific RL methods, in particular Soft Actor Critic (SAC). The reason it's interesting is that is has high sample efficiency and can converge to more robust policies. This also ties in to the paper on dart release timing, and how we might want to learn a release timing adjustment policy that maximizes the time spent in the good-release-zone of the throwing trajectory.
 
-<h3 align="left"> Soft Actor Critic </h3>
+<a name="m210923-sac"></a><h3 align="left"> Soft Actor Critic </h3>
 
 This approach considers not just the expected return but also the entropy of the policy. The objective is to maximize the expected reward and the entropy of the policy. This leads to more exploratory policies and can prevent premature convergence to suboptimal strategies. 
 
@@ -30,7 +42,7 @@ Furthermore SAC is said to be less sensitive to hyperparameters, and it can be m
 We definitely note that there are many other candidate algorithms (PPO, TD3PG), and testing multiple algorithms is one potential goal. 
 Either way we need simulation frameworks that we can employ learning in.
 
-<h3 align="left"> Simulation Environments </h3>
+<a name="m210923-sim"></a><h3 align="left"> Simulation Environments </h3>
 
 <h4 align="left"> MuJoCo </h4>
 
@@ -47,7 +59,7 @@ To begin with I think it is probably a good idea to try MuJoco. MuJoCo also has 
 JAX-based, so supports fully differentiable simulation on GPUs. Probably very good, but while I have some experience with JAX, it can get tricky at times. That being said, while being a physics engine it has some focus on reinforcement learning, and indeed has implementations of SAC, PPO and APG.
 Thus, if we end up needing to train on GPUs, this might be the way to go.
 
-<h3 align="left"> RL implementation tricks </h3>
+<a name="m210923-rltricks"></a><h3 align="left"> RL implementation tricks </h3>
 
 Random Exploration at the Start: For a fixed number of steps at the beginning (set with the start_steps keyword argument), the agent takes actions which are sampled from a uniform random distribution over valid actions. After that, it returns to normal exploration.
 
@@ -67,7 +79,7 @@ Normalization: Normalizing inputs (states) to neural networks can make training 
 
 Noise Injection: Adding noise to the policy (e.g., Ornstein-Uhlenbeck noise) can help with exploration.
 
-<h3 align="left"> Franka Emika Panda Max Velocity Issue </h3>
+<a name="m210923-velissue"></a><h3 align="left"> Franka Emika Panda Max Velocity Issue </h3>
 
 We've come to realize that the Panda has some pretty low max linear velocities, and that if linear motion limits are exceeded the motion is stopped. This means we can't just use the angular velocity limits of the individual joints to produce higher linear end-effector velocity. Unless we want to hack and override these limits on a 100 000 NOK robot, we need to think about solving this some other way.
 
@@ -97,7 +109,7 @@ For the gripper extension approach we could try one of these bad boys:
 <img src="https://github.com/Jesperoka/robodart_exploration/blob/jesper_meeting_notes/imgs/cardboard.jpg?raw=true" width=350>
 </p>
 
-<h3 align="left"> Automatic Recording of Throw Results </h3>
+<a name="m210923-cam"></a><h3 align="left"> Automatic Recording of Throw Results </h3>
 
 For the automatic recording of the dart throw results, it would be nice to use something already implemented, or atleast only change and already existing implementation a bit to fit out goals. Of course there needs to be some interfacing code that sends the result to the RL framework if we are learning on the real robot. In simulation it doesn't matter, but we need to make sure the dart board dimensions are the same so that rewards are the same scale (or adjust for it).
 
@@ -105,7 +117,7 @@ For the automatic recording of the dart throw results, it would be nice to use s
 > OpenCV and Single Calibrated (april tags) Camera: [github.com/LarsG21/Darts_Project](https://github.com/LarsG21/Darts_Project) <br>
 > Neural network approach: [github.com/wmcnally/deep-darts](https://github.com/wmcnally/deep-darts)
 
-<h2 align="center"> -- Going forward -- </h2>
+<a name="m210923-gf"></a><h2 align="center"> -- Going forward -- </h2>
 
 
 Get a basic gripper extension going, and think about if we should/can develop a better solution.
@@ -113,6 +125,8 @@ Get a basic gripper extension going, and think about if we should/can develop a 
 I want to familiarize myself with OpenAI Gym and MuJoCo, and set up a simulated robot throw. If I can hardcode this, then I can try to use a reinforcement learning algorithm like SAC to learn the gripper release point. From there I can do more research on how to effectively implement a learning framework.
 
 Another thing on the agenda is to work towards the real robot, and in that regard we need a functioning camera system that can record the result of a throw. This is shouldn't be too hard in terms of the code, but since we are using he Linux RT kernel patch, we don't have working nVidia drivers on the lab computer, so it might prove annoying to get any kind of camera system working. 
+
+<a name="m210923-ls"></a><h3 align="left"> Literature Search </h3>
 
 Then there is the literature search, which I haven't had enough time to do properly yet, but so far I've found some papers that have promising titles and abstracts.
 
@@ -143,3 +157,42 @@ Learning of a basketball free throw with a flexible link robot: https://asmedigi
 Robust trajectory design for object throwing based on sensitivity for model uncertainties: https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7139623
 
 Off-Policy Deep Reinforcement Learning without Exploration: https://arxiv.org/pdf/1812.02900.pdf (useful if we end up with high-dimensional continuous state-action space)
+
+---
+
+<a name="m260923"></a><h1 align="center"> Meeting 26.09.2023 </h1>
+
+The focus of this meeting is to address the velocity issues and consequently how to solve the now needed gripper extension design or overriding the speed limits of the Franka Emika robot.
+
+<a name="m260923-intro"></a><h2 align="left"> Intro </h2>
+
+In order to get some basic specifications on the gripper extension we have done some basic calculations on lever arm length and the corresponding limits on the mass or rotational inertia of the extension. Additionally we did some basic tests on the robot in order to see how those calculations play out in practice, to get better idea of what kind of weight the extension can actually have, and to get some qualitative understanding of what the limiting factors are going to be for the control problem.
+
+We've determined that in terms of the possible torque output of the robot alone, we will not be facing issues related to the mass of the extension. Issues from mass come primarily from oscillations and dynamics of the attachment, as too much external torque make the robot reflex (stop) because it reaches limits meant to signify a collison. Indeed the external torque and force limits are based on estimates, and can be wrong. These limits can be adjusted within the libfranka api, which mitigates the issue and is necessary. It should be noted that doing this means the robot is less safe to be around when operating, since it essentially means we are expecting to have collisions.
+
+<a name="m260923-calculations"></a><h2 align="left"> Calculations </h2>
+
+To be able to reach the dart board we need a lever arm of at least $1.0\text{ m}$, and preferably slightly longer.
+
+For a uniform extension rod of $1.0\text{ m}$ the max mass of the extension is ~$1.813\text{ kg}$ accounting for gravity but without accounting for friction. The corresponding inertia one third of that, i.e. ~$0.604\text{ kg m}^{2}$. 
+
+For a uniform extension rod of $1.5\text{ m}$ the max mass of the extension is ~$1.11\text{ kg}$ accounting for gravity but without accounting for friction. The corresponding inertia one third of that, i.e. ~$0.37\text{ kg m}^{2}$.
+
+These calculations assume no friction, which makes them less conservative, but require the arm to be able to hold the lever arm horizontally against gravity while applying the maximum possible torque to achieve the minimum acceleration needed to reach max joint angular velocity. This outweights the lack of friction, making them in fact quite conservative based on our physical tests.
+
+<a name="m260923-practice"></a><h2 align="left"> In Practice </h2>
+
+In practice friction plays an important role, and makes it so higher torque is required to accelerate the extension mass. On the other hand, the assumption of having to be able to counteract gravity is a very conservative one, since we are able to start the lever arm in a position where gravity helps us accelerate, thus allowing us to break the joint velocity violation while using substantially lower torques than the max torque.
+
+We were not able to trigger the total power limit violation while testing constant torque of 3 joints simultaneously with a lever arm attached. The tests had lever arm rotational inertias of very approximately $0.4\text{ kg m}^{2}$, TODO and TODO.
+
+TODO: sort and organize test videos<br>
+TODO: insert test GIFs<br>
+TODO: calculate the inertias of the other configurations<br>
+
+MEANWHILE: the test videos can be found at [my Google Drive](https://drive.google.com/drive/folders/1-0rvvZFShWgjWfSLc91YQpeAsdKtGUt7?usp=sharing)
+NOTE: the $0.4\text{ kg m}^{2}$ rotational inertia is for the configuration where both bottles are attached to the middle of the rod. The approximate figure comes from treating them as point masses and including the carboard rod as a uniform rod as well.
+
+<a name="m260923-initial-conclusion"></a><h2 align="left"> Initial Conclusion </h2>
+
+We probably want an arm length of about $1.25 \text{m}$, and while the weight can probably be quite high in practice, the lighter the better, and we feel like it should be possible to make a grip-and-release mechanism that has a rotational intertia of ~$0.4\text{ kg m}^{2}$ or less, i.e. have a mass $m \in [1.11, 1.6] \text{ kg}$ depending on distribution. There is also a point to be made that the lever arm needs to be rigid, and if possible the forces on the robot at the points of attachment should be spread as evenly as possible
