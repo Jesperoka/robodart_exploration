@@ -12,8 +12,11 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1.6 [Automatic Recording of Throw Results](#m210923-cam)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2  [Going Forward](#m210923-gf)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2.1 [Literature Search](#m210923-ls)<br><br>
-2. [Meeting 26.09.2023 (Extra Meeting)](#m260923)
-
+2. [Meeting 26.09.2023 (Extra Meeting)](#m260923)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.1 [Intro](#m210923-intro)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.2 [Calculations](#m210923-calculations)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.3 [In Practice](#m210923-in-practice)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.4 [Initial Conclusions](#m210923-initial-conclusions)<br>
 ---
 
 <a name="m210923"></a><h1 align="center"> Meeting 21.09.2023 </h1>
@@ -180,19 +183,66 @@ For a uniform extension rod of $1.5\text{ m}$ the max mass of the extension is ~
 
 These calculations assume no friction, which makes them less conservative, but require the arm to be able to hold the lever arm horizontally against gravity while applying the maximum possible torque to achieve the minimum acceleration needed to reach max joint angular velocity. This outweights the lack of friction, making them in fact quite conservative based on our physical tests.
 
-<a name="m260923-practice"></a><h2 align="left"> In Practice </h2>
+<a name="m260923-in-practice"></a><h2 align="left"> In Practice </h2>
 
 In practice friction plays an important role, and makes it so higher torque is required to accelerate the extension mass. On the other hand, the assumption of having to be able to counteract gravity is a very conservative one, since we are able to start the lever arm in a position where gravity helps us accelerate, thus allowing us to break the joint velocity violation while using substantially lower torques than the max torque.
 
-We were not able to trigger the total power limit violation while testing constant torque of 3 joints simultaneously with a lever arm attached. The tests had lever arm rotational inertias of very approximately $0.4\text{ kg m}^{2}$, TODO and TODO.
+We were not able to trigger the total power limit violation while testing constant torque of 3 joints simultaneously with a lever arm attached. The tests had lever arm rotational inertias of very approximately
 
-TODO: sort and organize test videos<br>
-TODO: insert test GIFs<br>
-TODO: calculate the inertias of the other configurations<br>
+|1|2|3|4|5|
+|----|--|--|--|--|
+| $0.125\text{ kg m}^{2}$ | $0.4\text{ kg m}^{2}$ | $0.5\text{ kg m}^{2}$ |  $0.69\text{ kg m}^{2}$ | $1.25\text{ kg m}^{2}$
+ 
+These test configurations can be seen in the figure below with inertias in order of lowest-to-highest, left-to-right.
 
-MEANWHILE: the test videos can be found at [my Google Drive](https://drive.google.com/drive/folders/1-0rvvZFShWgjWfSLc91YQpeAsdKtGUt7?usp=sharing)
-NOTE: the $0.4\text{ kg m}^{2}$ rotational inertia is for the configuration where both bottles are attached to the middle of the rod. The approximate figure comes from treating them as point masses and including the carboard rod as a uniform rod as well.
+<h3 align="center"> Test Configurations </h3>
+<p align="center">
+<img src="https://github.com/Jesperoka/robodart_exploration/blob/jesper_meeting_notes/imgs/test_configurations.png?raw=true" width=350>
+</p>
+<p align="center"> Lever arms with different rotational inertias </p>
+
+The approximate figures comes from treating the bottles as point masses and including the carboard rod as a uniform rod as well.
+
+For configurations 1, 2 and 3, we were able to reach maximum joint velocity from a standstill starting position, confirmed by triggering the `joint_velocity_violation` error, and while using only constant torque on joint 7. Tests can be seen in the figure below.
+
+<h3 align="center"> Reaching Maximum Joint Velocity (From Standstill) </h3>
+<p align="center">
+<img src="https://github.com/Jesperoka/robodart_exploration/blob/jesper_meeting_notes/imgs/config_1_joint_velocity.gif?raw=true" width=350>
+<img src="https://github.com/Jesperoka/robodart_exploration/blob/jesper_meeting_notes/imgs/config_2_joint_velocity.gif?raw=true" width=350>
+<img src="https://github.com/Jesperoka/robodart_exploration/blob/jesper_meeting_notes/imgs/config_3_joint_velocity.gif?raw=true" width=350>
+</p>
+<p align="center"> From a standstill, the maximum inertia that allows<br> us to reach maximum joint velocity of the end effector <br>is somewhere in the range [0.5, 0.69] kg m^2 </p>
+
+However, using gravity to assist us in the acceleration allows for higher inertias as illustrated in the figure below.
+
+<h3 align="center"> Reaching Maximum Joint Velocity (Gravity Assist) </h3>
+<p align="center">
+<img src="https://github.com/Jesperoka/robodart_exploration/blob/jesper_meeting_notes/imgs/config_4_joint_velocity_gravity_assist.gif?raw=true" width=350>
+</p>
+<p align="center"> Gravity assist allows for higher inertias<br> while still achieving max joint velocity </p>
+
+Therefore, the main issue that comes with having a higher mass gripper extension actually comes from the dynamics and potential oscillations it can introduce into the system. If external torques and forces are ever estimated to be too high, the robot has detected a collison and motion is aborted. The figure below shows this happening for configurations 4 and 5.
+
+<h3 align="center"> Reflex Errors </h3>
+<p align="center">
+<img src="https://github.com/Jesperoka/robodart_exploration/blob/jesper_meeting_notes/imgs/config_4_reflex.gif?raw=true" width=350>
+<img src="https://github.com/Jesperoka/robodart_exploration/blob/jesper_meeting_notes/imgs/config_5_reflex.gif?raw=true" width=350>
+</p>
+<p align="center"> Higher mass means higher chance of <br>exceeding external force and torque limits </p>
+
+Note that, as mentioned, its possible to adjust the external torque and force limits, but we have not found any documentation on the limits of this or mapped out how well this works in practice.
+
+Lastly, we were not able to trigger the `power_limit_violation` error using the simple torque controller we used during the tests, which is at least promising for the control task.
+
+
+<h3 align="center"> Reflex Errors </h3>
+<p align="center">
+<img src="https://github.com/Jesperoka/robodart_exploration/blob/jesper_meeting_notes/imgs/config_2_three_joints_no_error.gif?raw=true" width=350>
+</p>
+<p align="center"> Constant torque applied to 3 joints simultaneously while <br> the other 4 joints are kept at a constant position using a simple <br> PD controller did not exceed the maximum power limits </p>
 
 <a name="m260923-initial-conclusion"></a><h2 align="left"> Initial Conclusion </h2>
 
-We probably want an arm length of about $1.25 \text{m}$, and while the weight can probably be quite high in practice, the lighter the better, and we feel like it should be possible to make a grip-and-release mechanism that has a rotational intertia of ~ $0.4\text{ kg m}^{2}$ or less, i.e. have a mass $m \in [1.11, 1.6] \text{ kg}$ depending on distribution. There is also a point to be made that the lever arm needs to be rigid, and if possible the forces on the robot at the points of attachment should be spread as evenly as possible
+We probably want an arm length of about $1.25 \text{ m}$, and while the weight can probably be quite high in practice, **the lighter the better**, and we feel like it should be possible to make a grip-and-release mechanism that has a rotational intertia of ~ $0.4\text{ kg m}^{2}$ or less, i.e. have a mass $m \in [1.11, 1.6] \text{ kg}$ depending on distribution. 
+
+There is also a point to be made that the lever arm needs to be rigid, and if possible the forces on the robot at the points of attachment should be spread out as evenly as possible. This is to potentially have more stable external torque and force estimates.
