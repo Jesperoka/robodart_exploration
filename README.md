@@ -207,9 +207,9 @@ For configurations 1, 2 and 3, we were able to reach maximum joint velocity from
 
 <h3 align="center"> Reaching Maximum Joint Velocity (From Standstill) </h3>
 <p align="center">
-<img src="https://github.com/Jesperoka/robodart_exploration/blob/jesper_meeting_notes/imgs/config_1_joint_velocity.gif?raw=true" width=350>
-<img src="https://github.com/Jesperoka/robodart_exploration/blob/jesper_meeting_notes/imgs/config_2_joint_velocity.gif?raw=true" width=350>
-<img src="https://github.com/Jesperoka/robodart_exploration/blob/jesper_meeting_notes/imgs/config_3_joint_velocity.gif?raw=true" width=350>
+<img src="https://github.com/Jesperoka/robodart_exploration/blob/jesper_meeting_notes/imgs/config_1_joint_velocity.gif?raw=true" width=200>
+<img src="https://github.com/Jesperoka/robodart_exploration/blob/jesper_meeting_notes/imgs/config_2_joint_velocity.gif?raw=true" width=200>
+<img src="https://github.com/Jesperoka/robodart_exploration/blob/jesper_meeting_notes/imgs/config_3_joint_velocity.gif?raw=true" width=200>
 </p>
 <p align="center"> From a standstill, the maximum inertia that allows<br> us to reach maximum joint velocity of the end effector <br>is somewhere in the range [0.5, 0.69] kg m^2 </p>
 
@@ -217,7 +217,7 @@ However, using gravity to assist us in the acceleration allows for higher inerti
 
 <h3 align="center"> Reaching Maximum Joint Velocity (Gravity Assist) </h3>
 <p align="center">
-<img src="https://github.com/Jesperoka/robodart_exploration/blob/jesper_meeting_notes/imgs/config_4_joint_velocity_gravity_assist.gif?raw=true" width=350>
+<img src="https://github.com/Jesperoka/robodart_exploration/blob/jesper_meeting_notes/imgs/config_4_joint_velocity_gravity_assist.gif?raw=true" width=200>
 </p>
 <p align="center"> Gravity assist allows for higher inertias<br> while still achieving max joint velocity </p>
 
@@ -225,8 +225,8 @@ Therefore, the main issue that comes with having a higher mass gripper extension
 
 <h3 align="center"> Reflex Errors </h3>
 <p align="center">
-<img src="https://github.com/Jesperoka/robodart_exploration/blob/jesper_meeting_notes/imgs/config_4_reflex.gif?raw=true" width=350>
-<img src="https://github.com/Jesperoka/robodart_exploration/blob/jesper_meeting_notes/imgs/config_5_reflex.gif?raw=true" width=350>
+<img src="https://github.com/Jesperoka/robodart_exploration/blob/jesper_meeting_notes/imgs/config_4_reflex.gif?raw=true" width=200>
+<img src="https://github.com/Jesperoka/robodart_exploration/blob/jesper_meeting_notes/imgs/config_5_reflex.gif?raw=true" width=200>
 </p>
 <p align="center"> Higher mass means higher chance of <br>exceeding external force and torque limits </p>
 
@@ -235,9 +235,9 @@ Note that, as mentioned, its possible to adjust the external torque and force li
 Lastly, we were not able to trigger the `power_limit_violation` error using the simple torque controller we used during the tests, which is at least promising for the control task.
 
 
-<h3 align="center"> Reflex Errors </h3>
+<h3 align="center"> Multiple Joints Simultaneously</h3>
 <p align="center">
-<img src="https://github.com/Jesperoka/robodart_exploration/blob/jesper_meeting_notes/imgs/config_2_three_joints_no_error.gif?raw=true" width=350>
+<img src="https://github.com/Jesperoka/robodart_exploration/blob/jesper_meeting_notes/imgs/config_2_three_joints_no_error.gif?raw=true" width=200>
 </p>
 <p align="center"> Constant torque applied to 3 joints simultaneously while <br> the other 4 joints are kept at a constant position using a simple <br> PD controller did not exceed the maximum power limits </p>
 
