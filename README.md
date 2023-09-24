@@ -197,7 +197,7 @@ These test configurations can be seen in the figure below with inertias in order
 
 <h3 align="center"> Test Configurations </h3>
 <p align="center">
-<img src="https://github.com/Jesperoka/robodart_exploration/blob/jesper_meeting_notes/imgs/test_configurations.png?raw=true" width=350>
+<img src="https://github.com/Jesperoka/robodart_exploration/blob/jesper_meeting_notes/imgs/test_configurations.PNG?raw=true" width=400>
 </p>
 <p align="center"> Lever arms with different rotational inertias </p>
 
