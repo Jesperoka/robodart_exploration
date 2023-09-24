@@ -174,9 +174,9 @@ We've determined that in terms of the possible torque output of the robot alone,
 
 To be able to reach the dart board we need a lever arm of at least $1.0\text{ m}$, and preferably slightly longer.
 
-For a uniform extension rod of $1.0\text{ m}$ the max mass of the extension is ~$1.813\text{ kg}$ accounting for gravity but without accounting for friction. The corresponding inertia one third of that, i.e. ~$0.604\text{ kg m}^{2}$. 
+For a uniform extension rod of $1.0\text{ m}$ the max mass of the extension is ~ $1.813\text{ kg}$ accounting for gravity but without accounting for friction. The corresponding inertia one third of that, i.e. ~ $0.604\text{ kg m}^{2}$. 
 
-For a uniform extension rod of $1.5\text{ m}$ the max mass of the extension is ~$1.11\text{ kg}$ accounting for gravity but without accounting for friction. The corresponding inertia one third of that, i.e. ~$0.37\text{ kg m}^{2}$.
+For a uniform extension rod of $1.5\text{ m}$ the max mass of the extension is ~ $1.11\text{ kg}$ accounting for gravity but without accounting for friction. The corresponding inertia one third of that, i.e. ~ $0.37\text{ kg m}^{2}$.
 
 These calculations assume no friction, which makes them less conservative, but require the arm to be able to hold the lever arm horizontally against gravity while applying the maximum possible torque to achieve the minimum acceleration needed to reach max joint angular velocity. This outweights the lack of friction, making them in fact quite conservative based on our physical tests.
 
@@ -195,4 +195,4 @@ NOTE: the $0.4\text{ kg m}^{2}$ rotational inertia is for the configuration wher
 
 <a name="m260923-initial-conclusion"></a><h2 align="left"> Initial Conclusion </h2>
 
-We probably want an arm length of about $1.25 \text{m}$, and while the weight can probably be quite high in practice, the lighter the better, and we feel like it should be possible to make a grip-and-release mechanism that has a rotational intertia of ~$0.4\text{ kg m}^{2}$ or less, i.e. have a mass $m \in [1.11, 1.6] \text{ kg}$ depending on distribution. There is also a point to be made that the lever arm needs to be rigid, and if possible the forces on the robot at the points of attachment should be spread as evenly as possible
+We probably want an arm length of about $1.25 \text{m}$, and while the weight can probably be quite high in practice, the lighter the better, and we feel like it should be possible to make a grip-and-release mechanism that has a rotational intertia of ~ $0.4\text{ kg m}^{2}$ or less, i.e. have a mass $m \in [1.11, 1.6] \text{ kg}$ depending on distribution. There is also a point to be made that the lever arm needs to be rigid, and if possible the forces on the robot at the points of attachment should be spread as evenly as possible
