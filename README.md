@@ -253,10 +253,15 @@ There is also a point to be made that the lever arm needs to be rigid, and if po
 
 <a name="temp"></a><h3 align="center"> Temp </h3>
 
+https://impact-aware-robotics-database.tue.nl/
+
 https://www.youtube.com/watch?v=07tucCGxVj8 ModBus
 
 https://download.franka.de/documents/221010_Operating%20Instructions%20ECBPi%20CobotPump_11.18_EN.pdf Vacuum gripper (useful for specs when designing own)
 https://pimmedia.schmalz.com/MAM_Library/Dokumente/Datenblatt_Produktfamilie/0_/054/05463/Datasheet_Vacuum%20Generators%20ECBPi_en-EN.pdf
+
+https://amslaurea.unibo.it/20126/1/Tesi%20Magistrale%20_%20Marco%20Speziali.pdf
+https://github.com/felixduvallet/allegro-hand-ros
 
 ModBus TCP/IP is something, I don't know if that's what the gripper uses, I think it probably is, but it is non-realtime.
 
@@ -268,4 +273,8 @@ https://www.youtube.com/watch?v=oVVvKC19Y7I another gripper
 
 https://blog.robotiq.com/how-to-choose-a-parallel-gripper-for-my-robot
 
-
+https://jrl-umi3218.github.io/mc_rtc/doxygen.html
+https://github.com/jrl-umi3218/mc_franka
+https://github.com/jrl-umi3218/mc_rtc
+https://github.com/jrl-umi3218/mc_panda
+https://github.com/rohanpsingh/mc_mujoco
