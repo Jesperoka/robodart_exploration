@@ -246,3 +246,26 @@ Lastly, we were not able to trigger the `power_limit_violation` error using the 
 We probably want an arm length of about $1.25 \text{ m}$, and while the weight can probably be quite high in practice, **the lighter the better**, and we feel like it should be possible to make a grip-and-release mechanism that has a rotational intertia of ~ $0.4\text{ kg m}^{2}$ or less, i.e. have a mass $m \in [1.11, 1.6] \text{ kg}$ depending on distribution. 
 
 There is also a point to be made that the lever arm needs to be rigid, and if possible the forces on the robot at the points of attachment should be spread out as evenly as possible. This is to potentially have more stable external torque and force estimates.
+
+---
+
+<a name="m111023"></a><h1 align="center"> Meeting 11.10.2023 </h1>
+
+<a name="temp"></a><h3 align="center"> Temp </h3>
+
+https://www.youtube.com/watch?v=07tucCGxVj8 ModBus
+
+https://download.franka.de/documents/221010_Operating%20Instructions%20ECBPi%20CobotPump_11.18_EN.pdf Vacuum gripper (useful for specs when designing own)
+https://pimmedia.schmalz.com/MAM_Library/Dokumente/Datenblatt_Produktfamilie/0_/054/05463/Datasheet_Vacuum%20Generators%20ECBPi_en-EN.pdf
+
+ModBus TCP/IP is something, I don't know if that's what the gripper uses, I think it probably is, but it is non-realtime.
+
+https://www.youtube.com/watch?v=LU2rSG2Orwg Some open source 3D-printable grippers.
+https://www.youtube.com/watch?v=yI8E50Orkng 10 gripper mechanisms
+https://www.youtube.com/watch?v=IalkWUN6wvE another gripper
+https://www.youtube.com/watch?v=p9QoT1iwVY4 another gripper
+https://www.youtube.com/watch?v=oVVvKC19Y7I another gripper
+
+https://blog.robotiq.com/how-to-choose-a-parallel-gripper-for-my-robot
+
+
