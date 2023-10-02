@@ -13,10 +13,12 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2  [Going Forward](#m210923-gf)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2.1 [Literature Search](#m210923-ls)<br><br>
 2. [Meeting 26.09.2023 (Extra Meeting)](#m260923)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.1 [Intro](#m210923-intro)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.2 [Calculations](#m210923-calculations)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.3 [In Practice](#m210923-in-practice)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.4 [Initial Conclusions](#m210923-initial-conclusions)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.1 [Intro](#m260923-intro)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.2 [Calculations](#m260923-calculations)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.3 [In Practice](#m260923-in-practice)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.4 [Initial Conclusions](#m260923-initial-conclusions)<br><br>
+3. [Meeting 11.10.2023](#m111023)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.1 [Temp](#m111023-temp)<br>
 ---
 
 <a name="m210923"></a><h1 align="center"> Meeting 21.09.2023 </h1>
@@ -241,7 +243,7 @@ Lastly, we were not able to trigger the `power_limit_violation` error using the 
 </p>
 <p align="center"> Constant torque applied to 3 joints simultaneously while <br> the other 4 joints are kept at a constant position using a simple <br> PD controller did not exceed the maximum power limits </p>
 
-<a name="m260923-initial-conclusion"></a><h2 align="left"> Initial Conclusion </h2>
+<a name="m260923-initial-conclusions"></a><h2 align="left"> Initial Conclusion </h2>
 
 We probably want an arm length of about $1.25 \text{ m}$, and while the weight can probably be quite high in practice, **the lighter the better**, and we feel like it should be possible to make a grip-and-release mechanism that has a rotational intertia of ~ $0.4\text{ kg m}^{2}$ or less, i.e. have a mass $m \in [1.11, 1.6] \text{ kg}$ depending on distribution. 
 
@@ -251,7 +253,7 @@ There is also a point to be made that the lever arm needs to be rigid, and if po
 
 <a name="m111023"></a><h1 align="center"> Meeting 11.10.2023 </h1>
 
-<a name="temp"></a><h3 align="center"> Temp </h3>
+<a name="m111023-temp"></a><h3 align="center"> Temp </h3>
 
 https://impact-aware-robotics-database.tue.nl/
 
