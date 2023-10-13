@@ -8,7 +8,7 @@ from utils import common
 
 from gymnasium_envs import mujoco_gym
 
-MODEL_PATH = "mujoco_models/franka_emika_panda/scene.xml"
+MODEL_PATH = "mujoco_models/scene.xml"
 
 DURATION = 3.8  # (seconds)
 FPS = 60        # (Hz)
@@ -22,18 +22,18 @@ if __name__ == "__main__":
     data = mujoco.MjData(model)
     renderer = mujoco.Renderer(model)
 
-    # viewer.launch(model, data)
+    viewer.launch(model, data)
 
-    frames = []
+    # frames = []
 
-    while data.time < DURATION: 
+    # while data.time < DURATION: 
 
-        mujoco.mj_step(model, data)
+    #     mujoco.mj_step(model, data)
 
-        if len(frames) < data.time * FPS:
+    #     if len(frames) < data.time * FPS:
 
-            renderer.update_scene(data)
-            image = renderer.render()
-            frames.append(image)
+    #         renderer.update_scene(data)
+    #         image = renderer.render()
+    #         frames.append(image)
 
-    common.save_video(frames, filename="vid.mp4", show=True) 
+    # common.save_video(frames, filename="vid.mp4", show=True) 
