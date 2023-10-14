@@ -9,8 +9,8 @@ I want to implement (as far as possible) a framework which allows for different 
 1. Implement SAC bare bones skeleton (not able to fully implement until baseline controller is done and RL environment(s) is/are specified)
 
     - [x] Replay Buffer
-    - [ ] Value, Action-Value, Actor and Critic Neural Networks (depending on which SAC implementation I go with first)
-    - [ ] Main algorithm skeleton
+    - [x] Value, Action-Value, Actor and Critic Neural Networks (depending on which SAC implementation I go with first)
+    - [x] Main algorithm skeleton
 
 2. Add extension arm model into MuJoCo
 
