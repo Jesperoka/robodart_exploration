@@ -1,10 +1,9 @@
 <mujoco model="panda scene">
-
     <compiler angle="radian" meshdir="franka_emika_panda/assets" autolimits="true"/>
 
-    <include file="franka_emika_panda/panda.xml"/>
+    <include file="franka_emika_panda/panda_robodart.xml"/>
     <include file="dart/dart.xml"/>
-    <include file="dart/dart_board.xml"/>
+    <include file="dart_board/dart_board.xml"/>
 
     <statistic center="0.3 0 0.4" extent="1"/>
 
@@ -23,8 +22,12 @@
 
     <worldbody>
         <light pos="0 0 0" dir="0 0 -1" directional="true"/>
-        <geom name="floor" size="0 0 0.05" type="plane" material="groundplane"/>
-    </worldbody>
 
+        <!-- Cylinder (Positioned below to match panda's base height) -->
+        <geom name="stand_cylinder" pos="-0.043 0 -0.25" size="0.11 0.25" type="cylinder"/>
+
+        <!-- Floor (Placed just below the cylinder) -->
+        <geom name="floor" pos="0 0 -0.5" size="0 0 0.05" type="plane" material="groundplane"/>
+    </worldbody>
 </mujoco>
 

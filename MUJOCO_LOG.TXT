@@ -4,3 +4,9 @@ WARNING: Nan, Inf or huge value in QACC at DOF 0. The simulation is unstable. Ti
 Fri Oct 13 22:38:04 2023
 WARNING: Nan, Inf or huge value in QACC at DOF 0. The simulation is unstable. Time = 0.1860.
 
+Sun Oct 15 17:42:31 2023
+WARNING: Nan, Inf or huge value in QACC at DOF 1. The simulation is unstable. Time = 0.1720.
+
+Sun Oct 15 19:19:31 2023
+WARNING: mju_openResource: unknown file 'mujoco_models/franka_emika_panda/panda_no_hand.xml'
+
