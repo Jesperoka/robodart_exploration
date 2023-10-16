@@ -186,7 +186,8 @@
                     <geom mesh="link7_7" material="white" class="panda/visual"/>
                     <geom mesh="link7_c" class="panda/collision"/>
                     <body name="attachment" pos="0 0 0.107" quat="0.3826834 0 0 0.9238795">
-                      <site name="attachment_site"/>
+                        <site name="attachment_site"/>
+                        <include file="extendo_gripper/extendo_gripper.xml"/>
                     </body>
                   </body>
                 </body>

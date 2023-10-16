@@ -1,37 +1,6 @@
-<!-- <mujoco model="dart_board"> -->
-<!--     <default> -->
-<!--         <default class="dart_board_visual"> -->
-<!--             <geom group="2" type="mesh" contype="0" conaffinity="0"/> -->
-<!--         </default> -->
-<!--         <default class="dart_board_collision"> -->
-<!--             <geom group="3" type="mesh"/> -->
-<!--         </default> -->
-<!--     </default> -->
-<!--     <asset> -->
-<!--         <texture type="2d" name="dartboard" file="dart_board/dartboard.png"/> -->
-<!--         <material name="07___Default" texture="dartboard" specular="0.09000000000000001" shininess="0.01"/> -->
-<!--         <mesh file="../../dart_board/11721_darboard_V4_L3.obj" scale="0.1 0.1 0.1"/> -->
-<!--     </asset> -->
-<!--     <worldbody> -->
-<!--         <body name="dart_board" pos="0 10 0" quat="0 0 0.7071068 0.7071068"> -->
-<!--             <geom material="07___Default" mesh="11721_darboard_V4_L3" class="dart_board_visual"/> -->
-<!--             <geom mesh="11721_darboard_V4_L3" class="dart_board_collision"/> -->
-<!--         </body> -->
-<!--     </worldbody> -->
-<!-- </mujoco> -->
-
 <mujoco>
-    <asset>
-        <!-- Define the texture for the dartboard using a PNG image. -->
-        <texture type="2d" name="dartboard_texture" file="dart_board/dartboard.png"/>
-        <material name="dartboard_material" texture="dartboard_texture" />
-    </asset>
-    
-    <worldbody>
-        <!-- Dartboard placed relative to the parent body (floor_top_anchor) -->
-        <body name="dartboard_body" pos="0 -2.37 1.13" quat="0 0 0.7071068 0.7071068">
-            <geom type="cylinder" name="dartboard_geom" size="0.2285 0.005" material="dartboard_material" rgba="1 1 1 1"/>
-        </body>
-    </worldbody>
+    <body name="dartboard_body" pos="0 -2.37 1.63" quat="0 0 0.7071068 0.7071068">
+        <geom type="cylinder" name="dartboard_geom" size="0.2285 0.005" material="dartboard_material" rgba="1 1 1 1"/>
+    </body>
 </mujoco>
 

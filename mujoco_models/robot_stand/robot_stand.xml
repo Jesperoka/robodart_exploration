@@ -1,0 +1,6 @@
+<body name="robot_stand" pos="0 0 0">
+    <geom name="stand_cylinder_top" pos="-0.043 0 0.95" size="0.115 0.005" type="cylinder" material="matte_aluminum"/>
+    <geom name="stand_cylinder_middle" pos="-0.043 0 0.4745" size="0.07 0.4745" type="cylinder" material="matte_aluminum"/>
+    <geom name="stand_cylinder_bottom" pos="-0.043 0 0.005" size="0.31 0.005" type="cylinder" material="matte_aluminum"/>
+    <geom name="floor" pos="0 0 0" size="0 0 0.05" type="plane" material="groundplane"/>
+</body>
