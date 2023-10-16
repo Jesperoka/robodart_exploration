@@ -1,13 +1,18 @@
 <mujoco>
     <body name="extendo_gripper_base" pos="0 0 0.05">
-        <!-- Attach a soda can-like cylinder -->
         <inertial mass="0.4" pos="0 0 0"/> 
         <geom type="cylinder" size="0.033 0.05" material="black_plastic"/> 
 
-        <!-- Attach a prism-shaped rod to the side of the soda can -->
         <body name="extendo_gripper_t_slot_rod" pos="0 -0.5375 0.0375" quat="1 0 0 0">
             <inertial mass="0.1" pos="0 0 0"/>
             <geom type="box" size="0.015 0.5625 0.015" material="matte_aluminum"/>
+
+            <body name="temporary_release_mechanism" pos="0 -0.565 0">
+                <geom type="box" size="0.055 0.025 0.025" rgba="0 0.5 0 0.3"/>
+            </body>
+
         </body>
+
     </body>
+
 </mujoco>
