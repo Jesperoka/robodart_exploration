@@ -1,7 +1,8 @@
 <mujoco model="dart_model">
-        <body name="dart" pos="0 2.37 0.5">
-            <inertial pos="0 0 0" mass="0.022" 
-                      diaginertia="0.0001 0.0001 0.0001"/> <!-- Replace ix, iy, iz with precomputed values -->
-            <geom type="mesh" mesh="dart_mesh"/>
-        </body>
+    <body name="dart" pos="0 0 0">
+        <!-- <joint type="free"/> -->
+        <inertial pos="0 0 0" mass="0.022" 
+            diaginertia="0.0001 0.0001 0.0001"/> <!-- Replace ix, iy, iz with precomputed values -->
+        <geom type="mesh" mesh="dart_mesh"/>
+    </body>
 </mujoco>

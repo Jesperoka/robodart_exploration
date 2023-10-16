@@ -20,16 +20,24 @@
         <material name="dartboard_material" texture="dartboard_texture" />
 
         <mesh file="../../dart/assets/dart1.obj" name="dart_mesh"/>
+        <mesh file="../../extendo_gripper/franka_connector.obj" name="extendo_mesh"/>
     </asset>
 
     <worldbody>
         <light pos="0 0 0" dir="0 0 -1" directional="true"/>
         <include file="robot_stand/robot_stand.xml"/> 
-        <include file="dart/dart.xml" />
+        <!-- <include file="dart/dart.xml" /> -->
         <include file="dart_board/dart_board.xml"/>
     </worldbody>
 
-    <!-- <equality /> -->
+    <equality>
+        <weld body1="temporary_release_mechanism" body2="dart" solref="0.02 1" active="true"/>
+    </equality>
+
+    <!-- <keyframe> -->
+    <!--     <key name="home" qpos="0 0 0 -1.57079 0 1.57079 -0.7853" ctrl="0 0 0 -1.57079 0 1.57079 -0.7853"/> -->
+    <!--     <key name="throw_start" qpos="1.70923 0.857012 -0.143804 -1.32138 -1.44791 1.54729 -0.956189" ctrl="1.70923 0.857012 -0.143804 -1.32138 -1.44791 1.54729 -0.956189"/> -->
+    <!-- </keyframe> -->
 
 </mujoco>
 
