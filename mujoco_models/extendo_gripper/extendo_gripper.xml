@@ -1,7 +1,7 @@
 <mujoco>
     <body name="extendo_gripper_base" pos="0 0 0.05">
 
-        <inertial mass="0.4" pos="0 0 0"/> 
+        <inertial mass="0.4" pos="0 0 0"/>  
         <geom type="cylinder" size="0.033 0.05" material="black_plastic"/> 
 
         <body name="extendo_gripper_t_slot_rod" pos="0 -0.5375 0.0375" quat="1 0 0 0">

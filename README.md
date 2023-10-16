@@ -13,6 +13,8 @@ I want to implement (as far as possible) a framework which allows for different 
     - [x] Main algorithm skeleton
 
 2. Add extension arm model into MuJoCo
+    - [ ] Add programmatic release of dart
+    - [ ] Use extendo_gripper mesh instead of basic geometric shapes
 
 3. Implement temporary baseline controller, including figuring out how to implement torque control in MuJoCo with the Panda model
 
