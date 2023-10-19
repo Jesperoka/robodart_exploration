@@ -9,9 +9,9 @@
             <inertial mass="0.1" pos="0 0 0"/>
             <geom type="box" size="0.015 0.5625 0.015" material="matte_aluminum"/>
 
-            <body name="temporary_release_mechanism" pos="0 -0.565 0">
+            <body name="temporary_release_mechanism" pos="0 -0.585 0.0">
                 <geom type="box" size="0.055 0.025 0.025" rgba="0 0.5 0 0.3"/>
-                <site name="release_point" pos="0 0 0" quat="1 0 0 1" size="0.01" rgba="1 0 0 0.7" group="5"/>
+                <site name="release_point" pos="0 0 0" quat="0 -0.7071 0 0.7071" size="0.01" rgba="1 0 0 0.7" group="5"/>
             </body>
 
         </body>

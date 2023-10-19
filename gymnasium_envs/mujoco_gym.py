@@ -35,7 +35,7 @@ def default_baseline_controller(qpos, qvel) -> np.ndarray:
         3.436912040630976, 2.358766003196306
     ])
 
-    e = REFERENCE_POS - qpos 
+    e = REFERENCE_POS - qpos
     e_dot = np.zeros(7) - qvel
 
     torques = Kp*e + Kd*e_dot
@@ -52,12 +52,12 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
     goal = GOAL
 
     metadata = {
-            "render_modes": [
-                "human",
-                "rgb_array",
-                "depth_array",
-                ],
-            }
+        "render_modes": [
+            "human",
+            "rgb_array",
+            "depth_array",
+        ],
+    }
 
     def __init__(
         self,
@@ -77,9 +77,9 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
         print(self.init_qpos)
         print(self.init_qvel)
 
-        # Override action space 
+        # Override action space
         # WARNING: If step() is only called by me, I don't need to do this
-        self.action_space = Box(low=A_LOWER * np.ones(NUM_JOINTS), high=A_HIGHER * np.ones(NUM_JOINTS)) 
+        self.action_space = Box(low=A_LOWER * np.ones(NUM_JOINTS), high=A_HIGHER * np.ones(NUM_JOINTS))
 
         self.metadata = {
             "render_modes": [
@@ -102,16 +102,17 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
         self.observation = self.data.qpos[-7:-4].copy()
 
         info = {}  # placeholder
+        # done = True if self.observation[1] <= self.goal else False
         done = False  # placeholder
 
         return self.observation, reward, done, info
 
     def reset_model(self):
-        qpos = np.array([1.70923, 0.857012, -0.143804, -1.32138, -1.44791, 1.54729, -0.956189, 0, 0, 0, 0, 0, 0, 0])
-        qpos[-7:-4] = self.data.site("release_point").xpos
-        print(self.data.site("release_point").xpos)
-        qpos[-4:] = from_rotation_matrix(self.data.site("release_point").xmat)
-        qvel = np.zeros((self.model.nv, )) 
+        qpos = np.array([
+            1.70923, 0.857012, -0.143804, -1.32138, -1.44791, 1.54729, -0.956189, 0.22234311, 1.52364254,
+            0.41342544, 0.00098423, 0.024683026, 0.92662532, -0.37517367
+        ])
+        qvel = np.zeros((self.model.nv, ))
         self.set_state(qpos, qvel)
         self.observation = self.data.qpos[-7:-4].copy()
         return self.observation
