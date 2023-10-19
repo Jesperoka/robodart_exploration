@@ -198,17 +198,33 @@
     </body>
   </worldbody>
 
+  <!-- Position Control -->
+  <!-- <actuator> -->
+  <!--   <general class="panda" name="actuator1" joint="joint1" gainprm="4500" biasprm="0 -4500 -450"/> -->
+  <!--   <general class="panda" name="actuator2" joint="joint2" gainprm="4500" biasprm="0 -4500 -450" -->
+  <!--     ctrlrange="-1.7628 1.7628"/> -->
+  <!--   <general class="panda" name="actuator3" joint="joint3" gainprm="3500" biasprm="0 -3500 -350"/> -->
+  <!--   <general class="panda" name="actuator4" joint="joint4" gainprm="3500" biasprm="0 -3500 -350" -->
+  <!--     ctrlrange="-3.0718 -0.0698"/> -->
+  <!--   <general class="panda" name="actuator5" joint="joint5" gainprm="2000" biasprm="0 -2000 -200" forcerange="-12 12"/> -->
+  <!--   <general class="panda" name="actuator6" joint="joint6" gainprm="2000" biasprm="0 -2000 -200" forcerange="-12 12" -->
+  <!--     ctrlrange="-0.0175 3.7525"/> -->
+  <!--   <general class="panda" name="actuator7" joint="joint7" gainprm="2000" biasprm="0 -2000 -200" forcerange="-12 12"/> -->
+  <!-- </actuator> -->
+
+  <!-- Torque Control -->
   <actuator>
-    <general class="panda" name="actuator1" joint="joint1" gainprm="4500" biasprm="0 -4500 -450"/>
-    <general class="panda" name="actuator2" joint="joint2" gainprm="4500" biasprm="0 -4500 -450"
-      ctrlrange="-1.7628 1.7628"/>
-    <general class="panda" name="actuator3" joint="joint3" gainprm="3500" biasprm="0 -3500 -350"/>
-    <general class="panda" name="actuator4" joint="joint4" gainprm="3500" biasprm="0 -3500 -350"
-      ctrlrange="-3.0718 -0.0698"/>
-    <general class="panda" name="actuator5" joint="joint5" gainprm="2000" biasprm="0 -2000 -200" forcerange="-12 12"/>
-    <general class="panda" name="actuator6" joint="joint6" gainprm="2000" biasprm="0 -2000 -200" forcerange="-12 12"
-      ctrlrange="-0.0175 3.7525"/>
-    <general class="panda" name="actuator7" joint="joint7" gainprm="2000" biasprm="0 -2000 -200" forcerange="-12 12"/>
+    <motor ctrllimited="true" ctrlrange="-87 87" forcelimited="true" forcerange="-87 87" joint="joint1" name="panda_joint1" />
+    <motor ctrllimited="true" ctrlrange="-87 87" forcelimited="true" forcerange="-87 87" joint="joint2" name="panda_joint2" />
+    <motor ctrllimited="true" ctrlrange="-87 87" forcelimited="true" forcerange="-87 87" joint="joint3" name="panda_joint3" />
+    <motor ctrllimited="true" ctrlrange="-87 87" forcelimited="true" forcerange="-87 87" joint="joint4" name="panda_joint4" />
+    <motor ctrllimited="true" ctrlrange="-12 12" forcelimited="true" forcerange="-12 12" joint="joint5" name="panda_joint5" />
+    <motor ctrllimited="true" ctrlrange="-12 12" forcelimited="true" forcerange="-12 12" joint="joint6" name="panda_joint6" />
+    <motor ctrllimited="true" ctrlrange="-12 12" forcelimited="true" forcerange="-12 12" joint="joint7" name="panda_joint7" />
+    <!-- <position forcelimited="true" forcerange="-120 120" ctrllimited="true" ctrlrange="0 0.04" joint="panda_finger_joint1" kp="100" name="pos_panda_finger_joint1" user="1"/> -->
+    <!-- <position forcelimited="true" forcerange="-120 120" ctrllimited="true" ctrlrange="0 0.04" joint="panda_finger_joint2" kp="100" name="pos_panda_finger_joint2" user="1"/> -->
+    <!-- <velocity forcelimited="true" forcerange="-120 120" joint="panda_finger_joint1" kv="10" name="vel_panda_finger_joint1" user="1"/> -->
+    <!-- <velocity forcelimited="true" forcerange="-120 120" joint="panda_finger_joint2" kv="10" name="vel_panda_finger_joint2" user="1"/> -->
   </actuator>
 
 </mujoco>
