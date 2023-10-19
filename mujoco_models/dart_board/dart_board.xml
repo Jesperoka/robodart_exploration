@@ -1,5 +1,5 @@
 <mujoco>
-    <body name="dartboard_body" pos="0 -2.37 1.63" quat="0 0 0.7071068 0.7071068">
+    <body name="dartboard_body" pos="0 -2.46 1.625" quat="0 0 0.7071068 0.7071068">
         <geom type="cylinder" name="dartboard_geom" size="0.2285 0.005" material="dartboard_material" rgba="1 1 1 1"/>
     </body>
 </mujoco>
