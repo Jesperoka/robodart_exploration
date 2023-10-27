@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import random
 
 
 def find_time_hit(v_z, dz):
@@ -74,20 +75,53 @@ def plot_trajectory(B, vel_and_A_vecs, t_max):
 
 A = [0, 0, 0]
 B = [2, 3, 2]
-vel_and_A_vecs = []
 
-for a in range(10):
-    for b in range(10):
-        for c in range(10):
-            A = [a,b,c]
-            for i in range(1000):
-                vel_vec = calculate_vel_vec(A,B, v_z=i/100)
-                if vel_vec == [0,0,0]:
-                    continue
-                vel_and_A_vecs.append([A, vel_vec])
+
+
+#The throwing space is the points filling the box created from base_point with length len_x/y/z in the respective directions, with resolution A_resolution
+#A_resolution is given in points/m
+def create_points(base_point, len_x, len_y, len_z, A_resolution):
+    return [
+        [
+            base_point[0] + x / A_resolution, 
+            base_point[1] + y / A_resolution, 
+            base_point[2] + z / A_resolution
+        ]
+        for x in range(int(len_x * A_resolution))
+        for y in range(int(len_y * A_resolution))
+        for z in range(int(len_z * A_resolution))
+    ]
+
+
+def calculate_vel_vecs_in_area(base_point, len_x, len_y, len_z, A_resolution, B, v_min, v_max, v_resolution):
+    #Create points A
+    A_vec = create_points(base_point,len_x, len_y, len_z, A_resolution)
+
+    vel_A_combo = []
+    for A in A_vec:
+        for v_z in range (v_min, v_max*v_resolution):
+            vel_vec = calculate_vel_vec(A, B, v_min + v_z/v_resolution)
+            if vel_vec == [0,0,0]:
+                continue
+            vel_A_combo.append([A, vel_vec])
+
+    return vel_A_combo
+
+
+
+#Testing
+combo = calculate_vel_vecs_in_area([-0.2,0.1,1.2], 0.4, 0.4, 0.4, 10, [2,0,1], 1, 10, 10)
+#print(combo)
+print(len(combo))
+
+random_trajs = []
+for i in range(10):
+    random_trajs.append(combo[random.randint(10,len(combo))])
+print(random_trajs[0], "\n", random_trajs[1], "\n", random_trajs[2])
+plot_trajectory([2,0,1], random_trajs, 2)
 
 #print(vel_and_A_vecs)
-print(len(vel_and_A_vecs))
+#print(len(vel_and_A_vecs))
 
 #plot_trajectory(B, vel_and_A_vecs, 3)
 
