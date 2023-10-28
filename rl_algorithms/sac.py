@@ -1,10 +1,15 @@
-import os
 import numpy as np
 import torch as T
 import torch.nn.functional as F
-from rl_function_approximators.neural_networks import ActorNetwork, CriticNetwork, ValueNetwork
+
+from rl_function_approximators.neural_networks import (ActorNetwork,
+                                                       CriticNetwork,
+                                                       ValueNetwork)
+from utils.common import plot_learning_curve
+
 
 class ReplayBuffer():
+
     def __init__(self, max_size, input_shape, n_actions):
         self.mem_size = max_size
         self.mem_cntr = 0
@@ -12,7 +17,7 @@ class ReplayBuffer():
         self.new_state_memory = np.zeros((self.mem_size, *input_shape))
         self.action_memory = np.zeros((self.mem_size, n_actions))
         self.reward_memory = np.zeros(self.mem_size)
-        self.terminal_memory = np.zeros(self.mem_size, dtype=np.bool_) # TODO: double check type
+        self.terminal_memory = np.zeros(self.mem_size, dtype=np.bool_)  # TODO: double check type
 
     def store_transition(self, state, action, reward, state_, done):
         index = self.mem_cntr % self.mem_size
@@ -40,21 +45,31 @@ class ReplayBuffer():
 
 
 class Agent():
-    def __init__(self, alpha=0.0003, beta=0.0003, input_dims=[8],
-            env=None, gamma=0.99, n_actions=2, max_size=1000000, tau=0.005,
-            layer1_size=256, layer2_size=256, batch_size=256, reward_scale=2):
+
+    def __init__(self,
+                 alpha=0.0003,
+                 beta=0.0003,
+                 input_dims=[8],
+                 env=None,
+                 gamma=0.99,
+                 n_actions=2,
+                 max_size=1000000,
+                 tau=0.005,
+                 layer1_size=256,
+                 layer2_size=256,
+                 batch_size=256,
+                 reward_scale=2,
+                 max_action=1.0):
+
         self.gamma = gamma
         self.tau = tau
         self.memory = ReplayBuffer(max_size, input_dims, n_actions)
         self.batch_size = batch_size
         self.n_actions = n_actions
 
-        self.actor = ActorNetwork(alpha, input_dims, n_actions=n_actions,
-                    name='actor', max_action=env.action_space.high)
-        self.critic_1 = CriticNetwork(beta, input_dims, n_actions=n_actions,
-                    name='critic_1')
-        self.critic_2 = CriticNetwork(beta, input_dims, n_actions=n_actions,
-                    name='critic_2')
+        self.actor = ActorNetwork(alpha, input_dims, n_actions=n_actions, name='actor', max_action=max_action)
+        self.critic_1 = CriticNetwork(beta, input_dims, n_actions=n_actions, name='critic_1')
+        self.critic_2 = CriticNetwork(beta, input_dims, n_actions=n_actions, name='critic_2')
         self.value = ValueNetwork(beta, input_dims, name='value')
         self.target_value = ValueNetwork(beta, input_dims, name='target_value')
 
@@ -138,7 +153,7 @@ class Agent():
         q2_new_policy = self.critic_2.forward(state, actions)
         critic_value = T.min(q1_new_policy, q2_new_policy)
         critic_value = critic_value.view(-1)
-        
+
         actor_loss = log_probs - critic_value
         actor_loss = T.mean(actor_loss)
         self.actor.optimizer.zero_grad()
@@ -147,7 +162,7 @@ class Agent():
 
         self.critic_1.optimizer.zero_grad()
         self.critic_2.optimizer.zero_grad()
-        q_hat = self.scale*reward + self.gamma*value_
+        q_hat = self.scale * reward + self.gamma * value_
         q1_old_policy = self.critic_1.forward(state, action).view(-1)
         q2_old_policy = self.critic_2.forward(state, action).view(-1)
         critic_1_loss = 0.5 * F.mse_loss(q1_old_policy, q_hat)
@@ -160,3 +175,59 @@ class Agent():
 
         self.update_network_parameters()
 
+
+def basic_training_loop(env, n_games):
+    agent = Agent(env=env,
+                  input_dims=env.observation_space.shape,
+                  n_actions=env.flat_action_space.shape[0],
+                  max_action=env.flat_action_space.high)
+
+    # uncomment this line and do a mkdir tmp && mkdir video if you want to
+    # record video of the agent playing the game.
+    #env = wrappers.Monitor(env, 'tmp/video', video_callable=lambda episode_id: True, force=True)
+    filename = 'franka_dart_throw.png'
+
+    figure_file = 'logs/' + filename
+
+    best_score = -np.inf
+    score_history = []
+    load_checkpoint = False
+
+    if load_checkpoint:
+        agent.load_models()
+        env.render(mode='human')
+
+    for i in range(n_games):
+
+        observation = env.reset()
+        done = False
+
+        score = 0
+        while not done:
+            _action = agent.choose_action(observation)
+            action = (_action[0:7], 0 if _action[-1] <= 0.0 else 1)
+
+            observation_, reward, done, info = env.step(action)
+
+            score += reward
+            agent.remember(observation, action, reward, observation_, done)
+
+            if not load_checkpoint:
+                agent.learn()
+
+            observation = observation_
+
+        score_history.append(score)
+        avg_score = np.mean(score_history[-100:])
+
+        if avg_score > best_score:
+            best_score = avg_score
+
+            if not load_checkpoint:
+                agent.save_models()
+
+        print('episode ', i, 'score %.1f' % score, 'avg_score %.1f' % avg_score)
+
+    if not load_checkpoint:
+        x = [i + 1 for i in range(n_games)]
+        plot_learning_curve(x, score_history, figure_file)

@@ -6,6 +6,9 @@ def test_utils_import():
     print("\n\nimport was successful")
 
 
+# Example usage:
+# frames = [np.random.random((100, 100, 3)) for _ in range(100)]  # Example frames (random noise)
+# frames_to_video(frames, filename="output.mp4", fps=30, show=True)
 def save_video(frames, filename=None, fps=30, show=False):
     """
     Convert a list of frames (numpy arrays) into a video using matplotlib.
@@ -41,7 +44,12 @@ def save_video(frames, filename=None, fps=30, show=False):
 
     plt.close(fig)
 
-# Example usage:
-# frames = [np.random.random((100, 100, 3)) for _ in range(100)]  # Example frames (random noise)
-# frames_to_video(frames, filename="output.mp4", fps=30, show=True)
+
+def plot_learning_curve(x, scores, figure_file):
+    running_avg = np.zeros(len(scores))
+    for i in range(len(running_avg)):
+        running_avg[i] = np.mean(scores[max(0, i-100):(i+1)])
+    plt.plot(x, running_avg)
+    plt.title('Running average of previous 100 episodes')
+    plt.savefig(figure_file)
 

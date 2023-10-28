@@ -1,9 +1,6 @@
-import os
-
-import mujoco
 import numpy as np
 from gymnasium.envs.mujoco.mujoco_env import MujocoEnv
-from gymnasium.spaces import Box, Discrete, Tuple
+from gymnasium.spaces import Box, Discrete, Tuple, flatten_space
 from gymnasium.utils import EzPickle
 from quaternion import from_rotation_matrix
 
@@ -18,10 +15,9 @@ A_HIGHER = 1.0
 O_LOWER = -DTYPE("inf")
 O_HIGHER = DTYPE("inf")
 NUM_JOINTS = 7
-NUM_OBSERVABLE_STATES = 3  # Dart Position
-INITIAL_OBSERVATION = np.array([0.0, 0.0, 0.0], dtype=DTYPE)  # TODO: get proper inital state
-GOAL = np.array([0.0, -2.46, 1.625], dtype=DTYPE)
+NUM_OBSERVABLE_STATES = 2*NUM_JOINTS # Dart Position
 EPISODE_TIME_LIMIT = 69.0
+GOAL = np.array([0.0, -2.46, 1.625], dtype=DTYPE)
 
 
 def default_reward_function(dart_position, goal_position) -> DTYPE:
@@ -50,7 +46,6 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
     observation_space = Box(low=O_LOWER * np.ones(NUM_OBSERVABLE_STATES),
                             high=O_HIGHER * np.ones(NUM_OBSERVABLE_STATES), dtype=DTYPE)
     time_limit = EPISODE_TIME_LIMIT 
-    observation = INITIAL_OBSERVATION
     goal = GOAL
 
     metadata = {
@@ -75,16 +70,13 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
         EzPickle.__init__(self)
         MujocoEnv.__init__(self, mujoco_model_path, frame_skip, observation_space=self.observation_space)
 
-        print(self.data.site("release_point").xpos)
-        print(self.init_qpos)
-        print(self.init_qvel)
-
         # Override action space
         # WARNING: If step() is only called by me, I don't need to do this
         self.action_space = Tuple([
             Box(low=A_LOWER * np.ones(NUM_JOINTS), high=A_HIGHER * np.ones(NUM_JOINTS), dtype=DTYPE),
-            Discrete(n=2, seed=RNG_SEED, start=0)
-        ])
+            Discrete(n=2, start=0)
+        ], seed=RNG_SEED)
+        self.flat_action_space = flatten_space(self.action_space)
 
         self.metadata = {
             "render_modes": [
@@ -105,7 +97,6 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
         torques = action[0]
         release = action[1]
 
-        print(torques.shape)
         torques += baseline_action
         self.model.eq("weld").active = release 
 
@@ -121,7 +112,7 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
         x_lim = 2.0
         y_lim = self.goal[1] 
         z_lim = 0.0
-        dart_pos = self.observation[0][-3:]
+        dart_pos = self.data.qpos[-7:-4] # dart pos is 7-DOF xyz-quat
 
         if dart_pos[0] >= x_lim or dart_pos[1] >= -y_lim:
             return (True, -DTYPE("inf"))
@@ -132,8 +123,10 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
 
     # TODO: add noise
     def noisy_observation(self):
-        noise = 0
-        return (self.data.qpos[-7:-4].copy() + noise, self.data.qvel[-7:-4].copy() + noise)
+        pos_noise = 0.0
+        vel_noise = 0.0
+        assert(self.data.qpos.shape[0] > self.data.qpos.shape[1])
+        return np.concatenate([self.data.qpos[0:NUM_JOINTS] + pos_noise, self.data.qvel[0:NUM_JOINTS] + vel_noise], axis=0)
 
     # Reset the model in the simulator
     def reset_model(self):
@@ -142,9 +135,12 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
             0.41342544, 0.00098423, 0.024683026, 0.92662532, -0.37517367
         ])
         qvel = np.zeros((self.model.nv, ))
-        self.set_state(qpos, qvel)
-        self.observation = (qpos, qvel) 
 
+        self.set_state(qpos, qvel)
+        self.model.eq("weld").active = 1 
+        self.observation = np.concatenate([qpos[0:NUM_JOINTS], qvel[0:NUM_JOINTS]], axis=0) 
+
+        assert(self.observation.shape == (NUM_OBSERVABLE_STATES, ))
         return self.observation
 
     # def viewer_setup(self):
