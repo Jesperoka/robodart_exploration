@@ -6,6 +6,7 @@ from rl_function_approximators.neural_networks import (ActorNetwork,
                                                        CriticNetwork,
                                                        ValueNetwork)
 from utils.common import plot_learning_curve
+from utils.dtypes import NP_DTYPE, T_DTYPE
 
 
 class ReplayBuffer():
@@ -13,15 +14,15 @@ class ReplayBuffer():
     def __init__(self, max_size, input_shape, n_actions):
         self.mem_size = max_size
         self.mem_cntr = 0
-        self.state_memory = np.zeros((self.mem_size, *input_shape))
-        self.new_state_memory = np.zeros((self.mem_size, *input_shape))
-        self.action_memory = np.zeros((self.mem_size, n_actions))
-        self.reward_memory = np.zeros(self.mem_size)
+        self.state_memory = np.zeros((self.mem_size, *input_shape), dtype=NP_DTYPE)
+        self.new_state_memory = np.zeros((self.mem_size, *input_shape), dtype=NP_DTYPE)
+        self.action_memory = np.zeros((self.mem_size, n_actions), dtype=NP_DTYPE)
+        self.reward_memory = np.zeros(self.mem_size, dtype=NP_DTYPE)
         self.terminal_memory = np.zeros(self.mem_size, dtype=np.bool_)  # TODO: double check type
 
     def store_transition(self, state, action, reward, state_, done):
         index = self.mem_cntr % self.mem_size
-
+        assert(state.dtype == NP_DTYPE and action.dtype == NP_DTYPE and reward.dtype == NP_DTYPE and state_.dtype == NP_DTYPE), state_.dtype
         self.state_memory[index] = state
         self.new_state_memory[index] = state_
         self.action_memory[index] = action
@@ -59,8 +60,9 @@ class Agent():
                  layer2_size=256,
                  batch_size=256,
                  reward_scale=2,
-                 max_action=1.0):
-
+                 max_action=None):
+        
+        assert(max_action is not None)
         self.gamma = gamma
         self.tau = tau
         self.memory = ReplayBuffer(max_size, input_dims, n_actions)
@@ -76,13 +78,14 @@ class Agent():
         self.scale = reward_scale
         self.update_network_parameters(tau=1)
 
-    def choose_action(self, observation):
-        state = T.Tensor([observation]).to(self.actor.device)
+    # WARNING: changed from Tensor([obs]) to Tensor(obs)
+    def choose_action(self, flat_observation):
+        state = T.from_numpy(flat_observation).unsqueeze(0).to(self.actor.device)
         actions, _ = self.actor.sample_normal(state, reparameterize=False)
-
         return actions.cpu().detach().numpy()[0]
 
     def remember(self, state, action, reward, new_state, done):
+        assert(state.dtype == NP_DTYPE and action.dtype == NP_DTYPE and reward.dtype == NP_DTYPE and new_state.dtype == NP_DTYPE), new_state.dtype
         self.memory.store_transition(state, action, reward, new_state, done)
 
     def update_network_parameters(self, tau=None):
@@ -124,11 +127,12 @@ class Agent():
         state, action, reward, new_state, done = \
                 self.memory.sample_buffer(self.batch_size)
 
-        reward = T.tensor(reward, dtype=T.float).to(self.actor.device)
+        # TODO: use from_numpy() instead
+        reward = T.tensor(reward, dtype=T_DTYPE).to(self.actor.device)
         done = T.tensor(done).to(self.actor.device)
-        state_ = T.tensor(new_state, dtype=T.float).to(self.actor.device)
-        state = T.tensor(state, dtype=T.float).to(self.actor.device)
-        action = T.tensor(action, dtype=T.float).to(self.actor.device)
+        state_ = T.tensor(new_state, dtype=T_DTYPE).to(self.actor.device)
+        state = T.tensor(state, dtype=T_DTYPE).to(self.actor.device)
+        action = T.tensor(action, dtype=T_DTYPE).to(self.actor.device)
 
         value = self.value(state).view(-1)
         value_ = self.target_value(state_).view(-1)
@@ -195,27 +199,34 @@ def basic_training_loop(env, n_games):
 
     if load_checkpoint:
         agent.load_models()
-        env.render(mode='human')
+        env.render()
 
     for i in range(n_games):
+        print(f"Running game: {i}")
 
-        observation = env.reset()
+        observation, info = env.reset()
         done = False
 
         score = 0
         while not done:
+            temp = env.model.eq("weld").active
+            print(f"Score: {score} Weld active?: {temp}")
+
+            # WARNING: should just have a Box action space? 
             _action = agent.choose_action(observation)
+            print(_action[-1])
             action = (_action[0:7], 0 if _action[-1] <= 0.0 else 1)
 
             observation_, reward, done, info = env.step(action)
 
             score += reward
-            agent.remember(observation, action, reward, observation_, done)
+            agent.remember(observation, _action, reward, observation_, done)
 
             if not load_checkpoint:
                 agent.learn()
 
             observation = observation_
+            env.render()
 
         score_history.append(score)
         avg_score = np.mean(score_history[-100:])

@@ -1,27 +1,36 @@
 import numpy as np
 from gymnasium.envs.mujoco.mujoco_env import MujocoEnv
-from gymnasium.spaces import Box, Discrete, Tuple, flatten_space
+from gymnasium.spaces import Box, MultiBinary, Tuple, flatten_space
 from gymnasium.utils import EzPickle
-from quaternion import from_rotation_matrix
+from typing import Dict
+from utils.dtypes import NP_DTYPE 
 
 # WARNING: Different joints should have different limits
 # WARNING: Action space limits need to not be able to break robot limits
 
-DTYPE = np.float32
 RNG_SEED = 0
 
 A_LOWER = -1.0
 A_HIGHER = 1.0
-O_LOWER = -DTYPE("inf")
-O_HIGHER = DTYPE("inf")
+O_LOWER = -NP_DTYPE("inf")
+O_HIGHER = NP_DTYPE("inf")
 NUM_JOINTS = 7
 NUM_OBSERVABLE_STATES = 2*NUM_JOINTS # Dart Position
-EPISODE_TIME_LIMIT = 69.0
-GOAL = np.array([0.0, -2.46, 1.625], dtype=DTYPE)
+EPISODE_TIME_LIMIT = 5.0
+GOAL = np.array([0.0, -2.46, 1.625], dtype=NP_DTYPE)
+
+# TODO: use this
+DEFAULT_CAMERA_CONFIG = {
+    "trackbodyid": 1,
+    "distance": 4.0,
+    "lookat": np.array((0.0, 0.0, 2.0)),
+    "elevation": -20.0,
+}
 
 
-def default_reward_function(dart_position, goal_position) -> DTYPE:
-    return -np.linalg.norm(dart_position - goal_position)
+def default_reward_function(dart_position, goal_position) -> NP_DTYPE:
+    assert(dart_position.dtype == NP_DTYPE and goal_position.dtype == NP_DTYPE), str(dart_position.dtype) + " " + str(goal_position.dtype) 
+    return -np.linalg.norm(dart_position - goal_position).astype(NP_DTYPE)
 
 
 def default_baseline_controller(qpos, qvel) -> np.ndarray:
@@ -29,22 +38,23 @@ def default_baseline_controller(qpos, qvel) -> np.ndarray:
     Kd = 10.0
 
     REFERENCE_POS = np.array([
-        1.2535917688652172, 0.6972054325100352, 0.38962657131646805, -1.228720040789675, -0.24577336054378085,
-        3.436912040630976, 2.358766003196306
-    ])
+        1.585363, 0.972815, -0.074798, -1.660640, -1.538792,
+        1.733046, 1.126374
+    ], dtype=NP_DTYPE)
 
     e = REFERENCE_POS - qpos
-    e_dot = np.zeros(7) - qvel
+    e_dot = np.zeros(7, dtype=NP_DTYPE) - qvel
 
-    torques = Kp*e + Kd*e_dot
-
-    return torques.squeeze()
+    torques = (Kp*e + Kd*e_dot).squeeze()
+    
+    assert(torques.dtype == NP_DTYPE)
+    return torques
 
 
 class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
 
     observation_space = Box(low=O_LOWER * np.ones(NUM_OBSERVABLE_STATES),
-                            high=O_HIGHER * np.ones(NUM_OBSERVABLE_STATES), dtype=DTYPE)
+                            high=O_HIGHER * np.ones(NUM_OBSERVABLE_STATES), dtype=NP_DTYPE)
     time_limit = EPISODE_TIME_LIMIT 
     goal = GOAL
 
@@ -62,19 +72,21 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
         frame_skip,
         reward_function=default_reward_function,
         baseline_controller=default_baseline_controller,
+        camera_id=None,
+        camera_name=None,
     ):
 
         self.reward_function = reward_function
         self.baseline_controller = baseline_controller
 
         EzPickle.__init__(self)
-        MujocoEnv.__init__(self, mujoco_model_path, frame_skip, observation_space=self.observation_space)
+        MujocoEnv.__init__(self, mujoco_model_path, frame_skip, observation_space=self.observation_space, camera_name=camera_name, camera_id=camera_id)
 
         # Override action space
         # WARNING: If step() is only called by me, I don't need to do this
         self.action_space = Tuple([
-            Box(low=A_LOWER * np.ones(NUM_JOINTS), high=A_HIGHER * np.ones(NUM_JOINTS), dtype=DTYPE),
-            Discrete(n=2, start=0)
+            Box(low=A_LOWER * np.ones(NUM_JOINTS), high=A_HIGHER * np.ones(NUM_JOINTS), dtype=NP_DTYPE),
+            MultiBinary(1) 
         ], seed=RNG_SEED)
         self.flat_action_space = flatten_space(self.action_space)
 
@@ -90,7 +102,7 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
         self.render_mode = "human"
 
     # Sets control based on action simulates frame_skip number of frames and observes state 
-    def step(self, action: np.ndarray):
+    def step(self, action: np.ndarray) -> tuple[np.ndarray, NP_DTYPE, bool, Dict[str, float]]:
         done, reward = self.reward_or_terminate()
         baseline_action = self.baseline_controller(self.data.qpos[0:NUM_JOINTS], self.data.qvel[0:NUM_JOINTS])
 
@@ -105,36 +117,38 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
 
         info = {"action": action, "baseline_action": baseline_action} 
 
+        assert(self.observation.dtype == NP_DTYPE and reward.dtype == NP_DTYPE), str(self.observation.dtype) + " " + str(reward.dtype) 
         return self.observation, reward, done, info
 
     # Checks termination criteria and returns reward
-    def reward_or_terminate(self):
+    def reward_or_terminate(self) -> tuple[bool, NP_DTYPE]:
         x_lim = 2.0
         y_lim = self.goal[1] 
         z_lim = 0.0
-        dart_pos = self.data.qpos[-7:-4] # dart pos is 7-DOF xyz-quat
+        dart_pos = self.data.qpos[-7:-4].astype(NP_DTYPE) # dart pos is 7-DOF xyz-quat
 
         if dart_pos[0] >= x_lim or dart_pos[1] >= -y_lim:
-            return (True, -DTYPE("inf"))
+            return (True, -NP_DTYPE("inf"))
         elif dart_pos[1] <= y_lim or dart_pos[2] <= z_lim or self.data.time >= self.time_limit:
             return (True, self.reward_function(dart_pos, self.goal))
         else:
             return (False, self.reward_function(dart_pos, self.goal))
 
     # TODO: add noise
-    def noisy_observation(self):
+    def noisy_observation(self) -> np.ndarray:
         pos_noise = 0.0
         vel_noise = 0.0
-        assert(self.data.qpos.shape[0] > self.data.qpos.shape[1])
-        return np.concatenate([self.data.qpos[0:NUM_JOINTS] + pos_noise, self.data.qvel[0:NUM_JOINTS] + vel_noise], axis=0)
+        observation = np.concatenate([self.data.qpos[0:NUM_JOINTS] + pos_noise, self.data.qvel[0:NUM_JOINTS] + vel_noise], axis=0, dtype=NP_DTYPE)
+        assert(observation.shape == (NUM_OBSERVABLE_STATES, ))
+        return observation
 
     # Reset the model in the simulator
-    def reset_model(self):
+    def reset_model(self) -> np.ndarray:
         qpos = np.array([
-            1.70923, 0.857012, -0.143804, -1.32138, -1.44791, 1.54729, -0.956189, 0.22234311, 1.52364254,
+            1.70923, 0.857012, -0.143804, -1.32138, -1.44791, 1.54729, -0.956189, 0.22234311, 1.62364254,
             0.41342544, 0.00098423, 0.024683026, 0.92662532, -0.37517367
-        ])
-        qvel = np.zeros((self.model.nv, ))
+        ], dtype=NP_DTYPE)
+        qvel = np.zeros((self.model.nv, ), dtype=NP_DTYPE)
 
         self.set_state(qpos, qvel)
         self.model.eq("weld").active = 1 
@@ -143,10 +157,9 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
         assert(self.observation.shape == (NUM_OBSERVABLE_STATES, ))
         return self.observation
 
+    def _get_reset_info(self) -> Dict[str, float]:
+        """Function that generates the `info` that is returned during a `reset()`."""
+        return {}
+
     # def viewer_setup(self):
-    #     self.render_mode = "human"
-    #     self.camera_id = 0
-    #     self.camera_name = "my_camera"
-
-
-# test
+        # self.cam
