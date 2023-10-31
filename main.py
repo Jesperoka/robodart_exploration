@@ -17,7 +17,7 @@ if __name__ == "__main__":
 
     input("Press any key to unlock FCI")
 
-    desk.unlock()       # don't need if already unlocked
+    #desk.unlock()       # don't need if already unlocked
     desk.activate_fci() # don't need if already activated
 
     input("Press any key to connect to Robot")
