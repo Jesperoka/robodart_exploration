@@ -49,7 +49,7 @@ Run the following command from `~/robodart/`:
 docker run -it --net=host --privileged --mount type=bind,source=$(pwd)/robodart_exploration,target=/robodart_exploration robodart:latest
 ```
 
-and while in the docker container you can run navigate to `robodart_exploration`:
+and **while in the docker container** you can navigate to `robodart_exploration`:
 ```sh
 cd robodart_exploration
 ```
