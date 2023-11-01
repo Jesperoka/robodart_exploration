@@ -13,7 +13,7 @@ from rl_algorithms import sac
 
 MODEL_PATH = "./mujoco_models/scene.xml"
 MODEL_PATH = "./mujoco_models/scene.xml"
-FRAME_SKIP = 1
+FRAME_SKIP = 5
 
 DURATION = 3.8  # (seconds)
 FPS = 60  # (Hz)

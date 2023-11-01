@@ -128,14 +128,16 @@ class ActorNetwork(nn.Module):
     def sample_normal(self, state, reparameterize=True):
         assert(state.dtype == T_DTYPE), state.dtype
         mu, sigma = self.forward(state)
+        print(mu, sigma, reparameterize)
+        print(state)
         probabilities = Normal(mu, sigma)
 
         if reparameterize:
             actions = probabilities.rsample()
+            print("action", actions)
         else:
             actions = probabilities.sample()
 
-        # WARNING: need to handle release max_action differently
         action = T.tanh(actions)*T.tensor(self.max_action).to(self.device)
         log_probs = probabilities.log_prob(actions)
         log_probs -= T.log(1-action.pow(2)+self.reparam_noise)

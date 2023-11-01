@@ -10,3 +10,5895 @@ WARNING: Nan, Inf or huge value in QACC at DOF 1. The simulation is unstable. Ti
 Sun Oct 15 19:19:31 2023
 WARNING: mju_openResource: unknown file 'mujoco_models/franka_emika_panda/panda_no_hand.xml'
 
+Wed Nov  1 13:56:30 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:31 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:31 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:31 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:31 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:31 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:32 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:33 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:34 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:35 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:36 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:37 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:38 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:39 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:40 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:41 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:42 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:43 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:44 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:45 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:45 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:45 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:45 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:45 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:46 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:46 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:46 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:46 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:46 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:47 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:47 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:47 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:47 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:47 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:47 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:47 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:47 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:47 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:56:47 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 13:57:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:12:58 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:00 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:01 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:02 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:03 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:04 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:05 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:06 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:07 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:08 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:09 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:10 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:11 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:12 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:12 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:12 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:12 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:12 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:12 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:12 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:12 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:12 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:12 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:12 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:12 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:12 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:12 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:12 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:13 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:13 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:13 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:13 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 14:13:13 2023
+WARNING: mixed solref format, replacing with default
+
+Wed Nov  1 15:53:36 2023
+WARNING: Nan, Inf or huge value in QACC at DOF 0. The simulation is unstable. Time = 0.0120.
+
+Wed Nov  1 15:53:36 2023
+WARNING: Nan, Inf or huge value in QACC at DOF 0. The simulation is unstable. Time = 0.0120.
+
+Wed Nov  1 15:53:36 2023
+WARNING: Nan, Inf or huge value in QACC at DOF 0. The simulation is unstable. Time = 0.0120.
+
+Wed Nov  1 15:53:36 2023
+WARNING: Nan, Inf or huge value in QACC at DOF 1. The simulation is unstable. Time = 0.0120.
+
+Wed Nov  1 15:53:41 2023
+WARNING: Nan, Inf or huge value in QACC at DOF 0. The simulation is unstable. Time = 0.0120.
+
+Wed Nov  1 15:53:41 2023
+WARNING: Nan, Inf or huge value in QACC at DOF 0. The simulation is unstable. Time = 0.0120.
+
+Wed Nov  1 15:53:41 2023
+WARNING: Nan, Inf or huge value in QACC at DOF 1. The simulation is unstable. Time = 0.0120.
+
+Wed Nov  1 15:53:41 2023
+WARNING: Nan, Inf or huge value in QACC at DOF 0. The simulation is unstable. Time = 0.0120.
+
+Wed Nov  1 15:53:42 2023
+WARNING: Nan, Inf or huge value in QACC at DOF 0. The simulation is unstable. Time = 0.0120.
+
+Wed Nov  1 15:53:42 2023
+WARNING: Nan, Inf or huge value in QACC at DOF 0. The simulation is unstable. Time = 0.0120.
+
+Wed Nov  1 15:53:42 2023
+WARNING: Nan, Inf or huge value in QACC at DOF 0. The simulation is unstable. Time = 0.0120.
+
+Wed Nov  1 15:54:12 2023
+WARNING: Nan, Inf or huge value in QACC at DOF 0. The simulation is unstable. Time = 0.0120.
+
+Wed Nov  1 15:54:12 2023
+WARNING: Nan, Inf or huge value in QACC at DOF 0. The simulation is unstable. Time = 0.0120.
+
+Wed Nov  1 15:54:12 2023
+WARNING: Nan, Inf or huge value in QACC at DOF 0. The simulation is unstable. Time = 0.0120.
+
+Wed Nov  1 15:54:12 2023
+WARNING: Nan, Inf or huge value in QACC at DOF 0. The simulation is unstable. Time = 0.0120.
+
+Wed Nov  1 15:54:12 2023
+WARNING: Nan, Inf or huge value in QACC at DOF 0. The simulation is unstable. Time = 0.0120.
+

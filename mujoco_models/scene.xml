@@ -1,8 +1,13 @@
+<!-- Note to self: axes xyz are red, green, blue right-handed. -->
 <mujoco model="panda scene">
 
-    <!-- Set up and include the Franka Emika Robot -->
+    <!-- Set up simulator options and include the Franka Emika Robot -->
     <compiler angle="radian" meshdir="franka_emika_panda/assets" autolimits="true"/>
     <option integrator="implicitfast" impratio="10"/>
+    <option>
+        <flag contact="disable"/>
+    </option>
+
     <include file="franka_emika_panda/panda_robodart.xml"/>
 
     <visual>
@@ -29,11 +34,11 @@
         <include file="dart/dart.xml" />
         <include file="dart_board/dart_board.xml"/>
 
-        <camera name="dart_cam" mode="targetbodycom" target="dart" pos="0.5 0.5 0.5"/>
+        <camera name="dart_cam" mode="targetbodycom" target="dart" pos="0.5 -0.5 0.5"/>
     </worldbody>
 
     <equality>
-        <weld name="weld" body1="temporary_release_mechanism" body2="dart" solref="0.02 1" active="true"/>
+        <weld name="weld" body1="temporary_release_mechanism" body2="dart" solimp="1 1 0.5" solref="0.01 0.3" relpose="0 0 -0.1 1 0 0 0"  active="false"/>
     </equality>
 
     <contact>

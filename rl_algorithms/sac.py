@@ -209,13 +209,12 @@ def basic_training_loop(env, n_games):
 
         score = 0
         while not done:
-            temp = env.model.eq("weld").active
-            print(f"Score: {score} Weld active?: {temp}")
+            # temp = env.model.eq("weld").active
+            # print(f"Score: {score} Weld active?: {temp}")
 
             # WARNING: should just have a Box action space? 
             _action = agent.choose_action(observation)
-            print(_action[-1])
-            action = (_action[0:7], 0 if _action[-1] <= 0.0 else 1)
+            action = (_action[0:7], _action[-1])
 
             observation_, reward, done, info = env.step(action)
 
