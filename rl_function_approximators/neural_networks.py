@@ -10,9 +10,9 @@ from utils.dtypes import NP_DTYPE, T_DTYPE
 CHECKPOINT_DIR = "./nn_models/sac"
 
 class CriticNetwork(nn.Module):
-    def __init__(self, beta, input_dims, n_actions=None, fc1_dims=256, fc2_dims=256,
+    def __init__(self, beta, input_dims, n_actions, fc1_dims=256, fc2_dims=256,
                  name='critic', chkpt_dir=CHECKPOINT_DIR):
-        assert(n_actions != None)
+
         super(CriticNetwork, self).__init__()
         self.input_dims = input_dims
         self.fc1_dims = fc1_dims
@@ -32,15 +32,14 @@ class CriticNetwork(nn.Module):
         self.to(self.device)
 
     def forward(self, state, action):
-        assert(state.dtype == T_DTYPE)
-        assert(action.dtype == T_DTYPE)
         action_value = self.fc1(T.cat([state, action], dim=1))
         action_value = F.relu(action_value)
         action_value = self.fc2(action_value)
         action_value = F.relu(action_value)
 
         q = self.q(action_value)
-
+        
+        assert(q.dtype == T_DTYPE)
         return q
 
     def save_checkpoint(self):
@@ -70,7 +69,6 @@ class ValueNetwork(nn.Module):
         self.to(self.device)
 
     def forward(self, state):
-        assert(state.dtype == T_DTYPE), state.dtype
         state_value = self.fc1(state)
         state_value = F.relu(state_value)
         state_value = self.fc2(state_value)
@@ -78,6 +76,7 @@ class ValueNetwork(nn.Module):
 
         v = self.v(state_value)
 
+        assert(v.dtype == T_DTYPE)
         return v
 
     def save_checkpoint(self):
@@ -87,9 +86,9 @@ class ValueNetwork(nn.Module):
         self.load_state_dict(T.load(self.checkpoint_file))
 
 class ActorNetwork(nn.Module):
-    def __init__(self, alpha, input_dims, max_action=None, fc1_dims=256, fc2_dims=256, n_actions=None,
+    def __init__(self, alpha, input_dims, max_action, fc1_dims=256, fc2_dims=256, n_actions=None,
                  name='actor', chkpt_dir=CHECKPOINT_DIR):
-        assert(max_action is not None and n_actions != None)
+
         super(ActorNetwork, self).__init__()
         self.input_dims = input_dims
         self.fc1_dims = fc1_dims
@@ -112,7 +111,6 @@ class ActorNetwork(nn.Module):
         self.to(self.device)
 
     def forward(self, state):
-        assert(state.dtype == T_DTYPE), state.dtype
         prob = self.fc1(state)
         prob = F.relu(prob)
         prob = self.fc2(prob)
@@ -121,31 +119,27 @@ class ActorNetwork(nn.Module):
         mu = self.mu(prob)
         sigma = self.sigma(prob)
 
-        sigma = T.clamp(sigma, min=self.reparam_noise, max=1)
+        sigma = T.clamp(sigma, min=self.reparam_noise, max=1.0)
 
+        assert(mu.dtype == T_DTYPE and sigma.dtype == T_DTYPE)
         return mu, sigma
 
     def sample_normal(self, state, reparameterize=True):
-        assert(state.dtype == T_DTYPE), state.dtype
         mu, sigma = self.forward(state)
-        print(mu, sigma, reparameterize)
-        print(state)
+
         probabilities = Normal(mu, sigma)
 
         if reparameterize:
             actions = probabilities.rsample()
-            print("action", actions)
         else:
             actions = probabilities.sample()
 
         action = T.tanh(actions)*T.tensor(self.max_action).to(self.device)
-        log_probs = probabilities.log_prob(actions)
-        log_probs -= T.log(1-action.pow(2)+self.reparam_noise)
-        log_probs = log_probs.sum(1, keepdim=True)
+        log_probs = probabilities.log_prob(actions) - T.sum(1.0 - T.pow(T.tanh(actions), 2), dim=1, keepdim=True)
+        log_prob = T.sum(log_probs, dim=1, keepdim=True) # TODO: where this is done in paper 
 
-        assert(action.dtype == T_DTYPE), action.dtype
-        assert(actions.dtype == T_DTYPE), actions.dtype
-        return action, log_probs
+        assert(action.dtype == T_DTYPE and log_prob.dtype == T_DTYPE), str(action.dtype) + " " + str(log_prob.dtype)
+        return action, log_prob
 
     def save_checkpoint(self):
         T.save(self.state_dict(), self.checkpoint_file)

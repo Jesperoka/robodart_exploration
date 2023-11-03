@@ -1,15 +1,12 @@
 import faulthandler
 
 faulthandler.enable()
-
 from os import environ
 
-import matplotlib.pyplot as plt
 import numpy as np
-from mujoco import viewer
 
-from gymnasium_envs import mujoco_gym
 from rl_algorithms import sac
+from rl_environment import baseline_controllers, mujoco_gym, reward_functions
 
 MODEL_PATH = "./mujoco_models/scene.xml"
 MODEL_PATH = "./mujoco_models/scene.xml"
@@ -26,9 +23,14 @@ def zero_controller(dart_pos, goal_pos):
 if __name__ == "__main__":
     environ["MUJOCO_GL"] = "glfw"
 
+    lookahead_controller = baseline_controllers.LookaheadController()
+    lookahead_controller.do_log = True
+
     environment = mujoco_gym.FrankaEmikaDartThrowEnv(MODEL_PATH,
                                                      FRAME_SKIP,
-                                                     baseline_controller=zero_controller,
+                                                     reward_function=reward_functions.capped_inverse_distance,
+                                                     baseline_controller=lookahead_controller,
                                                      camera_name="dart_cam")
 
-    sac.basic_training_loop(environment, 100)
+    sac.basic_training_loop(environment, 250)
+    lookahead_controller.plot_logged()

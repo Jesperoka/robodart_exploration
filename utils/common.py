@@ -1,9 +1,12 @@
-import numpy as np
+from dataclasses import fields
+
 import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib.animation import FuncAnimation, writers
 
-def test_utils_import():
-    print("\n\nimport was successful")
+
+def unpack_dataclass(dataclass: type):
+    return [f.default for f in fields(dataclass)]
 
 
 # Example usage:
@@ -22,7 +25,7 @@ def save_video(frames, filename=None, fps=30, show=False):
     Returns:
     - None
     """
-    
+
     fig, ax = plt.subplots()
     im = ax.imshow(frames[0])
     plt.axis('off')  # Turn off axis numbers and ticks
@@ -48,8 +51,7 @@ def save_video(frames, filename=None, fps=30, show=False):
 def plot_learning_curve(x, scores, figure_file):
     running_avg = np.zeros(len(scores))
     for i in range(len(running_avg)):
-        running_avg[i] = np.mean(scores[max(0, i-100):(i+1)])
+        running_avg[i] = np.mean(scores[max(0, i - 100):(i + 1)])
     plt.plot(x, running_avg)
     plt.title('Running average of previous 100 episodes')
     plt.savefig(figure_file)
-

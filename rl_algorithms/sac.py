@@ -18,11 +18,14 @@ class ReplayBuffer():
         self.new_state_memory = np.zeros((self.mem_size, *input_shape), dtype=NP_DTYPE)
         self.action_memory = np.zeros((self.mem_size, n_actions), dtype=NP_DTYPE)
         self.reward_memory = np.zeros(self.mem_size, dtype=NP_DTYPE)
-        self.terminal_memory = np.zeros(self.mem_size, dtype=np.bool_)  # TODO: double check type
+        self.terminal_memory = np.zeros(self.mem_size, dtype=np.bool_)  # TODO: investigate 
 
     def store_transition(self, state, action, reward, state_, done):
-        index = self.mem_cntr % self.mem_size
         assert(state.dtype == NP_DTYPE and action.dtype == NP_DTYPE and reward.dtype == NP_DTYPE and state_.dtype == NP_DTYPE), state_.dtype
+        assert(np.isfinite(state).all() and np.isfinite(action).all() and np.isfinite(reward).all() and np.isfinite(state_).all() and np.isfinite(done).all())
+
+        index = self.mem_cntr % self.mem_size
+
         self.state_memory[index] = state
         self.new_state_memory[index] = state_
         self.action_memory[index] = action
@@ -40,9 +43,10 @@ class ReplayBuffer():
         states_ = self.new_state_memory[batch]
         actions = self.action_memory[batch]
         rewards = self.reward_memory[batch]
-        dones = self.terminal_memory[batch]
+        done = self.terminal_memory[batch]
 
-        return states, actions, rewards, states_, dones
+        assert(np.isfinite(states).all() and np.isfinite(actions).all() and np.isfinite(rewards).all() and np.isfinite(states_).all() and np.isfinite(done).all())
+        return states, actions, rewards, states_, done
 
 
 class Agent():
@@ -59,7 +63,7 @@ class Agent():
                  layer1_size=256,
                  layer2_size=256,
                  batch_size=256,
-                 reward_scale=2,
+                 reward_scale=1.0,
                  max_action=None):
         
         assert(max_action is not None)
@@ -136,7 +140,7 @@ class Agent():
 
         value = self.value(state).view(-1)
         value_ = self.target_value(state_).view(-1)
-        value_[done] = 0.0
+        value_[done] = 0.0 # TODO: investigate
 
         actions, log_probs = self.actor.sample_normal(state, reparameterize=False)
         log_probs = log_probs.view(-1)
@@ -183,8 +187,8 @@ class Agent():
 def basic_training_loop(env, n_games):
     agent = Agent(env=env,
                   input_dims=env.observation_space.shape,
-                  n_actions=env.flat_action_space.shape[0],
-                  max_action=env.flat_action_space.high)
+                  n_actions=env.action_space.shape[0],
+                  max_action=env.action_space.high)
 
     # uncomment this line and do a mkdir tmp && mkdir video if you want to
     # record video of the agent playing the game.
@@ -199,7 +203,7 @@ def basic_training_loop(env, n_games):
 
     if load_checkpoint:
         agent.load_models()
-        env.render()
+        # env.render()
 
     for i in range(n_games):
         print(f"Running game: {i}")
@@ -209,23 +213,22 @@ def basic_training_loop(env, n_games):
 
         score = 0
         while not done:
-            # temp = env.model.eq("weld").active
-            # print(f"Score: {score} Weld active?: {temp}")
 
-            # WARNING: should just have a Box action space? 
-            _action = agent.choose_action(observation)
-            action = (_action[0:7], _action[-1])
-
+            action = agent.choose_action(observation)
+            action = np.zeros_like(action)
+            action[-1] = -1.0 
             observation_, reward, done, info = env.step(action)
 
             score += reward
-            agent.remember(observation, _action, reward, observation_, done)
+            agent.remember(observation, action, reward, observation_, done)
 
             if not load_checkpoint:
                 agent.learn()
 
             observation = observation_
             env.render()
+
+        env.baseline_controller.plot_logged()
 
         score_history.append(score)
         avg_score = np.mean(score_history[-100:])
@@ -236,7 +239,7 @@ def basic_training_loop(env, n_games):
             if not load_checkpoint:
                 agent.save_models()
 
-        print('episode ', i, 'score %.1f' % score, 'avg_score %.1f' % avg_score)
+        print('episode ', i, 'score %.4f' % score, 'avg_score %.4f' % avg_score)
 
     if not load_checkpoint:
         x = [i + 1 for i in range(n_games)]
