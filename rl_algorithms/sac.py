@@ -50,28 +50,29 @@ class ReplayBuffer():
 
 
 class Agent():
-
+    # TODO: set better dafaults
     def __init__(self,
-                 alpha=0.0003,
-                 beta=0.0003,
+                 alpha=0.00003, # 0.0003
+                 beta=0.0001, # 0.0003
                  input_dims=[8],
                  env=None,
-                 gamma=0.99,
+                 gamma=0.999,
                  n_actions=2,
-                 max_size=1000000,
+                 max_size=100000,
                  tau=0.005,
                  layer1_size=256,
                  layer2_size=256,
-                 batch_size=256,
-                 reward_scale=1.0,
-                 max_action=None):
+                 batch_size=512,
+                 reward_scale=0.01,
+                 max_action=None,
+                 epsilon=0.001):
         
-        assert(max_action is not None)
         self.gamma = gamma
         self.tau = tau
         self.memory = ReplayBuffer(max_size, input_dims, n_actions)
         self.batch_size = batch_size
         self.n_actions = n_actions
+        self.epsilon = epsilon
 
         self.actor = ActorNetwork(alpha, input_dims, n_actions=n_actions, name='actor', max_action=max_action)
         self.critic_1 = CriticNetwork(beta, input_dims, n_actions=n_actions, name='critic_1')
@@ -82,19 +83,25 @@ class Agent():
         self.scale = reward_scale
         self.update_network_parameters(tau=1)
 
-    # WARNING: changed from Tensor([obs]) to Tensor(obs)
     def choose_action(self, flat_observation):
+        # Action from uniform distribution
+        if np.random.default_rng().uniform() < self.epsilon:
+            print("uniform")
+            return self.uniform_random_action()
+
+        # Action from current policy
         state = T.from_numpy(flat_observation).unsqueeze(0).to(self.actor.device)
         actions, _ = self.actor.sample_normal(state, reparameterize=False)
         return actions.cpu().detach().numpy()[0]
 
+    def uniform_random_action(self):
+        return np.random.default_rng().uniform(low=-self.actor.max_action, high=self.actor.max_action).astype(NP_DTYPE)
+
     def remember(self, state, action, reward, new_state, done):
-        assert(state.dtype == NP_DTYPE and action.dtype == NP_DTYPE and reward.dtype == NP_DTYPE and new_state.dtype == NP_DTYPE), new_state.dtype
         self.memory.store_transition(state, action, reward, new_state, done)
 
     def update_network_parameters(self, tau=None):
-        if tau is None:
-            tau = self.tau
+        if tau is None: tau = self.tau
 
         target_value_params = self.target_value.named_parameters()
         value_params = self.value.named_parameters()
@@ -103,8 +110,8 @@ class Agent():
         value_state_dict = dict(value_params)
 
         for name in value_state_dict:
-            value_state_dict[name] = tau*value_state_dict[name].clone() + \
-                    (1-tau)*target_value_state_dict[name].clone()
+            layer_weights = tau*value_state_dict[name].clone() + (1-tau)*target_value_state_dict[name].clone()
+            value_state_dict[name] = layer_weights 
 
         self.target_value.load_state_dict(value_state_dict)
 
@@ -149,6 +156,7 @@ class Agent():
         critic_value = T.min(q1_new_policy, q2_new_policy)
         critic_value = critic_value.view(-1)
 
+        # What is this
         self.value.optimizer.zero_grad()
         value_target = critic_value - log_probs
         value_loss = 0.5 * F.mse_loss(value, value_target)
@@ -184,7 +192,18 @@ class Agent():
         self.update_network_parameters()
 
 
+# QUESTIONS:
+# Is batch size large enough? Do I need batch size to be large enough to capture a full rollout?
+# Different scales of action values cause problems
+# Need to include baseline controller as part of state?
+# Make baseline_controller only depend on time?
+# Use baseline_controller to only stabilize lateral movement?
+# Use agent to only determine lateral movement and release?
+
 def basic_training_loop(env, n_games):
+    print(env.observation_space.shape)
+    print(env.action_space.shape)
+    print(env.action_space.high)
     agent = Agent(env=env,
                   input_dims=env.observation_space.shape,
                   n_actions=env.action_space.shape[0],
@@ -199,47 +218,70 @@ def basic_training_loop(env, n_games):
 
     best_score = -np.inf
     score_history = []
-    load_checkpoint = False
+    load_checkpoint = False 
+    load_first = False 
 
-    if load_checkpoint:
+    if load_first:
         agent.load_models()
-        # env.render()
 
     for i in range(n_games):
-        print(f"Running game: {i}")
-
         observation, info = env.reset()
         done = False
 
         score = 0
         while not done:
-
             action = agent.choose_action(observation)
-            action = np.zeros_like(action)
-            action[-1] = -1.0 
+
+            # Teach to hold dart for longer
+            if i <= 25:
+                action[-1] = -0.965 + 0.0002*i
+            # Uniform exploration
+            elif i <= 50:
+                action = agent.uniform_random_action()
+
+            if i % 100 == 0: print("action", action[-1])
             observation_, reward, done, info = env.step(action)
 
             score += reward
             agent.remember(observation, action, reward, observation_, done)
 
-            if not load_checkpoint:
-                agent.learn()
-
             observation = observation_
+            
+            # Vizualization
             env.render()
 
-        env.baseline_controller.plot_logged()
+        if not load_checkpoint and ((i-1) % 10 == 0):
+            num_gradient_steps = 10 
+            for k in range(num_gradient_steps):
+                agent.learn() # TODO: can move learning outside of while loop
+
+        if i % 200 == 0: 
+        #     env.render()
+            if not load_checkpoint:
+                x = np.arange(0, i, 1, dtype=np.int32)
+                plot_learning_curve(x, score_history, figure_file)
+
+        # print("samples so far:", agent.memory.mem_cntr)
+            
+        # if env.baseline_controller.do_log:
+        #     env.baseline_controller.do_log = False
+
+        # if i % 1000 == 0:
+        #     env.baseline_controller.do_log = True
+
+        # if (i-1) % 1000 == 0:
+        #     env.baseline_controller.plot_logged()
 
         score_history.append(score)
         avg_score = np.mean(score_history[-100:])
 
         if avg_score > best_score:
-            best_score = avg_score
+            best_score = score
 
             if not load_checkpoint:
                 agent.save_models()
 
-        print('episode ', i, 'score %.4f' % score, 'avg_score %.4f' % avg_score)
+        print('episode ', i, 'score %.8f' % score, 'avg_score %.8f' % avg_score)
 
     if not load_checkpoint:
         x = [i + 1 for i in range(n_games)]

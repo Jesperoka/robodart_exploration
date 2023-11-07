@@ -9,6 +9,8 @@ from utils.dtypes import NP_DTYPE, T_DTYPE
 
 CHECKPOINT_DIR = "./nn_models/sac"
 
+# TODO: add regularization to networks
+
 class CriticNetwork(nn.Module):
     def __init__(self, beta, input_dims, n_actions, fc1_dims=256, fc2_dims=256,
                  name='critic', chkpt_dir=CHECKPOINT_DIR):
@@ -136,7 +138,7 @@ class ActorNetwork(nn.Module):
 
         action = T.tanh(actions)*T.tensor(self.max_action).to(self.device)
         log_probs = probabilities.log_prob(actions) - T.sum(1.0 - T.pow(T.tanh(actions), 2), dim=1, keepdim=True)
-        log_prob = T.sum(log_probs, dim=1, keepdim=True) # TODO: where this is done in paper 
+        log_prob = T.sum(log_probs, dim=1, keepdim=True) # TODO: where is this done in paper 
 
         assert(action.dtype == T_DTYPE and log_prob.dtype == T_DTYPE), str(action.dtype) + " " + str(log_prob.dtype)
         return action, log_prob
