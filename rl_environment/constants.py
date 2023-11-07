@@ -22,15 +22,15 @@ class EnvConsts:
     EPISODE_TIME_LIMIT: float = 1.7
 
     GOAL: tuple[float,...] = (0.0, -2.46, 1.625) # dart board bullseye
-    NUM_OBSERVABLE_STATES: int = 2*NUM_JOINTS + 4  # joint angles, joint angular velocities, and time, release potential, released and goal
+    NUM_OBSERVABLE_STATES: int = 2*NUM_JOINTS + 2 + 3  # joint angles, joint angular velocities, time, released and goal pos
 
     # A_MAX: tuple[float,...] = (87, 87, 87, 87, 12, 12, 12, 1)
     # A_MIN: tuple[float,...] = (-87, -87, -87, -87, -12, -12, -12, -1)
-    A_MAX: tuple[float,...] = (*Q_MAX,)
-    A_MIN: tuple[float,...] = (*Q_MIN,) 
+    A_MAX: tuple[float,...] = (Q_MAX[1], Q_MAX[3], Q_MAX[6],  1)
+    A_MIN: tuple[float,...] = (Q_MIN[1], Q_MIN[3], Q_MIN[6], -1) 
 
-    O_MAX: tuple[float,...] = (*Q_MAX, *Q_DOT_MAX, EPISODE_TIME_LIMIT, float("inf"))
-    O_MIN: tuple[float,...] = (*Q_MIN, *Q_DOT_MIN, 0, -2)
+    O_MAX: tuple[float,...] = (*Q_MAX, *Q_DOT_MAX, EPISODE_TIME_LIMIT,  1, *GOAL)
+    O_MIN: tuple[float,...] = (*Q_MIN, *Q_DOT_MIN, 0,                   0, *GOAL)
 
 EnvConsts = EnvConsts() # type: ignore
 # ---------------------------------------------------------------------------- #

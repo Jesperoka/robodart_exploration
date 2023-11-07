@@ -10,7 +10,6 @@ from utils.dtypes import NP_DTYPE, T_DTYPE
 
 
 class ReplayBuffer():
-
     def __init__(self, max_size, input_shape, n_actions):
         self.mem_size = max_size
         self.mem_cntr = 0
@@ -52,31 +51,32 @@ class ReplayBuffer():
 class Agent():
     # TODO: set better dafaults
     def __init__(self,
-                 alpha=0.00003, # 0.0003
-                 beta=0.0001, # 0.0003
-                 input_dims=[8],
+                 lr_actor=0.0003, # 0.0003
+                 lr_critic_1=0.0003, # 0.0003
+                 lr_critic_2=0.0003,
+                 gamma=0.99,
                  env=None,
-                 gamma=0.999,
-                 n_actions=2,
-                 max_size=100000,
+                 input_dims=None,
+                 n_actions=None,
+                 max_size=1000000,
                  tau=0.005,
-                 layer1_size=256,
-                 layer2_size=256,
                  batch_size=512,
-                 reward_scale=0.01,
+                 reward_scale=0.001,
                  max_action=None,
-                 epsilon=0.001):
-        
+                 min_action=None):
+
+        self.max_action = max_action
+        self.min_action = min_action
+
         self.gamma = gamma
         self.tau = tau
         self.memory = ReplayBuffer(max_size, input_dims, n_actions)
         self.batch_size = batch_size
         self.n_actions = n_actions
-        self.epsilon = epsilon
 
-        self.actor = ActorNetwork(alpha, input_dims, n_actions=n_actions, name='actor', max_action=max_action)
-        self.critic_1 = CriticNetwork(beta, input_dims, n_actions=n_actions, name='critic_1')
-        self.critic_2 = CriticNetwork(beta, input_dims, n_actions=n_actions, name='critic_2')
+        self.actor = ActorNetwork(lr_actor, input_dims, n_actions=n_actions, name='actor', max_action=max_action, min_action=min_action)
+        self.critic_1 = CriticNetwork(lr_critic_1, input_dims, n_actions=n_actions, name='critic_1')
+        self.critic_2 = CriticNetwork(lr_critic_2, input_dims, n_actions=n_actions, name='critic_2')
         self.value = ValueNetwork(beta, input_dims, name='value')
         self.target_value = ValueNetwork(beta, input_dims, name='target_value')
 
@@ -84,18 +84,12 @@ class Agent():
         self.update_network_parameters(tau=1)
 
     def choose_action(self, flat_observation):
-        # Action from uniform distribution
-        if np.random.default_rng().uniform() < self.epsilon:
-            print("uniform")
-            return self.uniform_random_action()
-
-        # Action from current policy
         state = T.from_numpy(flat_observation).unsqueeze(0).to(self.actor.device)
         actions, _ = self.actor.sample_normal(state, reparameterize=False)
         return actions.cpu().detach().numpy()[0]
 
     def uniform_random_action(self):
-        return np.random.default_rng().uniform(low=-self.actor.max_action, high=self.actor.max_action).astype(NP_DTYPE)
+        return np.random.default_rng().uniform(low=self.min_action, high=self.max_action).astype(NP_DTYPE)
 
     def remember(self, state, action, reward, new_state, done):
         self.memory.store_transition(state, action, reward, new_state, done)
@@ -201,19 +195,13 @@ class Agent():
 # Use agent to only determine lateral movement and release?
 
 def basic_training_loop(env, n_games):
-    print(env.observation_space.shape)
-    print(env.action_space.shape)
-    print(env.action_space.high)
     agent = Agent(env=env,
                   input_dims=env.observation_space.shape,
                   n_actions=env.action_space.shape[0],
-                  max_action=env.action_space.high)
+                  max_action=env.action_space.high,
+                  min_action=env.action_space.low)
 
-    # uncomment this line and do a mkdir tmp && mkdir video if you want to
-    # record video of the agent playing the game.
-    #env = wrappers.Monitor(env, 'tmp/video', video_callable=lambda episode_id: True, force=True)
     filename = 'franka_dart_throw.png'
-
     figure_file = 'logs/' + filename
 
     best_score = -np.inf
@@ -224,53 +212,29 @@ def basic_training_loop(env, n_games):
     if load_first:
         agent.load_models()
 
+    # Episode
     for i in range(n_games):
         observation, info = env.reset()
         done = False
-
         score = 0
+
+        # Rollout
         while not done:
             action = agent.choose_action(observation)
-
-            # Teach to hold dart for longer
-            if i <= 25:
-                action[-1] = -0.965 + 0.0002*i
-            # Uniform exploration
-            elif i <= 50:
-                action = agent.uniform_random_action()
-
-            if i % 100 == 0: print("action", action[-1])
             observation_, reward, done, info = env.step(action)
-
-            score += reward
             agent.remember(observation, action, reward, observation_, done)
+            score += reward
 
             observation = observation_
-            
-            # Vizualization
             env.render()
 
-        if not load_checkpoint and ((i-1) % 10 == 0):
-            num_gradient_steps = 10 
-            for k in range(num_gradient_steps):
-                agent.learn() # TODO: can move learning outside of while loop
+        # Optimization
+        if not load_checkpoint:
+            agent.learn() 
 
         if i % 200 == 0: 
-        #     env.render()
-            if not load_checkpoint:
-                x = np.arange(0, i, 1, dtype=np.int32)
-                plot_learning_curve(x, score_history, figure_file)
-
-        # print("samples so far:", agent.memory.mem_cntr)
-            
-        # if env.baseline_controller.do_log:
-        #     env.baseline_controller.do_log = False
-
-        # if i % 1000 == 0:
-        #     env.baseline_controller.do_log = True
-
-        # if (i-1) % 1000 == 0:
-        #     env.baseline_controller.plot_logged()
+            x = np.arange(0, i, 1, dtype=np.int32)
+            plot_learning_curve(x, score_history, figure_file)
 
         score_history.append(score)
         avg_score = np.mean(score_history[-100:])

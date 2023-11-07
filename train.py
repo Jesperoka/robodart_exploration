@@ -23,13 +23,12 @@ def zero_controller(dart_pos, goal_pos):
 if __name__ == "__main__":
     environ["MUJOCO_GL"] = "glfw"
 
-    lookahead_controller = baseline_controllers.LookaheadController()
-    lookahead_controller.do_log = False 
+    controller = baseline_controllers.SelectedJointsPID()
+    controller.do_log = False 
 
     environment = mujoco_gym.FrankaEmikaDartThrowEnv(MODEL_PATH,
                                                      FRAME_SKIP,
-                                                     reward_function=reward_functions.capped_inverse_distance,
-                                                     baseline_controller=lookahead_controller,
+                                                     baseline_controller=controller,
                                                      camera_name="dart_cam",
                                                      render_mode="human")
 

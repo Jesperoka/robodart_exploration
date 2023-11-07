@@ -5,12 +5,13 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.distributions.normal import Normal
 
-from utils.dtypes import NP_DTYPE, T_DTYPE
+from utils.dtypes import T_DTYPE
 
 CHECKPOINT_DIR = "./nn_models/sac"
 
 # TODO: add regularization to networks
 
+# TODO: modify to output discrete action-values as well
 class CriticNetwork(nn.Module):
     def __init__(self, beta, input_dims, n_actions, fc1_dims=256, fc2_dims=256,
                  name='critic', chkpt_dir=CHECKPOINT_DIR):
@@ -50,6 +51,7 @@ class CriticNetwork(nn.Module):
     def load_checkpoint(self):
         self.load_state_dict(T.load(self.checkpoint_file))
 
+# TODO: remove
 class ValueNetwork(nn.Module):
     def __init__(self, beta, input_dims, fc1_dims=256, fc2_dims=256,
                  name='value', chkpt_dir=CHECKPOINT_DIR):
@@ -87,11 +89,12 @@ class ValueNetwork(nn.Module):
     def load_checkpoint(self):
         self.load_state_dict(T.load(self.checkpoint_file))
 
+# TODO: modify to output discrete actions as well
 class ActorNetwork(nn.Module):
-    def __init__(self, alpha, input_dims, max_action, fc1_dims=256, fc2_dims=256, n_actions=None,
+    def __init__(self, alpha, input_dims, max_action, min_action, fc1_dims=256, fc2_dims=256, n_actions=None,
                  name='actor', chkpt_dir=CHECKPOINT_DIR):
-
         super(ActorNetwork, self).__init__()
+        self.device = T.device('cuda:0' if T.cuda.is_available() else 'cpu')
         self.input_dims = input_dims
         self.fc1_dims = fc1_dims
         self.fc2_dims = fc2_dims
@@ -99,7 +102,8 @@ class ActorNetwork(nn.Module):
         self.name = name
         self.checkpoint_dir = chkpt_dir
         self.checkpoint_file = os.path.join(self.checkpoint_dir, name+'_sac')
-        self.max_action = max_action
+        self.max_action = T.tensor(max_action).to(self.device)
+        self.min_action = T.tensor(min_action).to(self.device)
         self.reparam_noise = 1e-6
 
         self.fc1 = nn.Linear(*self.input_dims, self.fc1_dims)
@@ -108,7 +112,6 @@ class ActorNetwork(nn.Module):
         self.sigma = nn.Linear(self.fc2_dims, self.n_actions)
 
         self.optimizer = optim.Adam(self.parameters(), lr=alpha)
-        self.device = T.device('cuda:0' if T.cuda.is_available() else 'cpu')
 
         self.to(self.device)
 
@@ -128,16 +131,20 @@ class ActorNetwork(nn.Module):
 
     def sample_normal(self, state, reparameterize=True):
         mu, sigma = self.forward(state)
+        gaussian = Normal(mu, sigma)
 
-        probabilities = Normal(mu, sigma)
+        if reparameterize: actions = gaussian.rsample()
+        else: actions = gaussian.sample()
 
-        if reparameterize:
-            actions = probabilities.rsample()
-        else:
-            actions = probabilities.sample()
+        # Squash distribution
+        tanh_actions = T.tanh(actions)
 
-        action = T.tanh(actions)*T.tensor(self.max_action).to(self.device)
-        log_probs = probabilities.log_prob(actions) - T.sum(1.0 - T.pow(T.tanh(actions), 2), dim=1, keepdim=True)
+        # TODO: do scaling and shifting on environment side
+        # Scale and Shift actions to environment range
+        action = 0.5*(self.max_action - self.min_action)*tanh_actions + 0.5*(self.max_action + self.max_action)
+        
+        # Log probabilities
+        log_probs = gaussian.log_prob(actions) - T.sum(1.0 - T.pow(tanh_actions, 2), dim=1, keepdim=True)
         log_prob = T.sum(log_probs, dim=1, keepdim=True) # TODO: where is this done in paper 
 
         assert(action.dtype == T_DTYPE and log_prob.dtype == T_DTYPE), str(action.dtype) + " " + str(log_prob.dtype)
