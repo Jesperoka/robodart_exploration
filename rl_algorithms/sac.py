@@ -65,7 +65,7 @@ class Agent():
         max_action=0,
         min_action=0,
         alpha=1.0,
-        gamma=0.99,
+        gamma=0.999,
         tau=0.005,
         update_actor_every=1,
         update_targets_every=1,

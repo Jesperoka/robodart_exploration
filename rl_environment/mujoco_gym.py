@@ -88,9 +88,9 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
 
         # Intermediary rewards
         if (_EC.Q_DOT_MAX < joint_angular_velocities).any() or (joint_angular_velocities < _EC.Q_DOT_MIN).any():
-            self.reward_shrinkage = self.reward_shrinkage * NP_DTYPE(0.9)
+            self.reward_shrinkage *= NP_DTYPE(0.99)
         if (_EC.Q_MAX <= joint_angles).any() or (joint_angles <= _EC.Q_MIN).any():
-            self.reward_shrinkage = self.reward_shrinkage * NP_DTYPE(0.9)
+            self.reward_shrinkage *= NP_DTYPE(0.99)
         reward = self.reward_shrinkage*reward_functions.capped_inverse_distance(dart_pos, self.goal) 
 
         # Terminal rewards
