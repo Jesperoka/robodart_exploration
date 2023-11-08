@@ -3,25 +3,27 @@ import torch as T
 import torch.nn.functional as F
 
 from rl_function_approximators.neural_networks import (ActorNetwork,
-                                                       CriticNetwork,
-                                                       ValueNetwork)
+                                                       CriticNetwork)
 from utils.common import plot_learning_curve
-from utils.dtypes import NP_DTYPE, T_DTYPE
+from utils.dtypes import NP_DTYPE
 
 
 class ReplayBuffer():
-    def __init__(self, max_size, input_shape, n_actions):
-        self.mem_size = max_size
+
+    def __init__(self, replay_buffer_size, state_size, action_size):
+        self.mem_size = replay_buffer_size
         self.mem_cntr = 0
-        self.state_memory = np.zeros((self.mem_size, *input_shape), dtype=NP_DTYPE)
-        self.new_state_memory = np.zeros((self.mem_size, *input_shape), dtype=NP_DTYPE)
-        self.action_memory = np.zeros((self.mem_size, n_actions), dtype=NP_DTYPE)
+        self.state_memory = np.zeros((self.mem_size, state_size), dtype=NP_DTYPE)
+        self.new_state_memory = np.zeros((self.mem_size, state_size), dtype=NP_DTYPE)
+        self.action_memory = np.zeros((self.mem_size, action_size), dtype=NP_DTYPE)
         self.reward_memory = np.zeros(self.mem_size, dtype=NP_DTYPE)
-        self.terminal_memory = np.zeros(self.mem_size, dtype=np.bool_)  # TODO: investigate 
+        self.terminal_memory = np.zeros(self.mem_size, dtype=np.uint8)  # TODO: investigate
 
     def store_transition(self, state, action, reward, state_, done):
-        assert(state.dtype == NP_DTYPE and action.dtype == NP_DTYPE and reward.dtype == NP_DTYPE and state_.dtype == NP_DTYPE), state_.dtype
-        assert(np.isfinite(state).all() and np.isfinite(action).all() and np.isfinite(reward).all() and np.isfinite(state_).all() and np.isfinite(done).all())
+        assert (state.dtype == NP_DTYPE and action.dtype == NP_DTYPE and reward.dtype == NP_DTYPE
+                and state_.dtype == NP_DTYPE), state_.dtype
+        assert (np.isfinite(state).all() and np.isfinite(action).all() and np.isfinite(reward).all()
+                and np.isfinite(state_).all() and np.isfinite(done).all())
 
         index = self.mem_cntr % self.mem_size
 
@@ -44,146 +46,158 @@ class ReplayBuffer():
         rewards = self.reward_memory[batch]
         done = self.terminal_memory[batch]
 
-        assert(np.isfinite(states).all() and np.isfinite(actions).all() and np.isfinite(rewards).all() and np.isfinite(states_).all() and np.isfinite(done).all())
+        assert (np.isfinite(states).all() and np.isfinite(actions).all() and np.isfinite(rewards).all()
+                and np.isfinite(states_).all() and np.isfinite(done).all())
         return states, actions, rewards, states_, done
 
 
 class Agent():
-    # TODO: set better dafaults
-    def __init__(self,
-                 lr_actor=0.0003, # 0.0003
-                 lr_critic_1=0.0003, # 0.0003
-                 lr_critic_2=0.0003,
-                 gamma=0.99,
-                 env=None,
-                 input_dims=None,
-                 n_actions=None,
-                 max_size=1000000,
-                 tau=0.005,
-                 batch_size=512,
-                 reward_scale=0.001,
-                 max_action=None,
-                 min_action=None):
+    device = T.device('cuda:0' if T.cuda.is_available() else 'cpu')
 
-        self.max_action = max_action
-        self.min_action = min_action
+    def __init__(
+        self,
+        lr_actor=0.0003,
+        lr_critic_1=0.0003,
+        lr_critic_2=0.0003,
+        weight_decay=0.0001,
+        state_size=0,
+        action_size=0,
+        max_action=0,
+        min_action=0,
+        alpha=1.0,
+        gamma=0.99,
+        tau=0.005,
+        update_actor_every=1,
+        update_targets_every=1,
+        batch_size=512,
+        replay_buffer_size=1000000,
+        device = T.device('cuda:0' if T.cuda.is_available() else 'cpu')
+    ):
+        self.device = device
+        self.max_action = T.tensor(max_action, device=device)
+        self.min_action = T.tensor(min_action, device=device)
 
-        self.gamma = gamma
+        self.target_alpha = T.tensor(-action_size, device=device)
+        self.log_alpha = T.tensor([0.0], requires_grad=True, device=device)
+        self.alpha = T.tensor(alpha, device=device)
+        self.alpha_optimizer = T.optim.Adam(params=[self.log_alpha], lr=lr_actor)
+        # self.action_prior = # TODO: investigate
+
+        self.gamma = T.tensor(gamma, device=device)
         self.tau = tau
-        self.memory = ReplayBuffer(max_size, input_dims, n_actions)
+
+        self.update_actor_every = update_actor_every
+        self.update_targets_every = update_targets_every
+
         self.batch_size = batch_size
-        self.n_actions = n_actions
+        self.replay_buffer = ReplayBuffer(replay_buffer_size, state_size, action_size)
 
-        self.actor = ActorNetwork(lr_actor, input_dims, n_actions=n_actions, name='actor', max_action=max_action, min_action=min_action)
-        self.critic_1 = CriticNetwork(lr_critic_1, input_dims, n_actions=n_actions, name='critic_1')
-        self.critic_2 = CriticNetwork(lr_critic_2, input_dims, n_actions=n_actions, name='critic_2')
-        self.value = ValueNetwork(beta, input_dims, name='value')
-        self.target_value = ValueNetwork(beta, input_dims, name='target_value')
+        self.actor = ActorNetwork(lr_actor, weight_decay, state_size, action_size, device=device, name='actor')
 
-        self.scale = reward_scale
-        self.update_network_parameters(tau=1)
+        self.critic_1 = CriticNetwork(lr_critic_1, weight_decay, state_size, action_size, device=device, name='critic_1')
+        self.critic_2 = CriticNetwork(lr_critic_2, weight_decay, state_size, action_size, device=device, name='critic_2')
 
-    def choose_action(self, flat_observation):
-        state = T.from_numpy(flat_observation).unsqueeze(0).to(self.actor.device)
-        actions, _ = self.actor.sample_normal(state, reparameterize=False)
-        return actions.cpu().detach().numpy()[0]
+        self.critic_1_target = CriticNetwork(lr_critic_1, weight_decay, state_size, action_size, device=device, name='critic_1')
+        self.critic_2_target = CriticNetwork(lr_critic_2, weight_decay, state_size, action_size, device=device, name='critic_2')
+        self.update_target_networks(1.0)
 
-    def uniform_random_action(self):
-        return np.random.default_rng().uniform(low=self.min_action, high=self.max_action).astype(NP_DTYPE)
+    def choose_action(self, state):
+        state = T.tensor(state, device=self.device).unsqueeze(0)
+        tanh_actions, _ = self.actor.sample(state, reparameterize=False)
+        action = 0.5*(self.max_action - self.min_action)*tanh_actions + 0.5*(self.max_action + self.min_action)
+        return action.numpy(force=True).squeeze(), tanh_actions.numpy(force=True).squeeze()
+
+    def uniform_random_action(self, min_action, max_action):
+        return np.random.default_rng().uniform(low=min_action, high=max_action).astype(NP_DTYPE)
 
     def remember(self, state, action, reward, new_state, done):
-        self.memory.store_transition(state, action, reward, new_state, done)
+        self.replay_buffer.store_transition(state, action, reward, new_state, done)
 
-    def update_network_parameters(self, tau=None):
-        if tau is None: tau = self.tau
+    def update_target_networks(self, tau):
+        # Get critic and critic target weights
+        c1_weights = self.critic_1.parameters()
+        c2_weights = self.critic_2.parameters()
+        c1_trgt_weights = self.critic_1_target.parameters()
+        c2_trgt_weights = self.critic_2_target.parameters()
 
-        target_value_params = self.target_value.named_parameters()
-        value_params = self.value.named_parameters()
-
-        target_value_state_dict = dict(target_value_params)
-        value_state_dict = dict(value_params)
-
-        for name in value_state_dict:
-            layer_weights = tau*value_state_dict[name].clone() + (1-tau)*target_value_state_dict[name].clone()
-            value_state_dict[name] = layer_weights 
-
-        self.target_value.load_state_dict(value_state_dict)
+        # Soft critic weights to targets
+        for c1tw, c2tw, c1w, c2w in zip(c1_trgt_weights, c2_trgt_weights, c1_weights, c2_weights):
+            c1tw.data.copy_(tau * c1w.data + (1.0-tau) * c1tw.data)
+            c2tw.data.copy_(tau * c2w.data + (1.0-tau) * c2tw.data)
 
     def save_models(self):
         print('.... saving models ....')
         self.actor.save_checkpoint()
-        self.value.save_checkpoint()
-        self.target_value.save_checkpoint()
         self.critic_1.save_checkpoint()
         self.critic_2.save_checkpoint()
+        self.critic_1_target.save_checkpoint()
+        self.critic_2_target.save_checkpoint()
 
     def load_models(self):
         print('.... loading models ....')
         self.actor.load_checkpoint()
-        self.value.load_checkpoint()
-        self.target_value.load_checkpoint()
         self.critic_1.load_checkpoint()
         self.critic_2.load_checkpoint()
+        self.critic_1_target.load_checkpoint()
+        self.critic_2_target.load_checkpoint()
 
-    def learn(self):
-        if self.memory.mem_cntr < self.batch_size:
-            return
+    def numpy_to_tensor_on_device(self, *args):
+        return (T.from_numpy(arg).to(self.device) for arg in args)
 
-        state, action, reward, new_state, done = \
-                self.memory.sample_buffer(self.batch_size)
+    def learn(self, step_index):
+        if self.replay_buffer.mem_cntr < self.batch_size: return
+        # Sample replay buffer
+        state, action, reward, next_state, done = self.replay_buffer.sample_buffer(self.batch_size)
+        state, action, reward, next_state, done = self.numpy_to_tensor_on_device(state, action, reward, next_state, done)
 
-        # TODO: use from_numpy() instead
-        reward = T.tensor(reward, dtype=T_DTYPE).to(self.actor.device)
-        done = T.tensor(done).to(self.actor.device)
-        state_ = T.tensor(new_state, dtype=T_DTYPE).to(self.actor.device)
-        state = T.tensor(state, dtype=T_DTYPE).to(self.actor.device)
-        action = T.tensor(action, dtype=T_DTYPE).to(self.actor.device)
+        self.critic_gradient_step(state, action, reward, next_state, done)
 
-        value = self.value(state).view(-1)
-        value_ = self.target_value(state_).view(-1)
-        value_[done] = 0.0 # TODO: investigate
+        action, log_probs = self.actor.sample(state, reparameterize=True)
 
-        actions, log_probs = self.actor.sample_normal(state, reparameterize=False)
-        log_probs = log_probs.view(-1)
-        q1_new_policy = self.critic_1.forward(state, actions)
-        q2_new_policy = self.critic_2.forward(state, actions)
-        critic_value = T.min(q1_new_policy, q2_new_policy)
-        critic_value = critic_value.view(-1)
+        if step_index % self.update_actor_every == 0:
+            self.alpha_gradient_step(log_probs)
+            self.actor_gradient_step(state, action, log_probs)
 
-        # What is this
-        self.value.optimizer.zero_grad()
-        value_target = critic_value - log_probs
-        value_loss = 0.5 * F.mse_loss(value, value_target)
-        value_loss.backward(retain_graph=True)
-        self.value.optimizer.step()
+        if step_index % self.update_targets_every == 0:
+            self.update_target_networks(self.tau)
 
-        actions, log_probs = self.actor.sample_normal(state, reparameterize=True)
-        log_probs = log_probs.view(-1)
-        q1_new_policy = self.critic_1.forward(state, actions)
-        q2_new_policy = self.critic_2.forward(state, actions)
-        critic_value = T.min(q1_new_policy, q2_new_policy)
-        critic_value = critic_value.view(-1)
+    def critic_gradient_step(self, state, action, reward, next_state, done):
+        # Compute target q values
+        with T.no_grad():
+            next_action, next_log_probs = self.actor.sample(next_state, reparameterize=False)
+            next_q1_target = self.critic_1_target(next_state, next_action)
+            next_q2_target = self.critic_2_target(next_state, next_action)
+            next_q_target = T.min(next_q1_target, next_q2_target)
+            q_target = (reward + self.gamma * (1 - done) * (next_q_target - self.alpha * next_log_probs)).detach()
 
-        actor_loss = log_probs - critic_value
-        actor_loss = T.mean(actor_loss)
-        self.actor.optimizer.zero_grad()
-        actor_loss.backward(retain_graph=True)
-        self.actor.optimizer.step()
+        # Compute critic loss
+        q1 = self.critic_1(state, action)
+        q2 = self.critic_2(state, action)
+        q1_loss = 0.5 * F.mse_loss(q1, q_target)
+        q2_loss = 0.5 * F.mse_loss(q2, q_target)
 
-        self.critic_1.optimizer.zero_grad()
-        self.critic_2.optimizer.zero_grad()
-        q_hat = self.scale * reward + self.gamma * value_
-        q1_old_policy = self.critic_1.forward(state, action).view(-1)
-        q2_old_policy = self.critic_2.forward(state, action).view(-1)
-        critic_1_loss = 0.5 * F.mse_loss(q1_old_policy, q_hat)
-        critic_2_loss = 0.5 * F.mse_loss(q2_old_policy, q_hat)
-
-        critic_loss = critic_1_loss + critic_2_loss
-        critic_loss.backward()
+        # Backpropagate critic networks
+        self.critic_1.zero_grad(set_to_none=True)
+        q1_loss.backward()
         self.critic_1.optimizer.step()
+        self.critic_2.zero_grad(set_to_none=True)
+        q2_loss.backward()
         self.critic_2.optimizer.step()
 
-        self.update_network_parameters()
+    def alpha_gradient_step(self, log_probs):
+        _alpha = T.exp(self.log_alpha)
+        alpha_loss = -(self.log_alpha * (log_probs + self.target_alpha)).mean()
+        self.alpha_optimizer.zero_grad(set_to_none=True)
+        alpha_loss.backward(retain_graph=True)
+        self.alpha_optimizer.step()
+        self.alpha = _alpha
+
+    def actor_gradient_step(self, state, action, log_probs):
+        q1 = self.critic_1(state, action)
+        actor_loss = (self.alpha * log_probs - q1).mean()  # - policy_prior_log_probs
+        self.actor.zero_grad(set_to_none=True)
+        actor_loss.backward()
+        self.actor.optimizer.step()
 
 
 # QUESTIONS:
@@ -194,45 +208,47 @@ class Agent():
 # Use baseline_controller to only stabilize lateral movement?
 # Use agent to only determine lateral movement and release?
 
+
 def basic_training_loop(env, n_games):
-    agent = Agent(env=env,
-                  input_dims=env.observation_space.shape,
-                  n_actions=env.action_space.shape[0],
+    agent = Agent(state_size=env.observation_space.shape[0],
+                  action_size=env.action_space.shape[0],
                   max_action=env.action_space.high,
-                  min_action=env.action_space.low)
+                  min_action=env.action_space.low,
+                  update_actor_every=1,
+                  update_targets_every=1)
 
     filename = 'franka_dart_throw.png'
     figure_file = 'logs/' + filename
 
     best_score = -np.inf
     score_history = []
-    load_checkpoint = False 
-    load_first = False 
+    load_checkpoint = False
+    load_first = False
 
     if load_first:
         agent.load_models()
 
     # Episode
     for i in range(n_games):
-        observation, info = env.reset()
+        state, info = env.reset()
         done = False
         score = 0
 
         # Rollout
         while not done:
-            action = agent.choose_action(observation)
-            observation_, reward, done, info = env.step(action)
-            agent.remember(observation, action, reward, observation_, done)
+            action, tanh_action = agent.choose_action(state)
+            next_state, reward, done, info = env.step(action)
+            agent.remember(state, tanh_action, reward, next_state, done)
             score += reward
 
-            observation = observation_
+            state = next_state
             env.render()
 
         # Optimization
         if not load_checkpoint:
-            agent.learn() 
+            agent.learn(i)
 
-        if i % 200 == 0: 
+        if i % 200 == 0:
             x = np.arange(0, i, 1, dtype=np.int32)
             plot_learning_curve(x, score_history, figure_file)
 

@@ -48,7 +48,7 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
         self.metadata["render_fps"] = int(np.round(1.0 / self.dt))
 
         # Define learning environment variables
-        self.goal = np.array(_EC.GOAL, dtype=NP_DTYPE)  # TODO: add to state
+        self.goal = np.array(_EC.GOAL, dtype=NP_DTYPE)
         self.released = False
         self.time_limit = _EC.EPISODE_TIME_LIMIT
         self.baseline_controller = baseline_controller
