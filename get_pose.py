@@ -7,7 +7,7 @@ with open('sens.txt', 'r') as file:
     password = file.readline().strip()
 
 if __name__ == "__main__":
-    Desk(SHOP_FLOOR_IP, username, password).activate_fci()
+    #Desk(SHOP_FLOOR_IP, username, password).activate_fci()
     panda = Panda(SHOP_FLOOR_IP)
     pose = panda.get_state()
     print(pose.q)

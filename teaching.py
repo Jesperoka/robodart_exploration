@@ -32,7 +32,7 @@ if __name__ == '__main__':
   # print(positions)
   # panda.move_to_joint_position(positions)
 
-  LEN = 5
+  LEN = 15
   input(
       f'Next, teach a trajectory for {LEN} seconds. Press enter to begin.')
   time.sleep(3)
@@ -45,7 +45,7 @@ if __name__ == '__main__':
   q = panda.get_log()['q']
   dq = panda.get_log()['dq']
 
-  pos = open("trajectory_pos.txt", "w")
+  pos = open("trajectory_pos_arm.txt", "w")
   pos.write("[")
   for i in range(len(q)-1):
     pos.write("[")
@@ -56,7 +56,7 @@ if __name__ == '__main__':
   pos.write("]]")
   pos.close()
 
-  vel = open("trajectory_vel.txt", "w")
+  vel = open("trajectory_vel_arm.txt", "w")
   vel.write("[")
   for i in range(len(dq)-1):
     vel.write("[")
