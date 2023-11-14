@@ -42,11 +42,17 @@ docker run -it \
 ```sh
 docker build -t robodart .
 ```
+```sh
+xhost +local:docker
+```
 #### Running
 
 Run the following command from `~/robodart/`:
 ```sh
 docker run -it --net=host --privileged --mount type=bind,source=$(pwd)/robodart_exploration,target=/robodart_exploration robodart:latest
+```
+```sh
+docker run -e DISPLAY=$DISPLAY  -v /tmp/.X11-unix:/tmp/.X11-unix -it --net=host --privileged --mount type=bind,source=$(pwd)/robodart_exploration,target=/robodart_exploration robodart:latest
 ```
 
 and **while in the docker container** you can navigate to `robodart_exploration`:
