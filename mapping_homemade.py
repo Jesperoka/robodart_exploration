@@ -1,131 +1,78 @@
-import numpy as np
+from typing import Literal
 import matplotlib.pyplot as plt
-import random
+import numpy as np
 
 
-def find_time_hit(v_z, dz):
-    return np.roots([0.5*9.81, -v_z, dz])
-
-def calculate_vel_vec(A, B, v_z):
-    x_a, y_a, z_a = A
-    x_b, y_b, z_b = B
-    
-    dx = x_b-x_a
-    dy = y_b-y_a
-    dz = z_b-z_a
-
-    t_hit_list = find_time_hit(v_z, dz)
-    real_numbers = [number for number in t_hit_list if isinstance(number, (int, float))]
-
-    if real_numbers:
-        t_hit = max(real_numbers)
-    else:
-        return [0,0,0]
-
-    v_x = dx/t_hit
-    v_y = dy/t_hit
-
-    return [v_x, v_y, v_z]
+def create_points(base_pt, len_x, len_y, len_z, volume_res, endpoint=False, idx: Literal['xy', 'ij'] ='ij'):
+    return np.stack(np.meshgrid(
+        np.linspace(base_pt[0], base_pt[0] + len_x, int(volume_res * len_x), endpoint=endpoint),
+        np.linspace(base_pt[1], base_pt[1] + len_y, int(volume_res * len_y), endpoint=endpoint),
+        np.linspace(base_pt[2], base_pt[2] + len_z, int(volume_res * len_z), endpoint=endpoint),
+        indexing=idx),
+        axis=-1)
 
 
-def plot_trajectory(B, vel_and_A_vecs, t_max):
-    g = 9.81  # acceleration due to gravity in m/s^2
-    xb, yb, zb = B
-    
-     # Time points
-    t_points = np.linspace(0, t_max, 500)
+def calculate_velocity_vector(start_pt: np.ndarray, end_pt: np.ndarray, vert_vel: float, g=9.81):
+    delta = end_pt - start_pt
+    time_arr = np.roots([0.5 * g, -vert_vel, delta[2]])
+    time_arr = time_arr[np.isreal(time_arr)]
+    assert(len(time_arr) > 0)
+    time_hit = max(time_arr)
 
-    # Create 3D plot
+    return np.array([delta[0] / time_hit, delta[1] / time_hit, vert_vel])
+
+
+def calculate_launch_point_and_velocity_vectors(base_pt, len_x, len_y, len_z, volume_res, target_pt, v_min, v_max, vel_res, endpoint=False, g=9.81):
+    launch_point_and_velocities = []
+    launch_pts = create_points(base_pt, len_x, len_y, len_z, volume_res, endpoint=endpoint)
+    launch_pts = launch_pts.reshape(np.prod(launch_pts.shape[:-1]), launch_pts.shape[-1])
+
+    for launch_pt in launch_pts:
+        for vertical_vel in np.linspace(v_min, v_max, int((v_max - v_min) * vel_res), endpoint=endpoint):
+            vel_vec = calculate_velocity_vector(launch_pt, target_pt, vertical_vel, g=g)
+            launch_point_and_velocities.append((launch_pt, vel_vec))
+
+    return np.array(launch_point_and_velocities)
+
+
+def plot_trajectory(target_pt, vel_start_combos, max_t, g=9.81):
+    t_pts = np.linspace(0, max_t, 500)
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
 
-    i = 0
-    for A_vel_combo in vel_and_A_vecs:
-        i+=1
-        x0, y0, z0 = A_vel_combo[0]
-        # Plot point A
-        ax.scatter(x0, y0, z0, c='g', marker='o')
+    for start_vel in vel_start_combos:
+        start_x, start_y, start_z = start_vel[0, :]
+        vel_x, vel_y, vel_z = start_vel[1, :]
+        ax.scatter(start_x, start_y, start_z, c='g', marker='o')
 
-        vx, vy, vz = A_vel_combo[1]
+        x = start_x + vel_x * t_pts
+        y = start_y + vel_y * t_pts
+        z = start_z + vel_z * t_pts - 0.5 * g * t_pts**2
 
-        # Equations of motion
-        x = x0 + vx * t_points
-        y = y0 + vy * t_points
-        z = z0 + vz * t_points - 0.5 * g * t_points ** 2
-
-        # Plot trajectory
         ax.plot(x, y, z)
 
-
-
-    # Plot point B
-    ax.scatter(xb, yb, zb, c='r', marker='o', label='Target B')
-    
-    # Label axes
+    ax.scatter(*target_pt, c='r', marker='o', label='Target')
     ax.set_xlabel('X')
     ax.set_ylabel('Y')
     ax.set_zlabel('Z')
-
-    # Add a legend
     ax.legend()
-
-    # Show the plot
     plt.show()
 
 
-A = [0, 0, 0]
-B = [2, 3, 2]
+if __name__ == "__main__":
+    g = 0.98219  # local gravitational acceleration in Trondheim at 45m according to WolframAlpha 
+    base_pt = np.array([-0.2, 0.1, 1.2])
+    dim_lengths = (0.4, 0.4, 0.4)
+    volume_res = 10
+    target_pt = np.array([2.0, 0.0, 1.0])
+    vel_limits = (1.0, 10.0)
+    vel_res = 10
 
+    launch_point_and_velocities = calculate_launch_point_and_velocity_vectors(base_pt, *dim_lengths, volume_res, target_pt, *vel_limits, vel_res, g=g)
 
+    num_samples = 10
+    max_traj_time = 25
+    sample_idxs = np.random.choice(len(launch_point_and_velocities) - 1, num_samples, replace=False)
+    sample_launch_data = launch_point_and_velocities[sample_idxs, :, :]
 
-#The throwing space is the points filling the box created from base_point with length len_x/y/z in the respective directions, with resolution A_resolution
-#A_resolution is given in points/m
-def create_points(base_point, len_x, len_y, len_z, A_resolution):
-    return [
-        [
-            base_point[0] + x / A_resolution, 
-            base_point[1] + y / A_resolution, 
-            base_point[2] + z / A_resolution
-        ]
-        for x in range(int(len_x * A_resolution))
-        for y in range(int(len_y * A_resolution))
-        for z in range(int(len_z * A_resolution))
-    ]
-
-
-def calculate_vel_vecs_in_area(base_point, len_x, len_y, len_z, A_resolution, B, v_min, v_max, v_resolution):
-    #Create points A
-    A_vec = create_points(base_point,len_x, len_y, len_z, A_resolution)
-
-    vel_A_combo = []
-    for A in A_vec:
-        for v_z in range (v_min, v_max*v_resolution):
-            vel_vec = calculate_vel_vec(A, B, v_min + v_z/v_resolution)
-            if vel_vec == [0,0,0]:
-                continue
-            vel_A_combo.append([A, vel_vec])
-
-    return vel_A_combo
-
-
-
-#Testing
-combo = calculate_vel_vecs_in_area([-0.2,0.1,1.2], 0.4, 0.4, 0.4, 10, [2,0,1], 1, 10, 10)
-#print(combo)
-print(len(combo))
-
-random_trajs = []
-for i in range(10):
-    random_trajs.append(combo[random.randint(10,len(combo))])
-print(random_trajs[0], "\n", random_trajs[1], "\n", random_trajs[2])
-plot_trajectory([2,0,1], random_trajs, 2)
-
-#print(vel_and_A_vecs)
-#print(len(vel_and_A_vecs))
-
-#plot_trajectory(B, vel_and_A_vecs, 3)
-
-
-
-
-
+    plot_trajectory(target_pt, sample_launch_data, max_traj_time, g=g)
