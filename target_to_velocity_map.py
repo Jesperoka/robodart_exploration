@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
+# Returns a 4D array arr defining a 3D space where arr[i, j, k] is the 3D point (x,y,z) at index i,j,k along the x, y and z axes respectively.
 def create_points(base_pt, len_x, len_y, len_z, volume_res, endpoint=False, idx: Literal['xy', 'ij'] ='ij'):
     return np.stack(np.meshgrid(
         np.linspace(base_pt[0], base_pt[0] + len_x, int(volume_res * len_x), endpoint=endpoint),
@@ -12,6 +13,7 @@ def create_points(base_pt, len_x, len_y, len_z, volume_res, endpoint=False, idx:
         axis=-1)
 
 
+# Compute the velocity vector that makes point mass projectile launched from start_pt hit end_pt.
 def calculate_velocity_vector(start_pt: np.ndarray, end_pt: np.ndarray, vert_vel: float, g=9.81):
     delta = end_pt - start_pt
     time_arr = np.roots([0.5 * g, -vert_vel, delta[2]])
@@ -22,6 +24,7 @@ def calculate_velocity_vector(start_pt: np.ndarray, end_pt: np.ndarray, vert_vel
     return np.array([delta[0] / time_hit, delta[1] / time_hit, vert_vel])
 
 
+# Compute the velocity vectors needed to hit point target_pt from points in the 3D space defined by base_point, len_x, len_y, len_z.
 def calculate_launch_point_and_velocity_vectors(base_pt, len_x, len_y, len_z, volume_res, target_pt, v_min, v_max, vel_res, endpoint=False, g=9.81):
     launch_point_and_velocities = []
     launch_pts = create_points(base_pt, len_x, len_y, len_z, volume_res, endpoint=endpoint)
@@ -35,6 +38,7 @@ def calculate_launch_point_and_velocity_vectors(base_pt, len_x, len_y, len_z, vo
     return np.array(launch_point_and_velocities)
 
 
+# Plot trajectory from Newton's equations of motion
 def plot_trajectory(target_pt, vel_start_combos, max_t, g=9.81):
     t_pts = np.linspace(0, max_t, 500)
     fig = plt.figure()
@@ -59,6 +63,7 @@ def plot_trajectory(target_pt, vel_start_combos, max_t, g=9.81):
     plt.show()
 
 
+# Example usage
 if __name__ == "__main__":
     g = 0.98219  # local gravitational acceleration in Trondheim at 45m according to WolframAlpha 
     base_pt = np.array([-0.2, 0.1, 1.2])
