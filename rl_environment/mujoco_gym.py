@@ -4,7 +4,7 @@ import numpy as np
 from gymnasium.envs.mujoco.mujoco_env import MujocoEnv
 from gymnasium.spaces import Box
 from gymnasium.utils import EzPickle
-from mujoco import mju_mulQuat
+from mujoco import mju_mulQuat, mjv_initGeom, mjv_addGeoms, mjtGeom, mjtObj, mjtCatBit
 from numpy.core.multiarray import ndarray  # type: ignore
 
 from rl_environment import reward_functions
@@ -52,7 +52,6 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
         self.released = False
         self.time_limit = _EC.EPISODE_TIME_LIMIT
         self.baseline_controller = baseline_controller
-        self.reward_shrinkage = NP_DTYPE(1.0)
 
 
     # Sets control based on action simulates frame_skip number of frames and observes state
@@ -73,7 +72,8 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
         done, reward = self.reward_or_terminate()
         self.observation = self.noisy_observation()
 
-        info = {"action": action}
+        dart_pos = self.data.qpos[-7:-4]
+        info = {"distance": reward_functions.distance(dart_pos, self.goal)}
 
         assert (self.observation.dtype == NP_DTYPE
                 and reward.dtype == NP_DTYPE), str(self.observation.dtype) + " " + str(reward.dtype)
@@ -83,22 +83,17 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
     # Checks termination criteria and returns reward
     def reward_or_terminate(self) -> tuple[bool, NP_DTYPE]:
         dart_pos = np.copy(self.data.qpos[-7:-4]).astype(NP_DTYPE)  # dart pos is 7-DOF xyz-quat
-        joint_angles = self.data.qpos[0:_EC.NUM_JOINTS]
-        joint_angular_velocities = self.data.qvel[0:_EC.NUM_JOINTS]
+        # joint_angles = self.data.qpos[0:_EC.NUM_JOINTS]
+        # joint_angular_velocities = self.data.qvel[0:_EC.NUM_JOINTS]
 
-        # Intermediary rewards
-        if (_EC.Q_DOT_MAX < joint_angular_velocities).any() or (joint_angular_velocities < _EC.Q_DOT_MIN).any():
-            self.reward_shrinkage *= NP_DTYPE(0.99)
-        if (_EC.Q_MAX <= joint_angles).any() or (joint_angles <= _EC.Q_MIN).any():
-            self.reward_shrinkage *= NP_DTYPE(0.99)
-        reward = self.reward_shrinkage*reward_functions.capped_inverse_distance(dart_pos, self.goal) 
+        # reward = reward_functions.close_enough(dart_pos, self.goal)
+        reward = -reward_functions.distance(dart_pos, self.goal)
 
         # Terminal rewards
-        if self.terminal(dart_pos):
-            if self.released: reward += reward_functions.capped_inverse_distance(dart_pos, self.goal)
-            return (True, self.reward_shrinkage*reward)
+        if self.terminal2(dart_pos):
+            return (True, reward)
         else:
-            return (False, self.reward_shrinkage*reward)
+            return (False, reward)
 
     def terminal(self, dart_pos):
         x_lim, y_lim, z_lim = 2.0, -self.goal[1], 0.0
@@ -107,11 +102,16 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
                 or not (z_lim <= dart_pos[2])\
                 or not (self.data.time <= self.time_limit)
 
+    def terminal2(self, *args):
+        return self.data.time >= self.time_limit
+
     # TODO: add noise
     # TODO: normalize observations (not self.released)
     def noisy_observation(self) -> np.ndarray:
         pos_noise = 0.0
         vel_noise = 0.0
+        dart_pos = self.data.qpos[_EC.NUM_JOINTS:_EC.NUM_JOINTS + 3]
+        dart_vel = self.data.qvel[_EC.NUM_JOINTS:_EC.NUM_JOINTS + 3]
         joint_angles = self.data.qpos[0:_EC.NUM_JOINTS]
         joint_angular_velocities = self.data.qvel[0:_EC.NUM_JOINTS]
         remaining_time = np.array([self.time_limit - self.data.time])
@@ -119,7 +119,7 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
 
         observation = np.concatenate([
             joint_angles + pos_noise, joint_angular_velocities + vel_noise, remaining_time, released,
-            self.goal
+            self.goal, dart_pos, dart_vel
         ],
                                      axis=0,
                                      dtype=NP_DTYPE)
@@ -131,8 +131,9 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
     def reset_model(self) -> np.ndarray:
 
         # Set initial joint angles and compute forward kinematics
-        qvel = np.zeros((self.model.nv, ), dtype=NP_DTYPE)
-        initial_joint_angles = Poses.q0
+        noise_shape = (len(Poses.q0), )
+        qvel = np.zeros((self.model.nv, ), dtype=NP_DTYPE) #+ np.random.uniform(-0.05, 0.05, size=(self.model.nv, ))
+        initial_joint_angles = Poses.q0 + np.random.uniform(-0.4, 0.4, size=noise_shape)
         self.set_state(np.array([*initial_joint_angles, *([0.0] * 7)], dtype=NP_DTYPE), qvel)
 
         # Compute initial dart position
@@ -156,11 +157,14 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
         self.set_state(qpos, qvel)
 
         # Reset members
+        self.goal = _EC.GOAL + np.random.uniform(-0.2255, 0.2255, self.goal.shape)
+        # self._add_marker(self.goal)
         self.reward_shrinkage = NP_DTYPE(1.0)
         self.released = False
         self.observation = np.concatenate([
             qpos[0:_EC.NUM_JOINTS], qvel[0:_EC.NUM_JOINTS],
-            np.array([self.time_limit - self.data.time]), np.array([self.released]), self.goal
+            np.array([self.time_limit - self.data.time]), np.array([self.released]), self.goal,
+            qpos[_EC.NUM_JOINTS:_EC.NUM_JOINTS + 3], qvel[_EC.NUM_JOINTS:_EC.NUM_JOINTS + 3]
         ],
                                           axis=0,
                                           dtype=NP_DTYPE)
@@ -168,6 +172,45 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
 
         assert (self.observation.shape == (_EC.NUM_OBSERVABLE_STATES, ))
         return self.observation
+
+    def _add_marker(self, pos, color=[1, 0, 0, 1]):
+        viewer = self.mujoco_renderer._get_viewer(self.render_mode)
+        viewer.add_marker(pos=pos, label="Goal", rgba=color, size=0.05*np.ones(3))
+        # print(dir(viewer))
+        # input()
+        # mjv_initGeom(self.mujoco_renderer._get_viewer(self.render_mode), mjtGeom.mjGEOM_SPHERE, 0.1*np.ones(3), pos, np.identity(3), np.array(color))
+        # mjv_addGeoms(self.model, self.data)
+
+    def _render(self):
+        self._add_marker(self.goal)
+        self.render()
+        self.mujoco_renderer._get_viewer(self.render_mode).scn.ngeom -= 1
+
+    # def _add_marker_to_scene(self, marker: dict):
+    #     if self.scn.ngeom >= self.scn.maxgeom:
+    #         raise RuntimeError("Ran out of geoms. maxgeom: %d" % self.scn.maxgeom)
+
+    #     viewer = self.mujoco_renderer._get_viewer(self.render_mode)
+    #     g = viewer.scn.geoms[self.scn.ngeom]
+    #     # default values.
+    #     g.dataid = -1
+    #     g.objtype = mjtObj.mjOBJ_UNKNOWN
+    #     g.objid = -1
+    #     g.category = mjtCatBit.mjCAT_DECOR
+    #     g.texid = -1
+    #     g.texuniform = 0
+    #     g.texrepeat[0] = 1
+    #     g.texrepeat[1] = 1
+    #     g.emission = 0
+    #     g.specular = 0.5
+    #     g.shininess = 0.5
+    #     g.reflectance = 0
+    #     g.type = mjtGeom.mjGEOM_SPHERE 
+    #     g.size[:] = np.ones(3) * 0.1
+    #     g.mat[:] = np.eye(3)
+    #     g.rgba[:] = np.ones(4)
+
+    #     viewer.scn.ngeom += 1
 
     # Sets the relative pose used to compute weld constaints, this will probably not be necessary in the future
     def _set_weld_relpose(self, pos: np.ndarray, quat: np.ndarray, name: str):

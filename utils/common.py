@@ -2,50 +2,11 @@ from dataclasses import fields
 
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.animation import FuncAnimation, writers
+from dtypes import NP_DTYPE
 
 
 def unpack_dataclass(dataclass: type):
     return [f.default for f in fields(dataclass)]
-
-
-# Example usage:
-# frames = [np.random.random((100, 100, 3)) for _ in range(100)]  # Example frames (random noise)
-# frames_to_video(frames, filename="output.mp4", fps=30, show=True)
-def save_video(frames, filename=None, fps=30, show=False):
-    """
-    Convert a list of frames (numpy arrays) into a video using matplotlib.
-
-    Parameters:
-    - frames: List of numpy arrays representing images.
-    - filename: Name of the file where the video will be saved. If None, video won't be saved.
-    - fps: Frames per second for the output video.
-    - show: If True, display the video. 
-
-    Returns:
-    - None
-    """
-
-    fig, ax = plt.subplots()
-    im = ax.imshow(frames[0])
-    plt.axis('off')  # Turn off axis numbers and ticks
-
-    def update(frame):
-        im.set_array(frame)
-        return [im]
-
-    ani = FuncAnimation(fig, update, frames=frames, blit=True, repeat=False)
-
-    if filename:
-        # Save the video to a file. You may need to have ffmpeg installed.
-        Writer = writers['ffmpeg']
-        writer = Writer(fps=fps, metadata=dict(artist='Me'), bitrate=1800)
-        ani.save(filename, writer=writer)
-
-    if show:
-        plt.show()
-
-    plt.close(fig)
 
 
 def plot_learning_curve(x, scores, figure_file):
@@ -54,4 +15,33 @@ def plot_learning_curve(x, scores, figure_file):
         running_avg[i] = np.mean(scores[max(0, i - 100):(i + 1)])
     plt.plot(x, running_avg)
     plt.title('Running Average with 100 Episode Backward-Only Window')
+    plt.grid(True)
     plt.savefig(figure_file)
+
+
+def all_finite_inputs(f0):
+    def f1(*args):
+        for arg in args: assert(np.isfinite(arg).all()), arg
+        return f0(*args)
+    return f1
+
+def all_finite_outputs(f0):
+    def f1(*args):
+        res = f0(*args)
+        for r in res: assert(np.isfinite(r).all()), r 
+        return res 
+    return f1
+
+def all_finite_in_out(f0):
+    def f1(*args):
+        for arg in args: assert(np.isfinite(arg).all()), arg
+        res = f0(*args)
+        for r in res: assert(np.isfinite(r).all()), r 
+        return res 
+    return f1
+        
+def all_correct_dtype(f0)
+    def f1(*args):
+        
+        return f0
+    return f1

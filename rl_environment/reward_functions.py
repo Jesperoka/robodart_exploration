@@ -6,6 +6,11 @@ def distance(d_pos, g_pos) -> NP_DTYPE:
     diff = d_pos - g_pos
     return np.sqrt(diff[0]*diff[0] + diff[1]*diff[1] + diff[2]*diff[2]).astype(NP_DTYPE)
 
+def close_enough(d_pos, g_pos) -> NP_DTYPE:
+    if distance(d_pos, g_pos) <= 0.1: return NP_DTYPE(1)
+    else: return NP_DTYPE(-1)
+
+
 # Only reward hitting the target wall
 def sparse_reward_function(dart_position, goal_position) -> NP_DTYPE:
     if dart_position[1] <= goal_position[1]:

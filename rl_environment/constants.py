@@ -19,18 +19,18 @@ class EnvConsts:
 
     # Changeable RL Environment Constants
     RNG_SEED: int = 0
-    EPISODE_TIME_LIMIT: float = 1.7
+    EPISODE_TIME_LIMIT: float = 1.9
 
     GOAL: tuple[float,...] = (0.0, -2.46, 1.625) # dart board bullseye
-    NUM_OBSERVABLE_STATES: int = 2*NUM_JOINTS + 2 + 3  # joint angles, joint angular velocities, time, released and goal pos
+    NUM_OBSERVABLE_STATES: int = 2*NUM_JOINTS + 2 + 3 + 6 # joint angles, joint angular velocities, time, released, goal pos, dart pos and dart vel
 
     # A_MAX: tuple[float,...] = (87, 87, 87, 87, 12, 12, 12, 1)
     # A_MIN: tuple[float,...] = (-87, -87, -87, -87, -12, -12, -12, -1)
     A_MAX: tuple[float,...] = (Q_MAX[1], Q_MAX[3], Q_MAX[6],  1)
     A_MIN: tuple[float,...] = (Q_MIN[1], Q_MIN[3], Q_MIN[6], -1) 
 
-    O_MAX: tuple[float,...] = (*Q_MAX, *Q_DOT_MAX, EPISODE_TIME_LIMIT,  1, *GOAL)
-    O_MIN: tuple[float,...] = (*Q_MIN, *Q_DOT_MIN, 0,                   0, *GOAL)
+    O_MAX: tuple[float,...] = (*Q_MAX, *Q_DOT_MAX, EPISODE_TIME_LIMIT,  1, *GOAL, float("inf"), float("inf"), float("inf"), float("inf"), float("inf"), float("inf"))
+    O_MIN: tuple[float,...] = (*Q_MIN, *Q_DOT_MIN, 0,                   0, *GOAL, -float("inf"), -float("inf"), -float("inf"), -float("inf"), -float("inf"), -float("inf"))
 
 EnvConsts = EnvConsts() # type: ignore
 # ---------------------------------------------------------------------------- #

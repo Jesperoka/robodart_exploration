@@ -1,12 +1,15 @@
 import numpy as np
+from numpy._typing import NDArray
 import torch as T
 import torch.nn.functional as F
+
 
 from rl_function_approximators.neural_networks import (ActorNetwork,
                                                        CriticNetwork)
 from utils.common import plot_learning_curve
-from utils.dtypes import NP_DTYPE
+from utils.dtypes import NP_DTYPE, NP_ARRTYPE
 
+rng = np.random.default_rng()
 
 class ReplayBuffer():
 
@@ -14,26 +17,27 @@ class ReplayBuffer():
         self.mem_size = replay_buffer_size
         self.mem_cntr = 0
         self.state_memory = np.zeros((self.mem_size, state_size), dtype=NP_DTYPE)
-        self.new_state_memory = np.zeros((self.mem_size, state_size), dtype=NP_DTYPE)
+        self.next_state_memory = np.zeros((self.mem_size, state_size), dtype=NP_DTYPE)
         self.action_memory = np.zeros((self.mem_size, action_size), dtype=NP_DTYPE)
         self.reward_memory = np.zeros(self.mem_size, dtype=NP_DTYPE)
-        self.terminal_memory = np.zeros(self.mem_size, dtype=np.uint8)  # TODO: investigate
+        self.terminal_memory = np.zeros(self.mem_size, dtype=np.uint8)  
 
-    def store_transition(self, state, action, reward, state_, done):
+    def store_transition(self, state: NP_ARRTYPE, action: NP_ARRTYPE, reward: NP_ARRTYPE, next_state: NP_ARRTYPE, done: NDArray[np.uint8]):
         assert (state.dtype == NP_DTYPE and action.dtype == NP_DTYPE and reward.dtype == NP_DTYPE
-                and state_.dtype == NP_DTYPE), state_.dtype
+                and next_state.dtype == NP_DTYPE), next_state.dtype
         assert (np.isfinite(state).all() and np.isfinite(action).all() and np.isfinite(reward).all()
-                and np.isfinite(state_).all() and np.isfinite(done).all())
+                and np.isfinite(next_state).all() and np.isfinite(done).all())
 
         index = self.mem_cntr % self.mem_size
 
         self.state_memory[index] = state
-        self.new_state_memory[index] = state_
         self.action_memory[index] = action
         self.reward_memory[index] = reward
+        self.next_state_memory[index] = next_state 
         self.terminal_memory[index] = done
 
         self.mem_cntr += 1
+
 
     def sample_buffer(self, batch_size):
         max_mem = min(self.mem_cntr, self.mem_size)
@@ -41,15 +45,45 @@ class ReplayBuffer():
         batch = np.random.choice(max_mem, batch_size)
 
         states = self.state_memory[batch]
-        states_ = self.new_state_memory[batch]
         actions = self.action_memory[batch]
         rewards = self.reward_memory[batch]
+        new_states = self.next_state_memory[batch]
         done = self.terminal_memory[batch]
 
         assert (np.isfinite(states).all() and np.isfinite(actions).all() and np.isfinite(rewards).all()
-                and np.isfinite(states_).all() and np.isfinite(done).all())
-        return states, actions, rewards, states_, done
+                and np.isfinite(new_states).all() and np.isfinite(done).all())
+        return states, actions, rewards, new_states, done 
 
+    def hindsight_experience_replay(self, num_episode_steps, k=4):
+        episode_start = self.get_episode_start_index(num_episode_steps)
+        episode_end = episode_start+num_episode_steps
+        
+        # Calculate indices as if infinite memory
+        start_indices = np.arange(episode_start+1, episode_end) 
+        end_indices = episode_end*np.ones_like(start_indices)
+        new_goal_indices = rng.integers(start_indices, end_indices, size=(k, max(start_indices.shape)), endpoint=True)
+
+        # Correct any indices past memory size
+        new_goal_indices = np.mod(new_goal_indices.flatten(), self.mem_size)
+
+        # Perform hindsight replay 
+        for goal_mem_idx in new_goal_indices:
+            if self.reward_memory[goal_mem_idx-1] == NP_DTYPE(0): continue # Filtered HER
+            
+            goal_idx = 16 # WARNING: hardcoded for now
+            dart_idx = 19
+
+            state = self.state_memory[goal_mem_idx].copy() 
+            state[goal_idx:goal_idx+3] = state[dart_idx:dart_idx+3]              
+            action = self.action_memory[goal_mem_idx].copy()
+            next_state = self.next_state_memory[goal_mem_idx].copy()
+            next_state[goal_idx:goal_idx+3] = next_state[dart_idx:dart_idx+3]   
+            done = self.terminal_memory[goal_mem_idx].copy() 
+
+            self.store_transition(state, action, NP_DTYPE(0), next_state, done)
+
+    def get_episode_start_index(self, num_episode_steps):
+        return (self.mem_cntr - (num_episode_steps - 1) ) % self.mem_size
 
 class Agent():
     device = T.device('cuda:0' if T.cuda.is_available() else 'cpu')
@@ -65,7 +99,7 @@ class Agent():
         max_action=0,
         min_action=0,
         alpha=1.0,
-        gamma=0.999,
+        gamma=0.99,
         tau=0.005,
         update_actor_every=1,
         update_targets_every=1,
@@ -110,8 +144,9 @@ class Agent():
     def uniform_random_action(self, min_action, max_action):
         return np.random.default_rng().uniform(low=min_action, high=max_action).astype(NP_DTYPE)
 
-    def remember(self, state, action, reward, new_state, done):
-        self.replay_buffer.store_transition(state, action, reward, new_state, done)
+    def remember(self, state, tanh_action, reward, new_state, done):
+        self.replay_buffer.store_transition(state, tanh_action, reward, new_state, done)
+
 
     def update_target_networks(self, tau):
         # Get critic and critic target weights
@@ -200,15 +235,6 @@ class Agent():
         self.actor.optimizer.step()
 
 
-# QUESTIONS:
-# Is batch size large enough? Do I need batch size to be large enough to capture a full rollout?
-# Different scales of action values cause problems
-# Need to include baseline controller as part of state?
-# Make baseline_controller only depend on time?
-# Use baseline_controller to only stabilize lateral movement?
-# Use agent to only determine lateral movement and release?
-
-
 def basic_training_loop(env, n_games):
     agent = Agent(state_size=env.observation_space.shape[0],
                   action_size=env.action_space.shape[0],
@@ -232,19 +258,25 @@ def basic_training_loop(env, n_games):
     for i in range(n_games):
         state, info = env.reset()
         done = False
-        score = 0
+        # score = 0
 
         # Rollout
+        step = 0
         while not done:
             action, tanh_action = agent.choose_action(state)
             next_state, reward, done, info = env.step(action)
             agent.remember(state, tanh_action, reward, next_state, done)
-            score += reward
-
             state = next_state
-            env.render()
+            env._render()
+            step += 1
 
-        # Optimization
+        score = info["distance"] # record final distance of dart 
+
+        # Hindsight Experience Replay 
+        episode_end = (agent.replay_buffer.mem_cntr + step - 1) % agent.replay_buffer.mem_size
+        agent.replay_buffer.hindsight_experience_replay(episode_end=episode_end_step, k=4)
+
+        # Optimization (standard experience replay)
         if not load_checkpoint:
             agent.learn(i)
 
@@ -255,7 +287,7 @@ def basic_training_loop(env, n_games):
         score_history.append(score)
         avg_score = np.mean(score_history[-100:])
 
-        if avg_score > best_score:
+        if avg_score < best_score:
             best_score = score
 
             if not load_checkpoint:
