@@ -118,11 +118,11 @@ class SelectedJointsPID(ControlLog):
 
         # Predetermined Control Parameters
         self.Kp = np.array([200.0, 100, 200.0, 100, 100.0, 100.0, 100])
-        self.Ki = np.array([20.0,  0, 20.0,  0, 10.0,  10.0,  0])
-        self.Kd = np.array([10.0,  0, 10.0,  0, 10.0,  10.0,  0])
+        self.Ki = np.array([0.0,  0, 0.0,  0, 0.0,  0.0,  0])
+        self.Kd = np.array([20.0,  0, 20.0,  0, 20.0,  20.0,  0])
 
         # Predetermined joints
-        self.qpos_ref_1 = Poses.q0[0]
+        # self.qpos_ref_1 = Poses.q0[0]
         self.qpos_ref_3 = Poses.q0[2]
         self.qpos_ref_5 = Poses.q0[4]
         self.qpos_ref_6 = Poses.q0[5]
@@ -139,11 +139,11 @@ class SelectedJointsPID(ControlLog):
     def __call__(self, t, qpos, qvel, qpos_ref, qvel_ref=np.zeros(7)):
         dt = t - self.t_prev
 
-        qpos_ref = np.array([self.qpos_ref_1, qpos_ref[0], self.qpos_ref_3, qpos_ref[1], self.qpos_ref_5, self.qpos_ref_6, qpos_ref[2]])
+        qpos_ref = np.array([qpos_ref[0], qpos_ref[1], self.qpos_ref_3, qpos_ref[2], self.qpos_ref_5, self.qpos_ref_6, qpos_ref[3]])
 
         e = qpos_ref - qpos                                     # P
         self.e_int += dt*(self.e_int + 0.5*(self.e_prev + e))   # I (explicit midpoint rule)
-        e_dot = qvel_ref - qvel                                 # D
+        e_dot = qvel_ref - qvel                                 # D # TODO: lowpass filter
 
         torques = (self.Kp*e + self.Ki*self.e_int + self.Kd*e_dot).squeeze()
         

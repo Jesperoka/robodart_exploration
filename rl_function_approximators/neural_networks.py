@@ -5,6 +5,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 from torch.distributions.normal import Normal
+from utils.common import all_t_dtype_in_out, all_t_dtype_out
 
 from utils.dtypes import T_DTYPE
 
@@ -40,6 +41,7 @@ class CriticNetwork(nn.Module):
         self.optimizer = optim.Adam(self.parameters(), lr=lr, weight_decay=weight_decay)
         self.to(device)
 
+    @all_t_dtype_in_out(method=True)
     def forward(self, state, action):
         state_action = T.cat([state, action], dim=1)
         q = F.relu(self.fc1(state_action), inplace=True)
@@ -87,6 +89,8 @@ class ActorNetwork(nn.Module):
         self.optimizer = optim.Adam(self.parameters(), lr=lr, weight_decay=weight_decay)
         self.to(device)
 
+
+    @all_t_dtype_in_out(method=True)
     def forward(self, state, eps=1e-6):
         x = F.relu(self.fc1(state), inplace=True)
         x = F.relu(self.fc2(x), inplace=True)
@@ -97,6 +101,7 @@ class ActorNetwork(nn.Module):
         assert (action_mean.dtype == T_DTYPE and action_std.dtype == T_DTYPE)
         return action_mean, action_std
 
+    @all_t_dtype_out
     def sample(self, state, reparameterize=True, eps=1e-6):
         mu, sigma = self.forward(state)
         gaussian = Normal(mu, sigma)

@@ -62,10 +62,8 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
         # Compute Torques 
         torques = self.baseline_controller(self.data.time, self.data.qpos[0:_EC.NUM_JOINTS],
                                                    self.data.qvel[0:_EC.NUM_JOINTS], qpos_ref)
-        # Check if dart release
-        if not self.released and release >= 0.0:
-            self.model.eq("weld").active = False
-            self.released = True
+        # Dart release logic
+        self.dart_release(release)
 
         # Simulate and observe environment
         self.do_simulation(torques, self.frame_skip)
@@ -77,8 +75,23 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
 
         assert (self.observation.dtype == NP_DTYPE
                 and reward.dtype == NP_DTYPE), str(self.observation.dtype) + " " + str(reward.dtype)
-        return self.observation, reward, done, info
+        return self.observation, reward, np.uint8(done), info
 
+    # Dart release logic and visualization
+    def dart_release(self, release: NP_DTYPE):
+        # Logic
+        if not self.released and release >= 0.0:
+            self.model.eq("weld").active = False
+            self.released = True
+
+        # Visualization
+        gripper_color = self.model.geom("placeholder_gripper").rgba
+        if self.released: 
+            gripper_color[:] = np.array([1, 0.5, 0, 1]) # orange
+            if release >= 0.0: gripper_color[:] = np.array([1, 0, 0, 1]) # red
+        else: gripper_color[:] = np.array([0, 1, 0, 1]) # green
+
+        
 
     # Checks termination criteria and returns reward
     def reward_or_terminate(self) -> tuple[bool, NP_DTYPE]:
@@ -86,21 +99,39 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
         # joint_angles = self.data.qpos[0:_EC.NUM_JOINTS]
         # joint_angular_velocities = self.data.qvel[0:_EC.NUM_JOINTS]
 
-        # reward = reward_functions.close_enough(dart_pos, self.goal)
-        reward = -reward_functions.distance(dart_pos, self.goal)
+        reward = reward_functions.close_enough(dart_pos, self.goal)
+        # reward = -reward_functions.distance(dart_pos, self.goal)
 
         # Terminal rewards
+        # penalty = NP_DTYPE(-20*self.time_limit*(1/self.dt)) # corresponds to being a distance 20 away for whole episode
+        bonus = NP_DTYPE(0.1)
         if self.terminal2(dart_pos):
             return (True, reward)
+        if self.too_far_left_or_right(dart_pos[0]):
+            return (True, reward)
+        if self.too_far_back(dart_pos[1]):
+            return (True, reward)
+        if self.too_far_up_or_down(dart_pos[2]):
+            return (True, reward)
+        if self.far_enough_forward(dart_pos[1]):
+            return (True, bonus+reward)
         else:
             return (False, reward)
 
-    def terminal(self, dart_pos):
-        x_lim, y_lim, z_lim = 2.0, -self.goal[1], 0.0
-        return  not (-x_lim <= dart_pos[0] and dart_pos[0] <= x_lim)\
-                or not (-y_lim <= dart_pos[1] and dart_pos[1] <= y_lim)\
-                or not (z_lim <= dart_pos[2])\
-                or not (self.data.time <= self.time_limit)
+    def too_far_left_or_right(self, dart_x):
+        x_lim = 2.0
+        return not (-x_lim <= dart_x and dart_x <= x_lim)
+
+    def too_far_back(self, dart_y):
+        y_lim = 5.0
+        return not (dart_y <= y_lim)
+
+    def far_enough_forward(self, dart_y):
+        return not (self.goal[1] <= dart_y)
+
+    def too_far_up_or_down(self, dart_z):
+        z_lim = 10.0
+        return not (0.0 <= dart_z and dart_z <= z_lim)
 
     def terminal2(self, *args):
         return self.data.time >= self.time_limit
@@ -158,7 +189,6 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
 
         # Reset members
         self.goal = _EC.GOAL + np.random.uniform(-0.2255, 0.2255, self.goal.shape)
-        # self._add_marker(self.goal)
         self.reward_shrinkage = NP_DTYPE(1.0)
         self.released = False
         self.observation = np.concatenate([
@@ -173,44 +203,16 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
         assert (self.observation.shape == (_EC.NUM_OBSERVABLE_STATES, ))
         return self.observation
 
-    def _add_marker(self, pos, color=[1, 0, 0, 1]):
+    # Custom add_marker() function because MujocoEnv base class is implemented a bit badly
+    def _add_marker(self, pos, color=[0, 0, 1, 1]):
         viewer = self.mujoco_renderer._get_viewer(self.render_mode)
         viewer.add_marker(pos=pos, label="Goal", rgba=color, size=0.05*np.ones(3))
-        # print(dir(viewer))
-        # input()
-        # mjv_initGeom(self.mujoco_renderer._get_viewer(self.render_mode), mjtGeom.mjGEOM_SPHERE, 0.1*np.ones(3), pos, np.identity(3), np.array(color))
-        # mjv_addGeoms(self.model, self.data)
 
+    # custom render() function to manage scn.ngeom 
     def _render(self):
         self._add_marker(self.goal)
         self.render()
         self.mujoco_renderer._get_viewer(self.render_mode).scn.ngeom -= 1
-
-    # def _add_marker_to_scene(self, marker: dict):
-    #     if self.scn.ngeom >= self.scn.maxgeom:
-    #         raise RuntimeError("Ran out of geoms. maxgeom: %d" % self.scn.maxgeom)
-
-    #     viewer = self.mujoco_renderer._get_viewer(self.render_mode)
-    #     g = viewer.scn.geoms[self.scn.ngeom]
-    #     # default values.
-    #     g.dataid = -1
-    #     g.objtype = mjtObj.mjOBJ_UNKNOWN
-    #     g.objid = -1
-    #     g.category = mjtCatBit.mjCAT_DECOR
-    #     g.texid = -1
-    #     g.texuniform = 0
-    #     g.texrepeat[0] = 1
-    #     g.texrepeat[1] = 1
-    #     g.emission = 0
-    #     g.specular = 0.5
-    #     g.shininess = 0.5
-    #     g.reflectance = 0
-    #     g.type = mjtGeom.mjGEOM_SPHERE 
-    #     g.size[:] = np.ones(3) * 0.1
-    #     g.mat[:] = np.eye(3)
-    #     g.rgba[:] = np.ones(4)
-
-    #     viewer.scn.ngeom += 1
 
     # Sets the relative pose used to compute weld constaints, this will probably not be necessary in the future
     def _set_weld_relpose(self, pos: np.ndarray, quat: np.ndarray, name: str):

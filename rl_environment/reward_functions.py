@@ -8,7 +8,7 @@ def distance(d_pos, g_pos) -> NP_DTYPE:
 
 def close_enough(d_pos, g_pos) -> NP_DTYPE:
     if distance(d_pos, g_pos) <= 0.1: return NP_DTYPE(1)
-    else: return NP_DTYPE(-1)
+    else: return NP_DTYPE(0)
 
 
 # Only reward hitting the target wall
