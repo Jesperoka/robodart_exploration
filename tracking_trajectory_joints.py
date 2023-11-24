@@ -4,7 +4,8 @@ from movement_primitives.dmp import DMPWithFinalVelocity
 from json import load
 
 import panda_py
-from panda_py import controllers
+from panda_py import controllers, libfranka
+from plot_dmp import plot_dmp
 
 SHOP_FLOOR_IP = "10.0.0.2"  # hostname for the workshop floor, i.e. the Franka Emika Desk
 ROBOT_IP = "192.168.0.1"    # don't know if we ever need robot IP
@@ -41,36 +42,65 @@ if __name__ == '__main__':
 
     # Concatenate all interpolated arrays
     concatenated_interpolated_poses = np.concatenate(interpolated_poses, axis=axis)
-    print(concatenated_interpolated_poses.shape)  # Display the shape of the final array
 
+    # Demonstrated trajectory
+    demo_y = np.array(traj)
+    # demo_y = concatenated_interpolated_poses
 
-    Y = concatenated_interpolated_poses
-    N = max(Y.shape)
-    execution_time = 15
+    # DMP hyperparameters
+    N = max(demo_y.shape)
+    execution_time = 10
     dt = execution_time / N
-    n_weights_per_dim = 50
+    n_weights_per_dim = 20
     T = np.linspace(0, execution_time, N)   
 
+    # Initialize DMP
     dmp = DMPWithFinalVelocity(n_dims=7, execution_time=execution_time, dt=dt, n_weights_per_dim=n_weights_per_dim)
-    dmp.imitate(T, Y)
+    dmp.imitate(T, demo_y)
 
-    dmp.configure(goal_y=np.array(Y[-1,:]), goal_yd=np.array([0, 0, 0, 0, 0, 0, 0.0]))
 
-    T, Y = dmp.open_loop(run_t=execution_time)
+# ################################################
+#     robot = libfranka.Robot(SHOP_FLOOR_IP)
+#     state = libfranka.Robot.read_once(robot)
+#     model = libfranka.Robot.load_model(robot)
+#     frame = libfranka.Frame.kFlange
+#     transformation = np.reshape(model.pose(frame, state), (4, 4)).T
 
-    q = Y
-    dq = (1.0/dmp.dt_)*np.gradient(Y, axis=0)
-    
-    print(dmp.dt_)
+#     print(state.q)
+#     print(transformation)
 
-    panda.move_to_joint_position(q[0])
+#     cartesian_pose = np.array([[1, 0, 0, 0],
+#                                [0, 1, 0, 0],
+#                                [0, 0, 1, 0],
+#                                [-0.26, -0.2, 1.2, 1]])
+#     joint_pose = panda_py.ik(transformation, state.q, state.q[-1])
+#     print(joint_pose)
+# #################################################
+
+    # Set target endpoint of trajectory
+    dmp.configure(goal_y=np.array(demo_y[-1,:]), goal_yd=np.array([0, 0, 0, 0.3, 0, 0, -1]))
+
+    dmp_t, dmp_y = dmp.open_loop(run_t=execution_time)
+    dmp_yd = (1.0/dmp.dt_)*np.gradient(dmp_y, axis=0)
+
+    plot_dmp(execution_time, dt, demo_y, dmp_y, dmp_yd)
+
+    panda.move_to_joint_position(dmp_y[0])
     input("Press any key to start")
 
+    # Follow trajectory
     i = 0
-    bias = np.array([0, 0, 0, 0, 0, 0, -4.0])
+    frequency = 1000
     ctrl = controllers.JointPosition()
     panda.start_controller(ctrl)
-    with panda.create_context(frequency=500, max_runtime=execution_time) as ctx:
-        while ctx.ok():
-            ctrl.set_control(q[i], dq[i])
+    with panda.create_context(frequency=frequency, max_runtime=execution_time) as ctx:
+        panda.enable_logging(frequency*execution_time)
+        while ctx.ok() and i < len(dmp_y):
+            ctrl.set_control(dmp_y[i], dmp_yd[i])
             i += 1
+
+    # Extract results
+    result_y = np.array(panda.get_log()['q'])
+    result_yd = np.array(panda.get_log()['dq'])
+
+    plot_dmp(execution_time, dt, demo_y, dmp_y, dmp_yd, result_y, result_yd)
