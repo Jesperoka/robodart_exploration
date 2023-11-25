@@ -5,7 +5,6 @@ from dataclasses import dataclass
 # ---------------------------------------------------------------------------- #
 @dataclass(frozen=True, slots=True, kw_only=True)
 class EnvConsts:
-    # Physical Robot Constants
     NUM_JOINTS: int = 7
 
     Q_MAX: tuple[float,...] = (2.8973, 1.7628, 2.8973, -0.0698, 2.8973, 3.7525, 2.8973)
@@ -17,20 +16,24 @@ class EnvConsts:
     TAU_MAX: tuple[float,...] = (87, 87, 87, 87, 12, 12, 12)
     TAU_MIN: tuple[float,...] = (-87, -87, -87, -87, -12, -12, -12)
 
-    # Changeable RL Environment Constants
     RNG_SEED: int = 0
     EPISODE_TIME_LIMIT: float = 1.9
 
-    GOAL: tuple[float,...] = (0.0, -2.46, 1.625) # dart board bullseye
-    NUM_OBSERVABLE_STATES: int = 2*NUM_JOINTS + 2 + 3 + 6 # joint angles, joint angular velocities, time, released, goal pos, dart pos and dart vel
+    BULLSEYE: tuple[float,...] = (0.0, -2.46, 1.625) 
+    BOARD_RADIUS: float = 0.2255
 
-    # A_MAX: tuple[float,...] = (87, 87, 87, 87, 12, 12, 12, 1)
-    # A_MIN: tuple[float,...] = (-87, -87, -87, -87, -12, -12, -12, -1)
-    A_MAX: tuple[float,...] = (Q_MAX[0], Q_MAX[1], Q_MAX[3], Q_MAX[6],  1)
-    A_MIN: tuple[float,...] = (Q_MIN[0], Q_MIN[1], Q_MIN[3], Q_MIN[6], -1) 
+    NUM_OBSERVABLE_STATES: int = 2*NUM_JOINTS + 3 + 3 + 6 + 6 
+    X_MAX: float = 1.5
+    X_MIN: float = -1.5
+    Y_MAX: float = 2.4
+    Y_MIN: float = -2.46
+    Z_MAX: float = 4.0
+    Z_MIN: float = 0.005
 
-    O_MAX: tuple[float,...] = (*Q_MAX, *Q_DOT_MAX, EPISODE_TIME_LIMIT,  1, *GOAL, float("inf"), float("inf"), float("inf"), float("inf"), float("inf"), float("inf"))
-    O_MIN: tuple[float,...] = (*Q_MIN, *Q_DOT_MIN, 0,                   0, *GOAL, -float("inf"), -float("inf"), -float("inf"), -float("inf"), -float("inf"), -float("inf"))
+    A_MAX: tuple[float,...] = (Q_MAX[1], Q_MAX[3], Q_MAX[4], Q_MAX[6], 1)
+    A_MIN: tuple[float,...] = (Q_MIN[1], Q_MIN[3], Q_MIN[4], Q_MIN[6], 0) 
+
+    
 
 EnvConsts = EnvConsts() # type: ignore
 # ---------------------------------------------------------------------------- #

@@ -1,21 +1,26 @@
 import numpy as np
-from utils.dtypes import NP_DTYPE
+from utils.dtypes import NP_ARRTYPE, NP_DTYPE
+from .constants import EnvConsts as _EC
 
-# Euclidean Distance between dart and goal
 def distance(d_pos, g_pos) -> NP_DTYPE:
     diff = d_pos - g_pos
     return np.sqrt(diff[0]*diff[0] + diff[1]*diff[1] + diff[2]*diff[2]).astype(NP_DTYPE)
 
 def close_enough(d_pos, g_pos) -> NP_DTYPE:
-    if distance(d_pos, g_pos) <= 0.1: return NP_DTYPE(1)
-    else: return NP_DTYPE(0)
+    if distance(d_pos, g_pos) <= 0.1: 
+        return NP_DTYPE(1)
+    return NP_DTYPE(0)
 
-
-# Only reward hitting the target wall
-def sparse_reward_function(dart_position, goal_position) -> NP_DTYPE:
-    if dart_position[1] <= goal_position[1]:
-        return (np.sqrt(2.0**2 + 1.625**2) - np.sqrt((dart_position[0] - goal_position[0])**2 + (dart_position[2] - goal_position[2])**2)).astype(NP_DTYPE)
-    return NP_DTYPE(0.0)
+def on_dart_board(d_pos, board_center=_EC.BULLSEYE) -> NP_DTYPE:
+    diff = np.array([d_pos[0] - board_center[0], d_pos[2] - board_center[2]], dtype=NP_DTYPE)
+    if np.sqrt(diff[0]*diff[0] + diff[1]*diff[1]) <= _EC.BOARD_RADIUS: 
+        return NP_DTYPE(1)
+    return NP_DTYPE(0)
+    
+def ts_ss_similarity(v1: NP_ARRTYPE, v2: NP_ARRTYPE) -> NP_DTYPE:
+    ts = np.linalg.norm(np.cross(v1, v2), ord=2)
+    ss = (np.linalg.norm(v1 - v2, ord=1) + np.linalg.norm(v1 - v2, ord=2))**2
+    return ts*ss
 
 def capped_inverse_distance(d_pos, g_pos, minimum_distance=1e-3) -> NP_DTYPE:
     diff = d_pos - g_pos

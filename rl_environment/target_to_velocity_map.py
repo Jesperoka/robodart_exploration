@@ -16,11 +16,12 @@ def create_points(base_pt, len_x, len_y, len_z, volume_res, endpoint=False, idx:
 # Compute the velocity vector that makes point mass projectile launched from start_pt hit end_pt.
 def calculate_velocity_vector(start_pt: np.ndarray, end_pt: np.ndarray, vert_vel: float, g=9.81):
     delta = end_pt - start_pt
+
     time_arr = np.roots([0.5 * g, -vert_vel, delta[2]])
-    time_arr = time_arr[np.isreal(time_arr)]
-    assert(len(time_arr) > 0)
+    time_arr = np.real(time_arr) # just converting straight up
     time_hit = max(time_arr)
 
+    if np.allclose(time_hit, 0.0): return np.zeros(3)
     return np.array([delta[0] / time_hit, delta[1] / time_hit, vert_vel])
 
 
@@ -65,18 +66,18 @@ def plot_trajectory(target_pt, vel_start_combos, max_t, g=9.81):
 
 # Example usage
 if __name__ == "__main__":
-    g = 0.98219  # local gravitational acceleration in Trondheim at 45m according to WolframAlpha 
-    base_pt = np.array([-0.2, 0.1, 1.2])
-    dim_lengths = (0.4, 0.4, 0.4)
+    g = 9.8219  # local gravitational acceleration in Trondheim at 45m according to WolframAlpha 
+    base_pt = np.array([-0.5, -0.5, 1.64])
+    dim_lengths = (1.0, 1.0, 3.0)
     volume_res = 10
-    target_pt = np.array([2.0, 0.0, 1.0])
-    vel_limits = (1.0, 10.0)
+    target_pt = np.array([0.0, -2.46, 1.64])
+    vel_limits = (1.0, 2.0)
     vel_res = 10
 
     launch_point_and_velocities = calculate_launch_point_and_velocity_vectors(base_pt, *dim_lengths, volume_res, target_pt, *vel_limits, vel_res, g=g)
 
-    num_samples = 10
-    max_traj_time = 25
+    num_samples = 15 
+    max_traj_time = 0.5 
     sample_idxs = np.random.choice(len(launch_point_and_velocities) - 1, num_samples, replace=False)
     sample_launch_data = launch_point_and_velocities[sample_idxs, :, :]
 
