@@ -4,7 +4,7 @@ import numpy as np
 
 
 # Returns a 4D array arr defining a 3D space where arr[i, j, k] is the 3D point (x,y,z) at index i,j,k along the x, y and z axes respectively.
-def create_points(base_pt, len_x, len_y, len_z, volume_res, endpoint=False, idx: Literal['xy', 'ij'] ='ij'):
+def points(base_pt, len_x, len_y, len_z, volume_res, endpoint=False, idx: Literal['xy', 'ij'] ='ij'):
     return np.stack(np.meshgrid(
         np.linspace(base_pt[0], base_pt[0] + len_x, int(volume_res * len_x), endpoint=endpoint),
         np.linspace(base_pt[1], base_pt[1] + len_y, int(volume_res * len_y), endpoint=endpoint),
@@ -14,7 +14,7 @@ def create_points(base_pt, len_x, len_y, len_z, volume_res, endpoint=False, idx:
 
 
 # Compute the velocity vector that makes point mass projectile launched from start_pt hit end_pt.
-def calculate_velocity_vector(start_pt: np.ndarray, end_pt: np.ndarray, vert_vel: float, g=9.81):
+def velocity_vector(start_pt: np.ndarray, end_pt: np.ndarray, vert_vel: float, g=9.81):
     delta = end_pt - start_pt
 
     time_arr = np.roots([0.5 * g, -vert_vel, delta[2]])
@@ -26,35 +26,46 @@ def calculate_velocity_vector(start_pt: np.ndarray, end_pt: np.ndarray, vert_vel
 
 
 # Compute the velocity vectors needed to hit point target_pt from points in the 3D space defined by base_point, len_x, len_y, len_z.
-def calculate_launch_point_and_velocity_vectors(base_pt, len_x, len_y, len_z, volume_res, target_pt, v_min, v_max, vel_res, endpoint=False, g=9.81):
+def launch_pairs(base_pt, len_x, len_y, len_z, volume_res, target_pt, v_min, v_max, vel_res, endpoint=False, g=9.81):
     launch_point_and_velocities = []
-    launch_pts = create_points(base_pt, len_x, len_y, len_z, volume_res, endpoint=endpoint)
+    launch_pts = points(base_pt, len_x, len_y, len_z, volume_res, endpoint=endpoint)
     launch_pts = launch_pts.reshape(np.prod(launch_pts.shape[:-1]), launch_pts.shape[-1])
 
     for launch_pt in launch_pts:
         for vertical_vel in np.linspace(v_min, v_max, int((v_max - v_min) * vel_res), endpoint=endpoint):
-            vel_vec = calculate_velocity_vector(launch_pt, target_pt, vertical_vel, g=g)
+            vel_vec = velocity_vector(launch_pt, target_pt, vertical_vel, g=g)
             launch_point_and_velocities.append((launch_pt, vel_vec))
 
     return np.array(launch_point_and_velocities)
 
+# Compute the trajectory from launch point with launch velocity until passing target_y
+def trajectory(target_y, launch_pt, launch_vel, t_max, res, g=9.81):
+    t = np.linspace(0, t_max, res)
+    x_0, y_0, z_0 = launch_pt
+    v_x, v_y, v_z = launch_vel 
+
+    x = x_0 + v_x * t
+    y = y_0 + v_y * t
+    z = z_0 + v_z * t - 0.5 * g * t**2
+    
+    if launch_pt[1] >= target_y:
+        idxs = np.where(y >= target_y)
+    else:
+        idxs = np.where(y <= target_y)
+
+    return np.stack([x[idxs],y[idxs],z[idxs]], axis=1)
+
 
 # Plot trajectory from Newton's equations of motion
-def plot_trajectory(target_pt, vel_start_combos, max_t, g=9.81):
-    t_pts = np.linspace(0, max_t, 500)
+def plot_trajectory(target_pt, launch_pt_launch_vels, t_max, g=9.81, res=20):
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
 
-    for start_vel in vel_start_combos:
-        start_x, start_y, start_z = start_vel[0, :]
-        vel_x, vel_y, vel_z = start_vel[1, :]
-        ax.scatter(start_x, start_y, start_z, c='g', marker='o')
-
-        x = start_x + vel_x * t_pts
-        y = start_y + vel_y * t_pts
-        z = start_z + vel_z * t_pts - 0.5 * g * t_pts**2
-
-        ax.plot(x, y, z)
+    for launch_pt_vel in launch_pt_launch_vels:
+        x_0, y_0, z_0 = launch_pt_vel[0, :]
+        ax.scatter(x_0, y_0, z_0, c='g', marker='o')
+        traj = trajectory(target_pt[1], launch_pt_vel[0, :], launch_pt_vel[1, :], t_max, res, g=g)
+        ax.plot(traj[:,0], traj[:, 1], traj[:, 2])
 
     ax.scatter(*target_pt, c='r', marker='o', label='Target')
     ax.set_xlabel('X')
@@ -74,11 +85,11 @@ if __name__ == "__main__":
     vel_limits = (1.0, 2.0)
     vel_res = 10
 
-    launch_point_and_velocities = calculate_launch_point_and_velocity_vectors(base_pt, *dim_lengths, volume_res, target_pt, *vel_limits, vel_res, g=g)
+    launch_point_and_velocities = launch_pairs(base_pt, *dim_lengths, volume_res, target_pt, *vel_limits, vel_res, g=g)
 
     num_samples = 15 
     max_traj_time = 0.5 
     sample_idxs = np.random.choice(len(launch_point_and_velocities) - 1, num_samples, replace=False)
     sample_launch_data = launch_point_and_velocities[sample_idxs, :, :]
 
-    plot_trajectory(target_pt, sample_launch_data, max_traj_time, g=g)
+    plot_trajectory(target_pt, sample_launch_data, max_traj_time, g=g, res=20)

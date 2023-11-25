@@ -22,6 +22,16 @@ def plot_learning_curve(x, scores, figure_file):
     plt.grid(True)
     plt.savefig(figure_file)
 
+def plot_moving_average(x, scores, figure_file, title="Training Progress", xlabel="Episodes", ylabel="Score", window_size=100):
+    running_avg = np.convolve(scores, np.ones(window_size)/window_size, mode='valid')
+    plt.figure(figsize=(10, 5))
+    plt.plot(x[:len(running_avg)], running_avg)
+    plt.title(title)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.grid(True)
+    plt.savefig(figure_file)
+    plt.close()
 
 # Sanity assertions as decorators.
 # Ironically I went a bit crazy making this, but its funny so whatever.

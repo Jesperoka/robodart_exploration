@@ -11,8 +11,7 @@ from typeguard import typechecked
 from rl_environment import reward_functions
 from rl_environment.constants import EnvConsts as _EC
 from rl_environment.constants import Poses
-from rl_environment.target_to_velocity_map import \
-    calculate_launch_point_and_velocity_vectors
+from rl_environment.target_to_velocity_map import launch_pairs, trajectory
 from utils.dtypes import NP_ARRTYPE, NP_DTYPE
 
 
@@ -21,13 +20,17 @@ from utils.dtypes import NP_ARRTYPE, NP_DTYPE
 class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
     metadata = {"render_modes": ["human", "rgb_array", "depth_array"]}
 
-    def __init__(self,
-                 mujoco_model_path,
-                 frame_skip,
-                 baseline_controller,
-                 camera_id=None,
-                 camera_name=None,
-                 render_mode="human"):
+    def __init__(
+        self,
+        mujoco_model_path,
+        frame_skip,
+        baseline_controller,
+        camera_id=None,
+        camera_name=None,
+        render_mode="human",
+        display_traj=False,
+        display_corners=False,
+    ):
 
         # Init base classes
         EzPickle.__init__(self)
@@ -48,6 +51,8 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
         # Set final rendering options
         self.render_mode = render_mode
         self.metadata["render_fps"] = int(np.round(1.0 / self.dt))
+        self.display_traj = display_traj
+        self.display_corners = display_corners
 
         # Define learning environment variables
         self.state = np.zeros(_EC.NUM_OBSERVABLE_STATES, dtype=NP_DTYPE)
@@ -58,6 +63,8 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
         self.baseline_controller = baseline_controller
         self.launch_pt = np.zeros(3)
         self.launch_vel = np.zeros(3)
+        self.launch_traj_res = 20
+        self.launch_traj = np.zeros((self.launch_traj_res, 3))
         self.state_indices = np.array([0, 7, 14, 15, 16, 17, 20, 23, 26, 29, 32], dtype=int)
         # q, q_dot, t_r, r1, r2, g, lp, lv, dp, dv
 
@@ -121,48 +128,57 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
 
     @typechecked
     def reward(self, state: NP_ARRTYPE) -> tuple[bool, NP_DTYPE]:
-
-        (_, _, remaining_time, released, releasing, goal, launch_pt, launch_vel, dart_pos,
+        (_, joint_ang_vels, remaining_time, released, releasing, goal, launch_pt, launch_vel, dart_pos,
          dart_vel) = self.decompose_state(state)
 
-        reward = NP_DTYPE(0)
-        eps = 1e-5
+        reward = 0.0
+        bonus = 0.0
 
-        # TODO: rebalance so after released is more important
         if not released:
-            mul = 0.5 if dart_pos[1] > launch_pt[1] else 100.0
-            reward -= mul * reward_functions.distance(dart_pos, launch_pt)
+            reward += 1.0 / (0.5 + reward_functions.ts_ss_similarity(dart_pos, launch_pt))
+            reward -= reward_functions.abs_norm_diff(dart_vel, launch_vel)
 
-            reward += 0.25*(np.dot(dart_vel, launch_vel) / (np.linalg.norm(dart_vel) * np.linalg.norm(launch_vel))) / (
-                reward_functions.ts_ss_similarity(dart_vel, launch_vel) + np.linalg.norm(dart_pos - launch_pt) +
-                eps)
+            # if remaining_time >= 0.9 * self.time_limit: bonus += 1.0
+            if dart_pos[1] < goal[1]: bonus -= 100.0
 
-            # reward += reward_functions.ts_ss_similarity(dart_vel, launch_vel)
-
-            if remaining_time >= 0.9 * self.time_limit:
-                reward += 10.0
-
-        if released: 
-            reward += 2.0*reward_functions.capped_inverse_distance(dart_pos, goal)
-            reward += 10.0 * reward_functions.on_dart_board(dart_pos)
-            reward += 1000.0 * reward_functions.close_enough(dart_pos, goal)
+        if released:
+            reward -= np.linalg.norm(joint_ang_vels)
+            reward += 1.0 / (1 + np.min(np.linalg.norm(dart_pos - self.launch_traj)))
 
         if releasing:
-            reward -= 0.1 * reward_functions.distance(dart_pos, launch_pt)
-            reward += 10.0 * (np.dot(dart_vel, launch_vel) / np.linalg.norm(dart_vel) *
-                       np.linalg.norm(launch_vel)) / (reward_functions.distance(dart_pos, launch_pt) + eps)
+            reward -= reward_functions.ts_ss_similarity(dart_vel, launch_vel)
+            reward -= reward_functions.ts_ss_similarity(dart_pos, launch_pt)
 
-        reward = NP_DTYPE(reward)
-        penalty = NP_DTYPE(-100.0)
+        reward = np.tanh(0.01 * reward)
 
-        if self.out_of_time(): return (True, reward + penalty)
-        if self.too_far_left_or_right(dart_pos[0]): return (True, reward + penalty)
-        if self.too_far_back(dart_pos[1]): return (True, reward + penalty)
-        if self.too_far_up_or_down(dart_pos[2]): return (True, reward + penalty)
-        if self.far_enough_forward(dart_pos[1]): return (True, reward)
-        else: return (False, reward)
+        terminal_reward = 0.0
+        terminal, penalty = self.terminal(dart_pos)
 
-    # Reset the model in the simulator
+        if terminal:
+            terminal_reward -= reward_functions.distance(dart_pos, goal)
+            terminal_reward += reward_functions.capped_inverse_distance(dart_pos, goal)
+            terminal_reward += 10.0 * reward_functions.on_dart_board(dart_pos)
+            terminal_reward += 100.0 * reward_functions.close_enough(dart_pos, goal)
+
+            terminal_reward = 10.0 * np.tanh(0.5 * terminal_reward)
+
+        return (terminal, NP_DTYPE(reward + bonus + penalty + terminal_reward))
+
+    def terminal(self, dart_pos):
+        terminal = True
+        penalty = -10.0
+        if self.out_of_time(): pass
+        elif self.too_far_left_or_right(dart_pos[0]): pass
+        elif self.too_far_back(dart_pos[1]): pass
+        elif self.too_far_up_or_down(dart_pos[2]): pass
+        elif self.far_enough_forward(dart_pos[1]):
+            penalty = 0.0
+        else:
+            penalty = 0.0
+            terminal = False
+        return (terminal, penalty)
+
+    # Reset the model in the simulator # TODO: make cleaner
     def reset_model(self) -> np.ndarray:
 
         # Set initial joint angles and compute forward kinematics
@@ -194,20 +210,22 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
 
         # Reset members
         self.goal = _EC.BULLSEYE + np.random.uniform(-_EC.BOARD_RADIUS, _EC.BOARD_RADIUS, self.goal.shape)
-        base_pt = np.array([-0.1, -0.1, 2.50])
-        launch_combos = calculate_launch_point_and_velocity_vectors(base_pt=base_pt,
-                                                                    len_x=0.2,
-                                                                    len_y=0.2,
-                                                                    len_z=0.2,
-                                                                    volume_res=10,
-                                                                    target_pt=self.goal,
-                                                                    v_min=0.0,
-                                                                    v_max=1.0,
-                                                                    vel_res=10,
-                                                                    g=9.81)  # TODO: put into args
+        base_pt = np.array([-0.1, -0.1, 2.55])
+        launch_combos = launch_pairs(base_pt=base_pt,
+                                     len_x=0.2,
+                                     len_y=0.2,
+                                     len_z=0.2,
+                                     volume_res=10,
+                                     target_pt=self.goal,
+                                     v_min=0.0,
+                                     v_max=1.0,
+                                     vel_res=10,
+                                     g=9.81)  # TODO: put into args
 
         min_idx = np.argmin(np.linalg.norm(launch_combos[:, 1, :], axis=1), axis=0)
         self.launch_pt, self.launch_vel = launch_combos[min_idx, 0, :], launch_combos[min_idx, 1, :]
+        self.launch_traj = trajectory(self.goal[1], self.launch_pt, self.launch_vel, 0.6, self.launch_traj_res)
+
         self.released = False
         self.releasing = False
         self.baseline_controller.reset_controller()
@@ -249,17 +267,29 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
         self._add_marker(dart_pos, color=[0.2, 0.7, 0.6, 0.35], label="p", size=0.03)
         self._add_marker(dart_pos + 0.1*dart_vel, color=[0.2, 0.3, 0.05, 0.35], label="v", size=0.015)
 
-        # c = [1, 0, 0, 1]
-        # self._add_marker(np.array([_EC.X_MAX, _EC.Y_MAX, _EC.Z_MAX]), color=c, label="+ + +", size=0.03)
-        # self._add_marker(np.array([_EC.X_MAX, _EC.Y_MAX, _EC.Z_MIN]), color=c, label="+ + -", size=0.03)
-        # self._add_marker(np.array([_EC.X_MAX, _EC.Y_MIN, _EC.Z_MAX]), color=c, label="+ - +", size=0.03)
-        # self._add_marker(np.array([_EC.X_MAX, _EC.Y_MIN, _EC.Z_MIN]), color=c, label="+ - -", size=0.03)
-        # self._add_marker(np.array([_EC.X_MIN, _EC.Y_MAX, _EC.Z_MAX]), color=c, label="- + +", size=0.03)
-        # self._add_marker(np.array([_EC.X_MIN, _EC.Y_MAX, _EC.Z_MIN]), color=c, label="- + -", size=0.03)
-        # self._add_marker(np.array([_EC.X_MIN, _EC.Y_MIN, _EC.Z_MAX]), color=c, label="- - +", size=0.03)
-        # self._add_marker(np.array([_EC.X_MIN, _EC.Y_MIN, _EC.Z_MIN]), color=c, label="- - -", size=0.03)
+        if self.display_corners:
+            self._display_corners()
+
+        if self.display_traj:
+            self._display_traj()
 
         self.render()
+
+    def _display_corners(self):
+        c = [1, 0, 0, 1]
+        self._add_marker(np.array([_EC.X_MAX, _EC.Y_MAX, _EC.Z_MAX]), color=c, label="+ + +", size=0.03)
+        self._add_marker(np.array([_EC.X_MAX, _EC.Y_MAX, _EC.Z_MIN]), color=c, label="+ + -", size=0.03)
+        self._add_marker(np.array([_EC.X_MAX, _EC.Y_MIN, _EC.Z_MAX]), color=c, label="+ - +", size=0.03)
+        self._add_marker(np.array([_EC.X_MAX, _EC.Y_MIN, _EC.Z_MIN]), color=c, label="+ - -", size=0.03)
+        self._add_marker(np.array([_EC.X_MIN, _EC.Y_MAX, _EC.Z_MAX]), color=c, label="- + +", size=0.03)
+        self._add_marker(np.array([_EC.X_MIN, _EC.Y_MAX, _EC.Z_MIN]), color=c, label="- + -", size=0.03)
+        self._add_marker(np.array([_EC.X_MIN, _EC.Y_MIN, _EC.Z_MAX]), color=c, label="- - +", size=0.03)
+        self._add_marker(np.array([_EC.X_MIN, _EC.Y_MIN, _EC.Z_MIN]), color=c, label="- - -", size=0.03)
+
+    def _display_traj(self):
+        c = [0.2, 0.7, 0.6, 0.35]
+        for pt in self.launch_traj:
+            self._add_marker(pt, color=c, label="", size=0.03)
 
     # Sets the relative pose used to compute weld constaints, this will probably not be necessary in the future
     def _set_weld_relpose(self, pos: np.ndarray, quat: np.ndarray, name: str):

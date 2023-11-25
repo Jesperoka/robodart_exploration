@@ -11,6 +11,7 @@ from rl_function_approximators.neural_networks import (HybridActorNetwork,
                                                        HybridCriticNetwork)
 from utils.common import all_finite_in, all_finite_out, all_np_dtype_in, all_t_dtype_in, all_t_dtype_out, plot_learning_curve 
 from utils.dtypes import NP_DTYPE, NP_ARRTYPE, T_ARRTYPE 
+from utils import data
 
 rng = np.random.default_rng()
 
@@ -314,7 +315,8 @@ class Agent():
 
 
 
-def basic_training_loop(env, n_games):
+def basic_training_loop(env, num_episodes):
+
     agent = Agent(state_size=env.observation_space.shape[0],
                   action_size=env.action_space.shape[0]-1,
                   discrete_action_size=2,
@@ -325,11 +327,17 @@ def basic_training_loop(env, n_games):
                   num_gradient_steps_per_episode=1,
                   )
 
-    filename = 'franka_dart_throw.png'
-    figure_file = 'logs/' + filename
+    filename = 'training_data_' + np.datetime_as_string(np.datetime64("now"))
+    filepath = 'logs/' + filename + str(".h5py")
 
-    best_score = np.inf # high is bad 
-    score_history = []
+    chunk_size = 200
+    final_distance_data = np.empty(chunk_size, dtype=NP_DTYPE) 
+    undiscounted_return_data = np.empty(chunk_size, dtype=NP_DTYPE) 
+    labels = ["final distance", "undiscounted return"]
+
+    min_mean_final_distance = np.inf 
+    mean_final_distance = np.inf 
+
     load_checkpoint = False
     load_first = False
 
@@ -337,46 +345,43 @@ def basic_training_loop(env, n_games):
         agent.load_models()
 
     # Episode
-    for i in range(n_games):
+    for episode in range(num_episodes):
+        idx = episode % chunk_size
         state, info = env.reset()
         done = False
 
         # Episode Rollout
         step = 0
-        sum_rewards = 0
-        while not done:
+        undiscounted_return = 0
+        while not done: # TODO: use fixed for loop instead (it's the same)
             cont_action, disc_action, full_tanh_action = agent.choose_action(state)
             next_state, reward, done, info = env.step(cont_action, disc_action)
             agent.remember(state, full_tanh_action, reward, next_state, done)
             state = next_state
             env._render()
             step += 1
-            sum_rewards += reward
-
-        score = info["distance"] # record final distance of dart 
+            undiscounted_return += reward
 
         # Hindsight Experience Replay 
         # agent.replay_buffer.hindsight_experience_replay(step, k=4)
 
-        # Optimization (standard experience replay)
         if not load_checkpoint:
-            agent.learn(i)
+            agent.learn(episode)
 
-        if i % 200 == 0:
-            x = np.arange(0, i, 1, dtype=np.int32)
-            plot_learning_curve(x, score_history, figure_file)
+        if episode % chunk_size == 0 and episode != 0:
+            data.save(filepath, [final_distance_data, undiscounted_return_data], labels)
 
-        score_history.append(score)
-        avg_score = np.mean(score_history[-100:])
+        final_distance_data[idx] = info["distance"]
+        undiscounted_return_data[idx] = undiscounted_return 
+        
+        if episode >= chunk_size:
+            window = np.arange(idx, idx - 100, - 1) % chunk_size
+            mean_final_distance = final_distance_data[window].mean()
 
-        if avg_score < best_score:
-            best_score = score
+            if mean_final_distance < min_mean_final_distance:
+                min_mean_final_distance = mean_final_distance
 
-            if not load_checkpoint:
-                agent.save_models()
+                if not load_checkpoint: 
+                    agent.save_models()
 
-        print('episode ', i, 'score %.8f' % score, 'avg_score %.8f' % avg_score, 'return %.8f' % sum_rewards)
-
-    if not load_checkpoint:
-        x = [i + 1 for i in range(n_games)]
-        plot_learning_curve(x, score_history, figure_file)
+        print('episode', episode, 'distance %.8f' % info["distance"], 'mean distance %.8f' % mean_final_distance, 'return %.8f' % undiscounted_return)
