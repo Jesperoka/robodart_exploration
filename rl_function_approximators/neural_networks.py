@@ -40,6 +40,7 @@ class CriticNetwork(nn.Module):
 
         self.optimizer = optim.Adam(self.parameters(), lr=lr, weight_decay=weight_decay)
         self.to(device)
+        self.register_grad_clip_hooks()
 
     @all_t_dtype_in_out(method=True)
     def forward(self, state, action):
@@ -55,6 +56,10 @@ class CriticNetwork(nn.Module):
 
     def load_checkpoint(self):
         self.load_state_dict(T.load(self.checkpoint_file))
+
+    def register_grad_clip_hooks(self):
+        for p in self.parameters():
+            p.register_hook(lambda grad: T.clamp(grad, -1.0, 1.0))
 # ---------------------------------------------------------------------------- #
 
 
@@ -86,6 +91,7 @@ class ActorNetwork(nn.Module):
 
         self.optimizer = optim.Adam(self.parameters(), lr=lr, weight_decay=weight_decay)
         self.to(device)
+        self.register_grad_clip_hooks()
 
 
     @all_t_dtype_in_out(method=True)
@@ -120,6 +126,10 @@ class ActorNetwork(nn.Module):
 
     def load_checkpoint(self):
         self.load_state_dict(T.load(self.checkpoint_file))
+
+    def register_grad_clip_hooks(self):
+        for p in self.parameters():
+            p.register_hook(lambda grad: T.clamp(grad, -1.0, 1.0))
 # ---------------------------------------------------------------------------- #
 
 
@@ -156,6 +166,7 @@ class HybridActorNetwork(nn.Module):
 
         self.optimizer = optim.Adam(self.parameters(), lr=lr, weight_decay=weight_decay)
         self.to(device)
+        self.register_grad_clip_hooks()
 
 
     @all_t_dtype_in_out(method=True)
@@ -171,6 +182,7 @@ class HybridActorNetwork(nn.Module):
     # @all_t_dtype_out
     def sample(self, state, reparameterize=True, eps=1e-6):
         mu, sigma, pi_d = self.forward(state)
+        
         gaussian = Normal(mu, sigma)
         discrete = Categorical(logits=pi_d)
 
@@ -201,6 +213,10 @@ class HybridActorNetwork(nn.Module):
 
     def load_checkpoint(self):
         self.load_state_dict(T.load(self.checkpoint_file))
+
+    def register_grad_clip_hooks(self):
+        for p in self.parameters():
+            p.register_hook(lambda grad: T.clamp(grad, -1.0, 1.0))
 # ---------------------------------------------------------------------------- #
 
 
@@ -232,6 +248,7 @@ class HybridCriticNetwork(nn.Module):
 
         self.optimizer = optim.Adam(self.parameters(), lr=lr, weight_decay=weight_decay)
         self.to(device)
+        self.register_grad_clip_hooks()
 
     @all_t_dtype_in_out(method=True)
     def forward(self, state, cont_action):
@@ -247,4 +264,8 @@ class HybridCriticNetwork(nn.Module):
 
     def load_checkpoint(self):
         self.load_state_dict(T.load(self.checkpoint_file))
+
+    def register_grad_clip_hooks(self):
+        for p in self.parameters():
+            p.register_hook(lambda grad: T.clamp(grad, -1.0, 1.0))
 # ---------------------------------------------------------------------------- #

@@ -39,7 +39,7 @@ EnvConsts = EnvConsts() # type: ignore
 # ---------------------------------------------------------------------------- #
 
 
-# Gathered Robot Poses 
+# Some Gathered Robot Poses 
 # ---------------------------------------------------------------------------- #
 @dataclass(frozen=True, slots=True, kw_only=True)
 class Poses:

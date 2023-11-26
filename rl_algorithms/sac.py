@@ -3,6 +3,7 @@ from typing import Unpack
 import numpy as np
 from numpy._typing import NDArray
 from typeguard import typechecked 
+from tqdm import tqdm
 import torch as T
 import torch.nn.functional as F
 
@@ -344,7 +345,17 @@ def basic_training_loop(env, num_episodes):
     if load_first:
         agent.load_models()
 
-    # Episode
+    num_pre_explorations = 4*agent.batch_size 
+    print("Gathering uniform state-action transition samples...")
+    for _ in tqdm(range(num_pre_explorations)):
+        env.pre_explore(agent.replay_buffer)
+        env.render()
+
+    print("Learning from uniform state-action transition samples...")
+    for i in tqdm(range(num_pre_explorations//10)):
+        agent.learn(i)
+
+    print("\nTraining...\n")
     for episode in range(num_episodes):
         idx = episode % chunk_size
         state, info = env.reset()
