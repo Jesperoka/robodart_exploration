@@ -18,7 +18,7 @@ def transformation_matrix_to_cartesian_pose(transformation_matrix=np.array((4,4)
     orientation = R.from_matrix(transformation_matrix[0:3, 0:3]).as_quat()
 
     # May have to rearrange quaternion to fit with panda_py quaternions
-    # goal_quaternion = np.array([r[1], r[2], r[3], r[0]])
+    # orientation = np.array([orientation[1], orientation[2], orientation[3], orientation[0]])
 
     cartesian_pose = np.append(position, orientation)
 
