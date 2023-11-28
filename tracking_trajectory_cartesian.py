@@ -2,6 +2,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from movement_primitives.dmp import DMPWithFinalVelocity
 from json import load
+from plot_dmp import plot_dmp
+from convert_pose_expression import cartesian_pose_to_transformation_matrix, transformation_matrix_to_cartesian_pose
+from scipy.spatial.transform import Rotation as R
 
 import panda_py
 from panda_py import controllers
@@ -16,7 +19,8 @@ if __name__ == '__main__':
     ####################################################
 
     # Interpolating trajectory from set of poses
-    # Poses provided
+    # Cartesian poses provided
+
     poses = [
         [-0.26684645, 0.72326601, 0.29045006, -0.33319444, -0.63154138, 0.2573719, 0.65107346],
         [-0.27151081, 0.59114054, 0.43162935, -0.2741086, -0.65613221, 0.21893884, 0.66814728],
@@ -46,33 +50,51 @@ if __name__ == '__main__':
     ###################################################
 
 
-    Y = concatenated_interpolated_poses
-    N = max(Y.shape)
+    demo_y = concatenated_interpolated_poses
+    N = max(demo_y.shape)
     execution_time = 15
     dt = execution_time / N
     n_weights_per_dim = 15
     T = np.linspace(0, execution_time, N)   
 
     dmp = DMPWithFinalVelocity(n_dims=7, execution_time=execution_time, dt=dt, n_weights_per_dim=n_weights_per_dim)
-    dmp.imitate(T, Y)
+    dmp.imitate(T, demo_y)
 
     # Example goal position and velocity from target_to_velocity_map.py
-    cartesian_goal = np.array([[-0.26, -0.2, 1.2],[0, -0.14505042, 1]])
-    dmp.configure(goal_y=np.array(np.append(cartesian_goal[0],Y[-1,3:7])), goal_yd=np.array(np.append(cartesian_goal[1],[0,0,0,0])))
+    # cartesian_goal = np.array([[-0.26, -0.2, 1.2],[0, -0.14505042, 1]])
 
+    transformation_matrix = np.array([[0.03815925, -0.03711592, -0.99858211, -0.26],
+                                    [-0.69274338, 0.71920556, -0.053205, -0.2],
+                                    [0.72016055, 0.69379141, 0.00173257, 1.2],
+                                    [0, 0, 0, 1]])
 
-    T, Y = dmp.open_loop(run_t=execution_time)
+    goal_y = transformation_matrix_to_cartesian_pose(transformation_matrix)
 
-    #q = Y
-    #dq = (1.0/dmp.dt_)*np.gradient(Y, axis=0)
-    
-    panda.move_to_joint_position([1.6715230781752977, 0.7786007218522945, -0.008575725651101039, -1.3165846017619227, 1.6955766522261893, 1.6617156298160554, 1.0561511186108676])
+    dmp.configure(goal_y=goal_y, goal_yd=np.array(np.append([0, -0.14505042, 1],[0,0,0,0])))
+
+    T, dmp_y = dmp.open_loop(run_t=execution_time)
+    dmp_yd = (1.0/dmp.dt_)*np.gradient(dmp_y, axis=0)
+
+    plot_dmp(execution_time, dt, demo_y, dmp_y, dmp_yd)
+
+    # Generate trajectory in joint space for control purpose
+    joint_trajectory = np.zeros_like(dmp_y)
+    joint_trajectory[0] = poses[0]
+
+    for index, pose in enumerate(dmp_y):
+        if index > 0:
+            pose_as_matrix = cartesian_pose_to_transformation_matrix(pose)
+            joint_trajectory[index] = panda_py.ik(pose_as_matrix, joint_trajectory[index-1])
+
+    joint_trajectory_yd = (1.0/dmp.dt_)*np.gradient(joint_trajectory, axis=0)
+
+    panda.move_to_joint_position(joint_trajectory[0])
     input("Press any key to start")
 
     i = 0
-    ctrl = controllers.CartesianImpedance()
+    ctrl = controllers.JointPosition()
     panda.start_controller(ctrl)
     with panda.create_context(frequency=500, max_runtime=execution_time) as ctx:
         while ctx.ok():
-            ctrl.set_control(Y[i,0:3], Y[i,3:7])
+            ctrl.set_control(joint_trajectory[i], joint_trajectory_yd[i])
             i += 1
