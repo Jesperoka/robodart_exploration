@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def plot_dmp(execution_time, dt, demo_y, dmp_y, dmp_yd, result_y=np.array([0]), result_yd=np.array([0])):
+def plot_dmp(execution_time, dt, demo_y, dmp_y, dmp_yd, result_y=np.array([0]), result_yd=np.array([0]), filename="test.pdf"):
     plt.figure(figsize=(20, 15))
     ax1 = plt.subplot(2,7,1)
     ax1.set_title("Dimension 1")
@@ -66,8 +66,6 @@ def plot_dmp(execution_time, dt, demo_y, dmp_y, dmp_yd, result_y=np.array([0]), 
     ax14 = plt.subplot(2,7,14)
     ax14.set_xlabel("Time")
     ax14.set_ylabel("Velocity")
-
-    goal_yd = 0
 
     if len(result_y) > 1:
         result_t = np.linspace(0, execution_time, max(result_y.shape))
@@ -136,5 +134,5 @@ def plot_dmp(execution_time, dt, demo_y, dmp_y, dmp_yd, result_y=np.array([0]), 
 
     ax1.legend()
     plt.tight_layout()
-    plt.savefig("test.pdf")
+    plt.savefig(filename)
     plt.show()
