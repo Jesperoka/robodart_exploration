@@ -24,10 +24,12 @@ def on_dart_board(d_pos, board_center=_EC.BULLSEYE) -> NP_DTYPE:
         return NP_DTYPE(1)
     return NP_DTYPE(0)
     
+# NOTE: Contrary to what the authors use, I using sum instead of product 
+# because cross product is zero when one of the vectors is zero, creating a bad local minima. 
 def ts_ss_similarity(v1: NP_ARRTYPE, v2: NP_ARRTYPE) -> NP_DTYPE:
     ts = np.linalg.norm(np.cross(v1, v2), ord=2)
     ss = (np.linalg.norm(v1 - v2, ord=1) + np.linalg.norm(v1 - v2, ord=2))**2
-    return ts*ss
+    return ts + ss
 
 def capped_inverse_distance(d_pos, g_pos, minimum_distance=1e-3) -> NP_DTYPE:
     euclidean_distance = distance(d_pos, g_pos)

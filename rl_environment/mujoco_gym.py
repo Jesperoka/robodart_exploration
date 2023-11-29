@@ -137,14 +137,14 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
         if not released:
             reward += 1.0 / (1.0 + reward_functions.ts_ss_similarity(dart_pos, launch_pt))
             reward += 1.0 / (1.0 + reward_functions.abs_norm_diff(dart_vel, launch_vel))
+            reward += 1.0 / (1.0 + np.abs(dart_pos[2] - launch_pt[2]))
 
             # if remaining_time >= 0.9 * self.time_limit: bonus += 1.0
             if dart_pos[1] < launch_pt[1]:
                 bonus -= 100.0
 
         if releasing:
-            bonus += 1.0 / (0.75 + reward_functions.ts_ss_similarity(dart_vel, launch_vel))
-            bonus += 1.0 / (0.75 + reward_functions.ts_ss_similarity(dart_pos, launch_pt))
+            bonus += 10.0 / (1.0 + reward_functions.ts_ss_similarity(dart_pos, launch_pt) + reward_functions.ts_ss_similarity(dart_vel, launch_vel))
 
         if released:
             reward += 1.0 / (10.0 + np.linalg.norm(joint_ang_vels))
@@ -306,7 +306,7 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
 
     def _reset_goals(self):
         self.goal = _EC.BULLSEYE + np.random.uniform(-_EC.BOARD_RADIUS, _EC.BOARD_RADIUS, self.goal.shape)
-        base_pt = np.array([-0.1, -0.1, 2.55])
+        base_pt = np.array([0.2, -0.1, 2.55])
         args = (base_pt, 0.2, 0.2, 0.2, 10, self.goal, 0.0, 1.0, 10)
         launch_combos = launch_pairs(*args)
         min_idx = np.argmin(np.linalg.norm(launch_combos[:, 1, :], axis=1), axis=0)

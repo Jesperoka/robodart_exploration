@@ -16,6 +16,7 @@ from utils import data
 
 rng = np.random.default_rng()
 
+# NOTE: considering switching to Reverb in future
 class ReplayBuffer():
     
     def __init__(self, replay_buffer_size: int, state_size: int, action_size: int):
@@ -111,9 +112,9 @@ class Agent():
     def __init__(
         self,
         lr_actor=0.0003,
-        lr_critic_1=0.0003,
-        lr_critic_2=0.0003,
-        weight_decay=0.0001,
+        lr_critic_1=0.0001,
+        lr_critic_2=0.0001,
+        weight_decay=0.0000, # turned off for now
         state_size=0,
         action_size=0, # TODO: rename to continuous and add toggles
         discrete_action_size=0,
@@ -121,12 +122,12 @@ class Agent():
         min_action=0,
         alpha=1.0,
         alpha_d=1.0,
-        gamma=0.99,
+        gamma=1.0,
         tau=0.005,
         m_scale=0.9,
         l_zero=-1.0,
-        update_actor_every=1,
-        update_targets_every=1,
+        update_actor_every=2,
+        update_targets_every=2,
         num_gradient_steps_per_episode=1,
         batch_size=512,
         replay_buffer_size=1000000,
@@ -136,14 +137,14 @@ class Agent():
         self.max_action = T.tensor(max_action, device=device)
         self.min_action = T.tensor(min_action, device=device)
 
-        self.target_alpha = T.tensor(-action_size, device=device)
-        self.target_alpha_d = T.tensor(-discrete_action_size, device=device)
+        self.target_alpha = T.tensor(-action_size, device=device).detach()
+        self.target_alpha_d = T.tensor(-discrete_action_size, device=device).detach()
 
         self.log_alpha = T.tensor([0.0], requires_grad=True, device=device)
         self.log_alpha_d = T.tensor([0.0], requires_grad=True, device=device)
 
-        self.alpha = T.tensor(alpha, device=device)
-        self.alpha_d = T.tensor(alpha_d, device=device)
+        self.alpha = self.log_alpha.exp().detach()
+        self.alpha_d = self.log_alpha_d.exp().detach()
 
         self.alpha_optimizer = T.optim.Adam(params=[self.log_alpha], lr=lr_actor)
         self.alpha_d_optimizer = T.optim.Adam(params=[self.log_alpha_d], lr=lr_actor)
@@ -238,11 +239,10 @@ class Agent():
             cont_action, disc_action = self.separate_continuous_discrete(action)
 
             self.critic_gradient_step(state, cont_action, disc_action, reward, next_state, done)
-            cont_action, cont_log_probs, disc_action, disc_log_probs, disc_probs = self.actor.sample(next_state, reparameterize=True)                                                                                                                           
 
             if step_index % self.update_actor_every == 0:
-                self.actor_gradient_step(state, cont_action, cont_log_probs, disc_log_probs, disc_probs)
-                self.alpha_gradient_step(cont_log_probs, disc_log_probs, disc_probs)
+                self.actor_gradient_step(state)
+                self.alpha_gradient_step(state)
 
             if step_index % self.update_targets_every == 0:
                 self.update_target_networks(self.tau)
@@ -257,8 +257,8 @@ class Agent():
             next_q2_target = self.critic_2_target(next_state, next_cont_action)
             next_q_target = T.min(next_q1_target, next_q2_target)
 
-            # WARNING: this assumes continuous actions are dependent on discrete ones I think
-            expected_next_q_target = T.sum(next_disc_probs * (next_q_target - self.alpha * next_cont_log_probs - self.alpha_d * next_disc_log_probs), dim=1).view(-1)
+            # TODO: check performance with the other formulation
+            expected_next_q_target = T.sum(next_disc_probs * (next_q_target - self.alpha * next_cont_log_probs - self.alpha_d * next_disc_log_probs), dim=1)
 
             # TODO: not using for now while implementing hybrid actions
             # Munchausen Reinforcement Learning
@@ -266,32 +266,32 @@ class Agent():
             scaled_log_policy = 0 #self.m_scale * self.alpha * T.clamp(log_probs, min=self.l_zero, max=0)
 
             # Temporal Difference
-            q_target = (reward + scaled_log_policy + self.gamma * (1 - done) * (expected_next_q_target)).detach()
+            q_target = (reward + scaled_log_policy + self.gamma * (1 - done) * (expected_next_q_target)).view(-1)
             # q_target = (reward + scaled_log_policy + self.gamma * (1 - done) * (next_q_target - self.alpha * next_cont_log_prob)).detach()
 
         # Compute critic loss
-        q1 = self.critic_1(state, cont_action).gather(1, disc_action.long().view(-1, 1)).squeeze()
-        q2 = self.critic_2(state, cont_action).gather(1, disc_action.long().view(-1, 1)).squeeze()
-        q1_loss = 0.5 * F.mse_loss(q1, q_target)
-        q2_loss = 0.5 * F.mse_loss(q2, q_target)
+        q1 = self.critic_1(state, cont_action).gather(1, disc_action.long().view(-1, 1)).view(-1)
+        q2 = self.critic_2(state, cont_action).gather(1, disc_action.long().view(-1, 1)).view(-1)
+        q1_loss = F.mse_loss(q1, q_target)
+        q2_loss = F.mse_loss(q2, q_target)
+        q_loss = q1_loss + q2_loss
         # TODO: prioritized experience replay
 
         # Backpropagate critic networks
         self.critic_1.zero_grad(set_to_none=True)
-        q1_loss.backward()
-        self.critic_1.optimizer.step()
-
         self.critic_2.zero_grad(set_to_none=True)
-        q2_loss.backward()
-        self.critic_2.optimizer.step()
+        q_loss.backward()
+        self.critic_1.optimizer.step()
+        self.critic_1.optimizer.step()
 
 
     @all_t_dtype_in(method=True)
-    def actor_gradient_step(self, state, cont_action, cont_log_probs, disc_log_probs, disc_probs):
+    def actor_gradient_step(self, state):
+        cont_action, cont_log_probs, disc_action, disc_log_probs, disc_probs = self.actor.sample(state, reparameterize=True)  
         q = T.min(self.critic_1(state, cont_action), self.critic_2(state, cont_action))
 
-        actor_loss_c = T.sum(disc_probs * (self.alpha * cont_log_probs - q), dim=1).mean()  # - policy_prior_log_probs
-        actor_loss_d = T.sum(disc_probs * (self.alpha_d * disc_log_probs - q), dim=1).mean()
+        actor_loss_c = T.sum(disc_probs * (self.log_alpha.exp() * cont_log_probs - q), dim=1).mean()  # - policy_prior_log_probs
+        actor_loss_d = T.sum(disc_probs * (self.log_alpha_d.exp() * disc_log_probs - q), dim=1).mean()
 
         self.actor.zero_grad(set_to_none=True)
         (actor_loss_c + actor_loss_d).backward()
@@ -299,21 +299,21 @@ class Agent():
 
 
     @all_t_dtype_in(method=True)
-    def alpha_gradient_step(self, cont_log_probs, disc_log_probs, disc_probs):
+    def alpha_gradient_step(self, state):
+        with T.no_grad():
+            _, cont_log_probs, _, disc_log_probs, disc_probs = self.actor.sample(state)
         alpha_c_loss = -T.sum(self.log_alpha * (disc_probs * (cont_log_probs + self.target_alpha)).detach(), dim=1).mean()
         alpha_d_loss = -T.sum(self.log_alpha_d * (disc_probs * (disc_log_probs + self.target_alpha_d)).detach(), dim=1).mean()
 
         self.alpha_optimizer.zero_grad(set_to_none=True)
         alpha_c_loss.backward()
         self.alpha_optimizer.step()
-        self.alpha = T.exp(self.log_alpha)
+        self.alpha = self.log_alpha.exp().detach()
 
         self.alpha_d_optimizer.zero_grad(set_to_none=True)
         alpha_d_loss.backward()
         self.alpha_d_optimizer.step()
-        self.alpha_d = T.exp(self.log_alpha_d)
-
-
+        self.alpha_d = self.log_alpha_d.exp().detach()
 
 
 def basic_training_loop(env, num_episodes):
@@ -345,15 +345,15 @@ def basic_training_loop(env, num_episodes):
     if load_first:
         agent.load_models()
 
-    num_pre_explorations = 4*agent.batch_size 
-    print("Gathering uniform state-action transition samples...")
-    for _ in tqdm(range(num_pre_explorations)):
-        env.pre_explore(agent.replay_buffer)
-        env.render()
+    # num_pre_explorations = 4*agent.batch_size 
+    # print("Gathering uniform state-action transition samples...")
+    # for _ in tqdm(range(num_pre_explorations)):
+    #     env.pre_explore(agent.replay_buffer)
+    #     env.render()
 
-    print("Learning from uniform state-action transition samples...")
-    for i in tqdm(range(num_pre_explorations//10)):
-        agent.learn(i)
+    # print("Learning from uniform state-action transition samples...")
+    # for i in tqdm(range(num_pre_explorations//10)):
+    #     agent.learn(i)
 
     print("\nTraining...\n")
     for episode in range(num_episodes):
@@ -373,11 +373,12 @@ def basic_training_loop(env, num_episodes):
             step += 1
             undiscounted_return += reward
 
+            if not load_checkpoint:
+                agent.learn(episode)
+
         # Hindsight Experience Replay 
         # agent.replay_buffer.hindsight_experience_replay(step, k=4)
 
-        if not load_checkpoint:
-            agent.learn(episode)
 
         if episode % chunk_size == 0 and episode != 0:
             data.save(filepath, [final_distance_data, undiscounted_return_data], labels)

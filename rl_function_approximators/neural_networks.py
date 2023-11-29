@@ -186,8 +186,9 @@ class HybridActorNetwork(nn.Module):
         gaussian = Normal(mu, sigma)
         discrete = Categorical(logits=pi_d)
 
-        if reparameterize: cont_action = gaussian.rsample()
-        else: cont_action = gaussian.sample()
+        # if reparameterize: cont_action = gaussian.rsample()
+        # else: cont_action = gaussian.sample()
+        cont_action = gaussian.rsample() 
 
         disc_action = discrete.sample()
 
