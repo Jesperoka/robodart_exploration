@@ -3,8 +3,9 @@ import numpy as np
 LOWER_JOINT_LIMITS = np.array([-2.8973, -1.7628, -2.8973, -3.0718, -2.8973, -0.0175, -2.8973])
 UPPER_JOINT_LIMITS = np.array([2.8973, 1.7628, 2.8973, -0.0698, 2.8973, 3.7525, 2.8973])
 JOINT_VELOCITY_LIMITS = np.array([2.1750, 2.1750, 2.1750, 2.1750, 2.6100, 2.6100, 2.6100])
+CARTESIAN_VELOCITY_LIMIT = 1.7
 
-def limit_position(q):
+def limit_joint_position(q):
     too_high = np.greater(q, UPPER_JOINT_LIMITS)
     too_low = np.greater(LOWER_JOINT_LIMITS, q)
 
@@ -19,11 +20,19 @@ def limit_position(q):
     return q
 
 
-def limit_velocity(q):
+def limit_joint_velocity(q):
     too_high = np.greater(np.abs(q), JOINT_VELOCITY_LIMITS)
 
     for i, val in enumerate(too_high):
         if val:
             q[i] = JOINT_VELOCITY_LIMITS[i]-0.01
+
+    return q
+
+def limit_cartesian_velocity(q):
+    norm = np.linalg.norm(q)
+    
+    if norm > CARTESIAN_VELOCITY_LIMIT:
+        q = CARTESIAN_VELOCITY_LIMIT/norm*q
 
     return q
