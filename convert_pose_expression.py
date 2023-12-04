@@ -23,8 +23,12 @@ def transformation_matrix_to_cartesian_pose(transformation_matrix=np.array((4,4)
 
     return cartesian_pose
 
-# Converts a quaternion of the form (x, y, z, w) rotation vector (omega_x, omega_y, omega_z)
+# Converts a quaternion of the form (x, y, z, w) to a rotation vector (omega_x, omega_y, omega_z)
 def quaternion_to_rotation_vector(quaternion=np.array(4)):
 
     return R.from_quat(quaternion).as_rotvec()
 
+# Converts a rotation vector (omega_x, omega_y, omega_z) to a quaternion of the form (x, y, z, w) 
+def rotation_vector_to_quaternion(rotvec=np.array(3)):
+
+    return R.from_rotvec(rotvec).as_quat()

@@ -3,7 +3,7 @@ import numpy as np
 from movement_primitives.dmp import DMPWithFinalVelocity
 from json import load
 from plot_dmp import plot_dmp
-from convert_pose_expression import cartesian_pose_to_transformation_matrix, transformation_matrix_to_cartesian_pose, quaternion_to_rotation_vector
+from convert_pose_expression import cartesian_pose_to_transformation_matrix, transformation_matrix_to_cartesian_pose, quaternion_to_rotation_vector, rotation_vector_to_quaternion
 from scipy.spatial.transform import Rotation as R
 from target_to_velocity_map import calculate_launch_point_and_velocity_vectors
 from jacobian import get_jacobian, get_jacobian_3_joints
@@ -17,7 +17,7 @@ ROBOT_IP = "192.168.0.1"    # don't know if we ever need robot IP
 
 if __name__ == '__main__':
 
-    panda = panda_py.Panda(SHOP_FLOOR_IP)
+    # panda = panda_py.Panda(SHOP_FLOOR_IP)
 
     ####################################################
 
@@ -81,7 +81,7 @@ if __name__ == '__main__':
     # DH parameters of end effector (a = 1.34m + 0.1m = 1.44m, d = 0.11m, alpha = 0, theta = 0)
     translational_goal_vel = limit_cartesian_velocity(cartesian_goal_vel)
     diff = cartesian_goal_vel-translational_goal_vel
-    angular_goal_vel = np.linalg.norm(diff)/1.44
+    angular_goal_vel = rotation_vector_to_quaternion([0, 0, np.linalg.norm(diff)/1.44])
 
 
     # 45 degrees upwards towards dart board
@@ -89,13 +89,13 @@ if __name__ == '__main__':
 
     goal_y = np.append(cartesian_goal_pos, cartesian_goal_orientation)
 
-    # dmp.configure(goal_y=goal_y, goal_yd=np.array(np.append(translational_goal_vel,[0,0,0,0])))
-    dmp.configure(goal_y=goal_y)
+    dmp.configure(goal_y=goal_y, goal_yd=np.array(np.append(translational_goal_vel, angular_goal_vel)))
+    # dmp.configure(goal_y=goal_y)
 
     T, dmp_y = dmp.open_loop(run_t=execution_time)
     dmp_yd = (1.0/dmp.dt_)*np.gradient(dmp_y, axis=0)
 
-    #plot_dmp(execution_time, dt, demo_y, dmp_y, dmp_yd, filename="cartesian_dmp.pdf")
+    plot_dmp(execution_time, dt, demo_y, dmp_y, dmp_yd, filename="cartesian_dmp.pdf")
 
 
     # Generate trajectory in joint space for control purpose
@@ -103,7 +103,7 @@ if __name__ == '__main__':
     joint_trajectory[0] = joint_poses[0]
     
     # I do not konw what alpha should be
-    alpha = 0.06
+    alpha = 0.1
     print("alpha = ", alpha)
 
     for index, pose in enumerate(dmp_y):
@@ -112,11 +112,26 @@ if __name__ == '__main__':
             q = joint_trajectory[index-1]
             J = get_jacobian(q)
             pseudo_J = np.linalg.pinv(J)
+            x_desired = np.zeros(6)
+            x_desired[0:3] = pose[0:3]
+            x_desired[3:7] = quaternion_to_rotation_vector(pose[3:7])
             delta_x = np.zeros(6)
-            delta_x[0:3] = (pose-dmp_y[index-1])[0:3]
-            delta_x[3:6] = quaternion_to_rotation_vector(pose[3:7])-quaternion_to_rotation_vector(dmp_y[index-1][3:7])
+            delta_x[0:3] = x_desired[0:3]-dmp_y[index-1][0:3]
+            delta_x[3:6] = x_desired[0:3]-quaternion_to_rotation_vector(dmp_y[index-1][3:7])
 
-            q_next = q + alpha*(pseudo_J @ delta_x)
+            # q_next = q_next + alpha*(pseudo_J @ delta_x)
+
+#############################################
+            q_next = q
+            print(index)
+            while np.linalg.norm(delta_x) > 0.1:
+                q_next = q_next + alpha*(pseudo_J @ delta_x)
+                q_next = limit_joint_position(q_next)
+                J = get_jacobian(q_next)
+                pseudo_J = np.linalg.pinv(J)
+                x_estimate = transformation_matrix_to_cartesian_pose(panda_py.fk(q_next))
+                delta_x = x_desired-np.append(x_estimate[0:3], quaternion_to_rotation_vector(x_estimate[3:7]))
+#############################################
 
             q_next = limit_joint_position(q_next)
 
@@ -150,20 +165,20 @@ if __name__ == '__main__':
     plot_dmp(execution_time, dt, new_traj, joint_dmp_y, joint_dmp_yd, filename="joint_space_dmp.pdf")
 
 
-    panda.move_to_joint_position(joint_dmp_y[0])
-    input("Press any key to start")
+    # panda.move_to_joint_position(joint_dmp_y[0])
+    # input("Press any key to start")
 
-    i = 0
-    ctrl = controllers.JointPosition()
-    panda.start_controller(ctrl)
-    with panda.create_context(frequency=1000, max_runtime=execution_time) as ctx:
-        while ctx.ok():
-            ctrl.set_control(joint_dmp_y[i], joint_dmp_yd[i])
-            i += 1
+    # i = 0
+    # ctrl = controllers.JointPosition()
+    # panda.start_controller(ctrl)
+    # with panda.create_context(frequency=1000, max_runtime=execution_time) as ctx:
+    #     while ctx.ok():
+    #         ctrl.set_control(joint_dmp_y[i], joint_dmp_yd[i])
+    #         i += 1
 
 
-    # Extract results
-    result_y = np.array(panda.get_log()['q'])
-    result_yd = np.array(panda.get_log()['dq'])
+    # # Extract results
+    # result_y = np.array(panda.get_log()['q'])
+    # result_yd = np.array(panda.get_log()['dq'])
 
-    plot_dmp(execution_time, dt, new_traj, joint_dmp_y, joint_dmp_yd, result_y, result_yd, filename="result.pdf")
+    # plot_dmp(execution_time, dt, new_traj, joint_dmp_y, joint_dmp_yd, result_y, result_yd, filename="result.pdf")
