@@ -66,7 +66,7 @@ def plot_trajectory(target_pt, vel_start_combos, max_t, g=9.81):
 # Example usage
 if __name__ == "__main__":
     g = 0.98219  # local gravitational acceleration in Trondheim at 45m according to WolframAlpha 
-    base_pt = np.array([-0.2, 0.1, 1.2])
+    base_pt = np.array([0.2, 0.1, 1.2])
     dim_lengths = (0.4, 0.4, 0.4)
     volume_res = 10
     target_pt = np.array([2.0, 0.0, 1.0])

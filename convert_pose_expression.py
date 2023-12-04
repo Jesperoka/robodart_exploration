@@ -16,11 +16,15 @@ def transformation_matrix_to_cartesian_pose(transformation_matrix=np.array((4,4)
     
     position = transformation_matrix[0:3, 3].T
     orientation = R.from_matrix(transformation_matrix[0:3, 0:3]).as_quat()
-
     # May have to rearrange quaternion to fit with panda_py quaternions
-    # goal_quaternion = np.array([r[1], r[2], r[3], r[0]])
+    # orientation = np.array([orientation[1], orientation[2], orientation[3], orientation[0]])
 
     cartesian_pose = np.append(position, orientation)
 
     return cartesian_pose
+
+# Converts a quaternion of the form (x, y, z, w) rotation vector (omega_x, omega_y, omega_z)
+def quaternion_to_rotation_vector(quaternion=np.array(4)):
+
+    return R.from_quat(quaternion).as_rotvec()
 
