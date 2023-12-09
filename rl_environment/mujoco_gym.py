@@ -133,27 +133,35 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
 
         reward = 0.0
         bonus = 0.0
+        penalty = 0.0
+
+        # TODO: idea, first X seconds, align arm with launch_pt, next, perform throw
+
+        if (np.abs(joint_ang_vels) >= _EC.Q_DOT_MAX).any():
+                penalty -= 0.01
 
         if not released:
             reward += 1.0 / (1.0 + reward_functions.ts_ss_similarity(dart_pos, launch_pt))
-            reward += 1.0 / (1.0 + reward_functions.abs_norm_diff(dart_vel, launch_vel))
-            reward += 1.0 / (1.0 + np.abs(dart_pos[2] - launch_pt[2]))
+            reward += 0.6 / (1.0 + reward_functions.abs_norm_diff(dart_vel, launch_vel))
+            reward -= 0.01*np.linalg.norm(joint_ang_vels[np.where(np.abs(joint_ang_vels) > _EC.Q_DOT_MAX)], ord=2)
+                            
+            # if dart_pos[1] < launch_pt[1]:
+            #     penalty -= 100.0
 
-            # if remaining_time >= 0.9 * self.time_limit: bonus += 1.0
-            if dart_pos[1] < launch_pt[1]:
-                bonus -= 100.0
+        # TODO: what happens if I reduct std_dev of actions
 
         if releasing:
             bonus += 10.0 / (1.0 + reward_functions.ts_ss_similarity(dart_pos, launch_pt) + reward_functions.ts_ss_similarity(dart_vel, launch_vel))
+            penalty -= 0.1*reward_functions.distance(dart_pos, launch_pt)
+            penalty -= 0.1*reward_functions.distance(dart_vel, launch_vel)
 
         if released:
-            reward += 1.0 / (10.0 + np.linalg.norm(joint_ang_vels))
             reward += 1.0 / (1.0 + np.min(np.linalg.norm(dart_pos - self.launch_traj)))
 
         reward = np.tanh(0.01 * reward)
 
         terminal_reward = 0.0
-        terminal, penalty = self.terminal(dart_pos)
+        terminal, fail_penalty = self.terminal(dart_pos)
 
         if terminal:
             terminal_reward -= reward_functions.distance(dart_pos, goal)
@@ -161,9 +169,9 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
             terminal_reward += 10.0 * reward_functions.on_dart_board(dart_pos)
             terminal_reward += 100.0 * reward_functions.close_enough(dart_pos, goal)
 
-            terminal_reward = 10.0 * np.tanh(0.5 * terminal_reward)
+            terminal_reward = 2.5 * np.tanh(0.01 * terminal_reward)
 
-        return (terminal, NP_DTYPE(reward + bonus + penalty + terminal_reward))
+        return (terminal, NP_DTYPE(reward + bonus + penalty + fail_penalty + terminal_reward))
 
     def terminal(self, dart_pos):
         terminal = True
@@ -307,7 +315,7 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
     def _reset_goals(self):
         self.goal = _EC.BULLSEYE + np.random.uniform(-_EC.BOARD_RADIUS, _EC.BOARD_RADIUS, self.goal.shape)
         base_pt = np.array([0.2, -0.1, 2.55])
-        args = (base_pt, 0.2, 0.2, 0.2, 10, self.goal, 0.0, 1.0, 10)
+        args = (base_pt, 0.2, 0.4, 0.2, 10, self.goal, 0.0, 1.0, 10)
         launch_combos = launch_pairs(*args)
         min_idx = np.argmin(np.linalg.norm(launch_combos[:, 1, :], axis=1), axis=0)
         self.launch_pt, self.launch_vel = launch_combos[min_idx, 0, :], launch_combos[min_idx, 1, :]

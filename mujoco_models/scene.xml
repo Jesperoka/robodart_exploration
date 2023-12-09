@@ -3,7 +3,7 @@
 
     <!-- Set up simulator options and include the Franka Emika Robot -->
     <compiler angle="radian" meshdir="franka_emika_panda/assets" autolimits="true"/>
-    <option integrator="implicitfast" impratio="10"/>
+    <option integrator="implicitfast" impratio="10" timestep="0.0012"/>
     <option>
         <flag contact="disable"/>
     </option>

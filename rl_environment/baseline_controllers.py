@@ -118,14 +118,14 @@ class SelectedJointsPID(ControlLog):
 
         # Predetermined Control Parameters
         self.Kp = np.array([200.0, 100, 200.0, 100, 100.0, 100.0, 100])
-        self.Ki = np.array([1.0,  0, 1.0,  0, 0.0,  0.0,  0])
-        self.Kd = np.array([20.0,  0, 20.0,  0, 20.0,  20.0,  0])
+        self.Ki = np.array([1.0,  1.0, 1.0,  1.0, 1.0,  1.0,  1.0])
+        self.Kd = np.array([20.0,  20.0, 20.0,  20.0, 20.0,  20.0,  20.0])
 
-        # Predetermined joints
-        self.qpos_ref_1 = Poses.q0[0]
-        self.qpos_ref_3 = Poses.q0[2]
-        # self.qpos_ref_5 = Poses.q0[4]
-        self.qpos_ref_6 = Poses.q0[5]
+        # Predetermined joints # TODO: switch back to joint 0 control
+        self.qpos_ref_0 = Poses.q0[0]
+        self.qpos_ref_2 = Poses.q0[2]
+        self.qpos_ref_4 = Poses.q0[4]
+        self.qpos_ref_5 = Poses.q0[5]
 
         # Control limits
         self.a_min = np.array([*EnvConsts.TAU_MIN]) 
@@ -139,7 +139,8 @@ class SelectedJointsPID(ControlLog):
     def __call__(self, t, qpos, qvel, qpos_ref, qvel_ref=np.zeros(7)):
         dt = t - self.t_prev
 
-        qpos_ref = np.array([self.qpos_ref_1, qpos_ref[0], self.qpos_ref_3, qpos_ref[1], qpos_ref[2], self.qpos_ref_6, qpos_ref[3]])
+        qpos_ref_0 = self.qpos_ref_0 + qpos_ref[0] # joint 0 is only allowed small deviations
+        qpos_ref = np.array([qpos_ref_0, qpos_ref[1], self.qpos_ref_2, qpos_ref[2], self.qpos_ref_4, self.qpos_ref_5, qpos_ref[3]])
 
         e = qpos_ref - qpos                                     # P
         self.e_int += dt*(self.e_int + 0.5*(self.e_prev + e))   # I (explicit midpoint rule)

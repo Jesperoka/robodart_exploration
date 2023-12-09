@@ -12,6 +12,7 @@ from utils.dtypes import T_DTYPE
 
 CHECKPOINT_DIR = "./nn_models/sac"
 
+# TODO: change to explicit use of reparameterization trick
 
 # Continuous Actions Critic Q-function approximator network
 # ---------------------------------------------------------------------------- #
@@ -208,6 +209,18 @@ class HybridActorNetwork(nn.Module):
         cont_tanh_action = cont_tanh_action[T.arange(cont_tanh_action.size(0)), disc_action]
 
         return cont_tanh_action.squeeze(), cont_log_probs.squeeze(), disc_action.squeeze(), disc_log_probs, disc_probs
+
+    # @all_t_dtype_out
+    def sample_deterministic(self, state):
+        mu, _, pi_d = self.forward(state) 
+
+        cont_tanh_action = T.tanh(mu)
+        disc_action = T.argmax(Categorical(logits=pi_d).probs)
+
+        cont_tanh_action = cont_tanh_action.view(-1, self.disc_action_size, self.cont_action_size)
+        cont_tanh_action = cont_tanh_action[T.arange(cont_tanh_action.size(0)), disc_action]
+
+        return cont_tanh_action.squeeze(), disc_action.squeeze()
 
     def save_checkpoint(self):
         T.save(self.state_dict(), self.checkpoint_file)

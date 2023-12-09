@@ -8,40 +8,16 @@ import torch as T
 import torch.nn.functional as F
 
 
-from rl_function_approximators.neural_networks import (ActorNetwork,
-                                                       CriticNetwork)
-from rl_algorithms.replay_buffer import ReplayBuffer
+from rl_function_approximators.neural_networks import (HybridActorNetwork,
+                                                       HybridCriticNetwork)
+from replay_buffer import ReplayBuffer
 
 from utils.common import all_np_dtype_in, all_t_dtype_in 
 from utils.dtypes import NP_DTYPE, NP_ARRTYPE, T_ARRTYPE 
 from utils import data
+from sac import CanSaveModels
 
-# Object oriented programming, yuck!
-class CanSaveModels():
-    actor: T.nn.Module
-    critic_1: T.nn.Module
-    critic_2: T.nn.Module
-    critic_1_target: T.nn.Module
-    critic_2_target: T.nn.Module
-
-    def save_models(self):
-        print('.... saving models ....')
-        self.actor.save_checkpoint()
-        self.critic_1.save_checkpoint()
-        self.critic_2.save_checkpoint()
-        self.critic_1_target.save_checkpoint()
-        self.critic_2_target.save_checkpoint()
-
-    def load_models(self):
-        print('.... loading models ....')
-        self.actor.load_checkpoint()
-        self.critic_1.load_checkpoint()
-        self.critic_2.load_checkpoint()
-        self.critic_1_target.load_checkpoint()
-        self.critic_2_target.load_checkpoint()
-
-
-class SAC(CanSaveModels):
+class HybridSAC(CanSaveModels):
     device = T.device('cuda:0' if T.cuda.is_available() else 'cpu')
 
     def __init__(
@@ -79,7 +55,6 @@ class SAC(CanSaveModels):
         self.log_alpha_d = T.tensor([0.0], requires_grad=True, device=device)
 
         self.alpha = self.log_alpha.exp().detach()
-
         self.alpha_d = self.log_alpha_d.exp().detach()
 
         self.alpha_optimizer = T.optim.Adam(params=[self.log_alpha], lr=lr_actor)
@@ -100,13 +75,13 @@ class SAC(CanSaveModels):
         self.batch_size = batch_size
         self.replay_buffer = ReplayBuffer(replay_buffer_size, state_size, action_size + 1)
 
-        self.actor = ActorNetwork(lr_actor, weight_decay, state_size, action_size, discrete_action_size, device=device, name='actor')
+        self.actor = HybridActorNetwork(lr_actor, weight_decay, state_size, action_size, discrete_action_size, device=device, name='actor')
 
-        self.critic_1 = CriticNetwork(lr_critic_1, weight_decay, state_size, action_size, discrete_action_size, device=device, name='critic_1')
-        self.critic_2 = CriticNetwork(lr_critic_2, weight_decay, state_size, action_size, discrete_action_size, device=device, name='critic_2')
+        self.critic_1 = HybridCriticNetwork(lr_critic_1, weight_decay, state_size, action_size, discrete_action_size, device=device, name='critic_1')
+        self.critic_2 = HybridCriticNetwork(lr_critic_2, weight_decay, state_size, action_size, discrete_action_size, device=device, name='critic_2')
 
-        self.critic_1_target = CriticNetwork(lr_critic_1, weight_decay, state_size, action_size, discrete_action_size, device=device, name='critic_1')
-        self.critic_2_target = CriticNetwork(lr_critic_2, weight_decay, state_size, action_size, discrete_action_size, device=device, name='critic_2')
+        self.critic_1_target = HybridCriticNetwork(lr_critic_1, weight_decay, state_size, action_size, discrete_action_size, device=device, name='critic_1')
+        self.critic_2_target = HybridCriticNetwork(lr_critic_2, weight_decay, state_size, action_size, discrete_action_size, device=device, name='critic_2')
         self.update_target_networks(1.0)
 
 
@@ -142,9 +117,32 @@ class SAC(CanSaveModels):
             c2tw.data.copy_(tau * c2w.data + (1.0-tau) * c2tw.data)
 
 
+    def save_models(self):
+        print('.... saving models ....')
+        self.actor.save_checkpoint()
+        self.critic_1.save_checkpoint()
+        self.critic_2.save_checkpoint()
+        self.critic_1_target.save_checkpoint()
+        self.critic_2_target.save_checkpoint()
+
+
+    def load_models(self):
+        print('.... loading models ....')
+        self.actor.load_checkpoint()
+        self.critic_1.load_checkpoint()
+        self.critic_2.load_checkpoint()
+        self.critic_1_target.load_checkpoint()
+        self.critic_2_target.load_checkpoint()
+
+
     @typechecked
     def numpy_to_tensor_on_device(self, *args: Unpack[tuple[NP_ARRTYPE, NP_ARRTYPE, NP_ARRTYPE, NP_ARRTYPE, NDArray[np.uint8]]]):
         return (T.from_numpy(arg).to(self.device) for arg in args)
+
+
+    def separate_continuous_discrete(self, action: T_ARRTYPE):
+        return action[:, 0:self.action_split_index], action[:, self.action_split_index:]
+
 
     def learn(self, step_index: int):
         if self.replay_buffer.mem_cntr < self.batch_size: return
@@ -155,7 +153,9 @@ class SAC(CanSaveModels):
             state, action, reward, next_state, done = self.replay_buffer.sample_buffer(self.batch_size)
             state, action, reward, next_state, done = self.numpy_to_tensor_on_device(state, action, reward, next_state, done)
 
-            self.critic_gradient_step(state, action, reward, next_state, done)
+            cont_action, disc_action = self.separate_continuous_discrete(action)
+
+            self.critic_gradient_step(state, cont_action, disc_action, reward, next_state, done)
 
             if step_index % self.update_actor_every == 0:
                 self.actor_gradient_step(state)
@@ -166,10 +166,10 @@ class SAC(CanSaveModels):
 
 
     @typechecked 
-    def critic_gradient_step(self, state: T_ARRTYPE, action: T_ARRTYPE, reward: T_ARRTYPE, next_state: T_ARRTYPE, done: T_ARRTYPE):
+    def critic_gradient_step(self, state: T_ARRTYPE, cont_action: T_ARRTYPE, disc_action: T_ARRTYPE, reward: T_ARRTYPE, next_state: T_ARRTYPE, done: T_ARRTYPE):
         # Compute target q values
         with T.no_grad():
-            next_action, next_log_probs = self.actor.sample(next_state, reparameterize=False)                                                                                                                           
+            next_cont_action, next_cont_log_probs, next_disc_action, next_disc_log_probs, next_disc_probs = self.actor.sample(next_state, reparameterize=False)                                                                                                                           
             next_q1_target = self.critic_1_target(next_state, next_cont_action)
             next_q2_target = self.critic_2_target(next_state, next_cont_action)
             next_q_target = T.min(next_q1_target, next_q2_target)

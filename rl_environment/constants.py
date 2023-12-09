@@ -30,8 +30,8 @@ class EnvConsts:
     Z_MAX: float = 4.0
     Z_MIN: float = 0.005
 
-    A_MAX: tuple[float,...] = (Q_MAX[1], Q_MAX[3], Q_MAX[4], Q_MAX[6], 1)
-    A_MIN: tuple[float,...] = (Q_MIN[1], Q_MIN[3], Q_MIN[4], Q_MIN[6], 0) 
+    A_MAX: tuple[float,...] = (0.20, Q_MAX[1], Q_MAX[3], Q_MAX[6], 1) 
+    A_MIN: tuple[float,...] = (-0.20, Q_MIN[1], Q_MIN[3], Q_MIN[6], 0) 
 
     
 
