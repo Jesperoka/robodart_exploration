@@ -1,9 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from utils.dtypes import NP_DTYPE
-from utils.common import unpack_dataclass
 from rl_environment.constants import EnvConsts, Poses
-from copy import copy
 
 
 # Convenience Logging
@@ -49,65 +47,7 @@ class ControlLog():
 # ---------------------------------------------------------------------------- #
     
 
-# Pure Pursuit Lookahead Controller based on Interpolated Trajectory
-# ---------------------------------------------------------------------------- #
-class LookaheadController(ControlLog):
-    def __init__(self, dt=None):
-        self.e_int = 0.0 
-        self.s0 = 0.0
-        self.t = 0.0
-        self.Kp = 2.0*np.array([100.0, 100.0, 100.0, 95.0, 100.0, 100.0, 150.0])
-        self.Ki = 0.5*np.array([20.0, 1.0, 20.0, 1.0, 20.0, 20.0, 1.0])
-        self.Kd = np.array([10.0, 40.0, 10.0, 40.0, 10.0, 10.0, 45.0])
-        self.dt = 1e-3 if dt == None else dt
-        self.lookahead_distance = 0.1  # adjust as needed
-        self.poses = np.array(unpack_dataclass(Poses))
-        self._setup_interpolation()
-
-    def _setup_interpolation(self, resolution=1000):
-        s_values = np.linspace(0, len(self.poses) - 1, len(self.poses))
-        self.dense_s = np.linspace(0, len(self.poses) - 1, resolution)  # You can adjust the resolution
-        self.lookup_table = np.array([np.interp(self.dense_s, s_values, self.poses[:, i]) for i in range(EnvConsts.NUM_JOINTS)]).T
-
-    def interpolate_pose(self, s):
-        index = np.argmin(np.abs(self.dense_s - s)) # TODO: just use indices instead of s since lookup_table
-        return self.lookup_table[index]
-
-    def reset_controller(self):
-        self.e_int = 0.0
-        self.s0 = 0.0
-        self.t = 0.0
-        self.lookahead_distance = 0.6
-    
-    def find_lookahead_point(self, current_pose, s0):
-        s = s0 
-        while s < len(self.poses) - 1: # TODO: just use indices instead of s since lookup_table
-            lookahead_pose = self.interpolate_pose(s)
-            masked_diff = np.ma.masked_array(current_pose - lookahead_pose, mask=[0, 1, 0, 1, 0, 0, 1])
-            if np.linalg.norm(masked_diff) >= self.lookahead_distance:
-                return lookahead_pose, s
-            s += 0.01  
-        return self.poses[-1], s
-
-    def __call__(self, qpos, qvel): # TODO: clamp torques
-        self.lookahead_distance += 1.5*self.dt if self.lookahead_distance + self.dt <= 0.9 else 0.0
-        qpos_ref, self.s0 = self.find_lookahead_point(qpos, copy(self.s0))
-        qvel_ref = np.array([0, -0.35, 0, 0.0, 0, 0, 2.0100])
-
-        e = qpos_ref - qpos     # P
-        self.e_int += self.dt*e # I
-        e_dot = qvel_ref - qvel # D
-
-        torques = (self.Kp*e + self.Ki*self.e_int + self.Kd * e_dot).squeeze()
-        
-        if self.do_log:
-            self.append_to_log(qpos, qpos_ref, qvel, qvel_ref, e, self.e_int, e_dot, torques)
-
-        return np.clip(torques, a_min=EnvConsts.A_MIN[0:EnvConsts.NUM_JOINTS], a_max=EnvConsts.A_MAX[0:EnvConsts.NUM_JOINTS]).astype(NP_DTYPE)
-# ---------------------------------------------------------------------------- #
-
-
-# PID Position Control of Joints 2, 4 and 7
+# PID Position Control of Selected Joints 
 # ---------------------------------------------------------------------------- #
 class SelectedJointsPID(ControlLog):
     def __init__(self):
@@ -121,7 +61,7 @@ class SelectedJointsPID(ControlLog):
         self.Ki = np.array([1.0,  1.0, 1.0,  1.0, 1.0,  1.0,  1.0])
         self.Kd = np.array([20.0,  20.0, 20.0,  20.0, 20.0,  20.0,  20.0])
 
-        # Predetermined joints # TODO: switch back to joint 0 control
+        # Predetermined joints 
         self.qpos_ref_0 = Poses.q0[0]
         self.qpos_ref_2 = Poses.q0[2]
         self.qpos_ref_4 = Poses.q0[4]

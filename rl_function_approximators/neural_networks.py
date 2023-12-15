@@ -12,11 +12,19 @@ from utils.dtypes import T_DTYPE
 
 CHECKPOINT_DIR = "./nn_models/sac"
 
-# TODO: change to explicit use of reparameterization trick
+# TODO: change to explicit use of reparameterization trick: a = mu(phi) + sigma(phi)*epsilon
+
+# Object oriented programming, yuck!
+class CanSaveWeights(nn.Module):
+    checkpoint_file: str
+    def save_checkpoint(self):
+        T.save(self.state_dict(), self.checkpoint_file)
+    def load_checkpoint(self):
+        self.load_state_dict(T.load(self.checkpoint_file))
 
 # Continuous Actions Critic Q-function approximator network
 # ---------------------------------------------------------------------------- #
-class CriticNetwork(nn.Module):
+class CriticNetwork(CanSaveWeights):
 
     def __init__(self,
                  lr,
@@ -27,13 +35,14 @@ class CriticNetwork(nn.Module):
                  fc2_size=256,
                  device=T.device("cpu"),
                  name='critic',
+                 config_name="NONE",
                  chkpt_dir=CHECKPOINT_DIR):
 
         super(CriticNetwork, self).__init__()
 
         self.name = name
         self.checkpoint_dir = chkpt_dir
-        self.checkpoint_file = os.path.join(self.checkpoint_dir, name + '_sac')
+        self.checkpoint_file = os.path.join(self.checkpoint_dir, name + "_" + config_name) 
 
         self.fc1 = nn.Linear(state_size + action_size, fc1_size)
         self.fc2 = nn.Linear(fc1_size, fc2_size)
@@ -52,12 +61,6 @@ class CriticNetwork(nn.Module):
 
         return q
 
-    def save_checkpoint(self):
-        T.save(self.state_dict(), self.checkpoint_file)
-
-    def load_checkpoint(self):
-        self.load_state_dict(T.load(self.checkpoint_file))
-
     def register_grad_clip_hooks(self):
         for p in self.parameters():
             p.register_hook(lambda grad: T.clamp(grad, -1.0, 1.0))
@@ -66,7 +69,7 @@ class CriticNetwork(nn.Module):
 
 # Continuous Actions Actor Policy Network
 # ---------------------------------------------------------------------------- #
-class ActorNetwork(nn.Module):
+class ActorNetwork(CanSaveWeights):
 
     def __init__(self,
                  lr,
@@ -77,13 +80,14 @@ class ActorNetwork(nn.Module):
                  fc2_size=256,
                  device=T.device("cpu"),
                  name='actor',
+                 config_name="NONE",
                  chkpt_dir=CHECKPOINT_DIR):
 
         super(ActorNetwork, self).__init__()
 
         self.name = name
         self.checkpoint_dir = chkpt_dir
-        self.checkpoint_file = os.path.join(self.checkpoint_dir, name + '_sac')
+        self.checkpoint_file = os.path.join(self.checkpoint_dir, name + "_" + config_name) 
 
         self.fc1 = nn.Linear(state_size, fc1_size)
         self.fc2 = nn.Linear(fc1_size, fc2_size)
@@ -113,20 +117,17 @@ class ActorNetwork(nn.Module):
         if reparameterize: actions = gaussian.rsample()
         else: actions = gaussian.sample()
 
-        # Squash distribution
         tanh_actions = T.tanh(actions)
 
-        # Log probabilities
         log_probs = gaussian.log_prob(actions) - T.sum(T.log(1.0 - T.pow(tanh_actions, 2) + eps), dim=1, keepdim=True)
         log_prob = T.sum(log_probs, dim=1, keepdim=True) 
 
         return tanh_actions.squeeze(), log_prob.squeeze()
 
-    def save_checkpoint(self):
-        T.save(self.state_dict(), self.checkpoint_file)
-
-    def load_checkpoint(self):
-        self.load_state_dict(T.load(self.checkpoint_file))
+    def sample_deterministic(self, state):
+        mu, _ = self.forward(state) 
+        tanh_action = T.tanh(mu)
+        return tanh_action 
 
     def register_grad_clip_hooks(self):
         for p in self.parameters():
@@ -136,7 +137,7 @@ class ActorNetwork(nn.Module):
 
 # Hybrid Actions Actor Policy Network
 # ---------------------------------------------------------------------------- #
-class HybridActorNetwork(nn.Module):
+class HybridActorNetwork(CanSaveWeights):
 
     def __init__(self,
                  lr,
@@ -148,6 +149,7 @@ class HybridActorNetwork(nn.Module):
                  fc2_size=256,
                  device=T.device("cpu"),
                  name='actor',
+                 config_name="NONE",
                  chkpt_dir=CHECKPOINT_DIR):
 
         super(HybridActorNetwork, self).__init__()
@@ -157,7 +159,7 @@ class HybridActorNetwork(nn.Module):
 
         self.name = name
         self.checkpoint_dir = chkpt_dir
-        self.checkpoint_file = os.path.join(self.checkpoint_dir, name + '_sac')
+        self.checkpoint_file = os.path.join(self.checkpoint_dir, name + "_" + config_name) 
 
         self.fc1 = nn.Linear(state_size, fc1_size)
         self.fc2 = nn.Linear(fc1_size, fc2_size)
@@ -181,19 +183,15 @@ class HybridActorNetwork(nn.Module):
         return action_mean, action_std, disc_action_distr 
 
     # @all_t_dtype_out
-    def sample(self, state, reparameterize=True, eps=1e-6):
+    def sample(self, state, eps=1e-6):
         mu, sigma, pi_d = self.forward(state)
         
         gaussian = Normal(mu, sigma)
         discrete = Categorical(logits=pi_d)
 
-        # if reparameterize: cont_action = gaussian.rsample()
-        # else: cont_action = gaussian.sample()
         cont_action = gaussian.rsample() 
-
         disc_action = discrete.sample()
 
-        # Squash distribution
         cont_tanh_action = T.tanh(cont_action)
 
         # Continuous action log probability
@@ -222,12 +220,6 @@ class HybridActorNetwork(nn.Module):
 
         return cont_tanh_action.squeeze(), disc_action.squeeze()
 
-    def save_checkpoint(self):
-        T.save(self.state_dict(), self.checkpoint_file)
-
-    def load_checkpoint(self):
-        self.load_state_dict(T.load(self.checkpoint_file))
-
     def register_grad_clip_hooks(self):
         for p in self.parameters():
             p.register_hook(lambda grad: T.clamp(grad, -1.0, 1.0))
@@ -236,7 +228,7 @@ class HybridActorNetwork(nn.Module):
 
 # Hybrid Actions Critic Q-function approximator network
 # ---------------------------------------------------------------------------- #
-class HybridCriticNetwork(nn.Module):
+class HybridCriticNetwork(CanSaveWeights):
 
     def __init__(self,
                  lr,
@@ -248,13 +240,14 @@ class HybridCriticNetwork(nn.Module):
                  fc2_size=256,
                  device=T.device("cpu"),
                  name='critic',
+                 config_name="NONE",
                  chkpt_dir=CHECKPOINT_DIR):
 
         super(HybridCriticNetwork, self).__init__()
 
         self.name = name
         self.checkpoint_dir = chkpt_dir
-        self.checkpoint_file = os.path.join(self.checkpoint_dir, name + '_sac')
+        self.checkpoint_file = os.path.join(self.checkpoint_dir, name + "_" + config_name) 
 
         self.fc1 = nn.Linear(state_size + cont_action_size, fc1_size)
         self.fc2 = nn.Linear(fc1_size, fc2_size)
@@ -272,12 +265,6 @@ class HybridCriticNetwork(nn.Module):
         q = self.q_hat(q).squeeze()
 
         return q
-
-    def save_checkpoint(self):
-        T.save(self.state_dict(), self.checkpoint_file)
-
-    def load_checkpoint(self):
-        self.load_state_dict(T.load(self.checkpoint_file))
 
     def register_grad_clip_hooks(self):
         for p in self.parameters():

@@ -21,7 +21,7 @@ def save(filename: str, data: list[np.ndarray], labels: list[str]):
 
 
 @typechecked
-def load(filename: str, label: str) -> h5py.Dataset:
+def load(filename: str, label: str) -> np.ndarray:
     with h5py.File(filename, 'r') as file:
         data = file[label][:] # type: ignore
         return data # type: ignore

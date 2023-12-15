@@ -3,34 +3,39 @@ from typing import Unpack
 import numpy as np
 from numpy._typing import NDArray
 from typeguard import typechecked 
-from tqdm import tqdm
 import torch as T
 import torch.nn.functional as F
 
 
 from rl_function_approximators.neural_networks import (HybridActorNetwork,
                                                        HybridCriticNetwork)
-from replay_buffer import ReplayBuffer
+from rl_algorithms.replay_buffer import ReplayBuffer
 
 from utils.common import all_np_dtype_in, all_t_dtype_in 
 from utils.dtypes import NP_DTYPE, NP_ARRTYPE, T_ARRTYPE 
-from utils import data
-from sac import CanSaveModels
+from rl_algorithms.sac import CanSaveModels
 
 class HybridSAC(CanSaveModels):
     device = T.device('cuda:0' if T.cuda.is_available() else 'cpu')
 
     def __init__(
         self,
+        min_action,
+        max_action,
+        state_size,
+        action_size, # TODO: rename to continuous 
+        discrete_action_size,
+        config_name,
+        munchausen=False,       # not yet toggleable
+        HER=False,              # not yet toggleable
+        LaBER=False,            # not yet toggleable
+        tune_alpha=True,        # not yet toggleable
+        larger_nn=False,        # not yet toggleable
+        spectral_norm=False,    # not yet toggleable
         lr_actor=0.0003,
         lr_critic_1=0.0001,
         lr_critic_2=0.0001,
-        weight_decay=0.0000, # turned off for now
-        state_size=0,
-        action_size=0, # TODO: rename to continuous and add toggles
-        discrete_action_size=0,
-        max_action=0,
-        min_action=0,
+        weight_decay=0.0000, 
         alpha=1.0,
         alpha_d=1.0,
         gamma=1.0,
@@ -45,6 +50,10 @@ class HybridSAC(CanSaveModels):
         device = T.device('cuda:0' if T.cuda.is_available() else 'cpu')
     ):
         self.device = device
+
+        # Config
+        self.LaBER = LaBER
+
         self.max_action = T.tensor(max_action, device=device)
         self.min_action = T.tensor(min_action, device=device)
 
@@ -60,7 +69,6 @@ class HybridSAC(CanSaveModels):
         self.alpha_optimizer = T.optim.Adam(params=[self.log_alpha], lr=lr_actor)
         self.alpha_d_optimizer = T.optim.Adam(params=[self.log_alpha_d], lr=lr_actor)
 
-        # self.action_prior = # TODO: investigate
         self.action_split_index = action_size
 
         self.gamma = T.tensor(gamma, device=device)
@@ -73,22 +81,22 @@ class HybridSAC(CanSaveModels):
         self.num_gradient_steps_per_episode = num_gradient_steps_per_episode
 
         self.batch_size = batch_size
-        self.replay_buffer = ReplayBuffer(replay_buffer_size, state_size, action_size + 1)
+        self.replay_buffer = ReplayBuffer(replay_buffer_size, state_size, action_size + discrete_action_size//2)
 
-        self.actor = HybridActorNetwork(lr_actor, weight_decay, state_size, action_size, discrete_action_size, device=device, name='actor')
+        self.actor = HybridActorNetwork(lr_actor, weight_decay, state_size, action_size, discrete_action_size, device=device, name='actor', config_name=config_name)
 
-        self.critic_1 = HybridCriticNetwork(lr_critic_1, weight_decay, state_size, action_size, discrete_action_size, device=device, name='critic_1')
-        self.critic_2 = HybridCriticNetwork(lr_critic_2, weight_decay, state_size, action_size, discrete_action_size, device=device, name='critic_2')
+        self.critic_1 = HybridCriticNetwork(lr_critic_1, weight_decay, state_size, action_size, discrete_action_size, device=device, name='critic_1', config_name=config_name)
+        self.critic_2 = HybridCriticNetwork(lr_critic_2, weight_decay, state_size, action_size, discrete_action_size, device=device, name='critic_2', config_name=config_name)
 
-        self.critic_1_target = HybridCriticNetwork(lr_critic_1, weight_decay, state_size, action_size, discrete_action_size, device=device, name='critic_1')
-        self.critic_2_target = HybridCriticNetwork(lr_critic_2, weight_decay, state_size, action_size, discrete_action_size, device=device, name='critic_2')
+        self.critic_1_target = HybridCriticNetwork(lr_critic_1, weight_decay, state_size, action_size, discrete_action_size, device=device, name='critic_1', config_name=config_name)
+        self.critic_2_target = HybridCriticNetwork(lr_critic_2, weight_decay, state_size, action_size, discrete_action_size, device=device, name='critic_2', config_name=config_name)
         self.update_target_networks(1.0)
 
 
     @all_np_dtype_in(method=True)
     def choose_action(self, state): # TODO: make cleaner
         state = T.tensor(state, device=self.device).unsqueeze(0)
-        tanh_action, _, disc_action, _, _ = self.actor.sample(state, reparameterize=False)
+        tanh_action, _, disc_action, _, _ = self.actor.sample(state)
         tanh_and_disc_action = T.cat((tanh_action, disc_action.unsqueeze(0)))
         action = 0.5*(self.max_action - self.min_action)*tanh_action + 0.5*(self.max_action + self.min_action)
         return action.numpy(force=True).squeeze(), disc_action.numpy(force=True).squeeze(), tanh_and_disc_action.numpy(force=True).squeeze()
@@ -116,25 +124,6 @@ class HybridSAC(CanSaveModels):
             c1tw.data.copy_(tau * c1w.data + (1.0-tau) * c1tw.data)
             c2tw.data.copy_(tau * c2w.data + (1.0-tau) * c2tw.data)
 
-
-    def save_models(self):
-        print('.... saving models ....')
-        self.actor.save_checkpoint()
-        self.critic_1.save_checkpoint()
-        self.critic_2.save_checkpoint()
-        self.critic_1_target.save_checkpoint()
-        self.critic_2_target.save_checkpoint()
-
-
-    def load_models(self):
-        print('.... loading models ....')
-        self.actor.load_checkpoint()
-        self.critic_1.load_checkpoint()
-        self.critic_2.load_checkpoint()
-        self.critic_1_target.load_checkpoint()
-        self.critic_2_target.load_checkpoint()
-
-
     @typechecked
     def numpy_to_tensor_on_device(self, *args: Unpack[tuple[NP_ARRTYPE, NP_ARRTYPE, NP_ARRTYPE, NP_ARRTYPE, NDArray[np.uint8]]]):
         return (T.from_numpy(arg).to(self.device) for arg in args)
@@ -154,6 +143,9 @@ class HybridSAC(CanSaveModels):
             state, action, reward, next_state, done = self.numpy_to_tensor_on_device(state, action, reward, next_state, done)
 
             cont_action, disc_action = self.separate_continuous_discrete(action)
+            
+            # TODO: impl. LaBER 
+            if self.LaBER
 
             self.critic_gradient_step(state, cont_action, disc_action, reward, next_state, done)
 
@@ -169,7 +161,7 @@ class HybridSAC(CanSaveModels):
     def critic_gradient_step(self, state: T_ARRTYPE, cont_action: T_ARRTYPE, disc_action: T_ARRTYPE, reward: T_ARRTYPE, next_state: T_ARRTYPE, done: T_ARRTYPE):
         # Compute target q values
         with T.no_grad():
-            next_cont_action, next_cont_log_probs, next_disc_action, next_disc_log_probs, next_disc_probs = self.actor.sample(next_state, reparameterize=False)                                                                                                                           
+            next_cont_action, next_cont_log_probs, next_disc_action, next_disc_log_probs, next_disc_probs = self.actor.sample(next_state)                                                                                                                           
             next_q1_target = self.critic_1_target(next_state, next_cont_action)
             next_q2_target = self.critic_2_target(next_state, next_cont_action)
             next_q_target = T.min(next_q1_target, next_q2_target)
@@ -177,9 +169,10 @@ class HybridSAC(CanSaveModels):
             # TODO: check performance with the other formulation
             expected_next_q_target = T.sum(next_disc_probs * (next_q_target - self.alpha * next_cont_log_probs - self.alpha_d * next_disc_log_probs), dim=1)
 
-            # TODO: not using for now while implementing hybrid actions
+            # TODO: impl. munchausen 
+
             # Munchausen Reinforcement Learning
-            # _, log_probs = self.actor.sample(state, reparameterize=False)
+            # _, log_probs = self.actor.sample(state)
             scaled_log_policy = 0 #self.m_scale * self.alpha * T.clamp(log_probs, min=self.l_zero, max=0)
 
             # Temporal Difference
@@ -204,7 +197,7 @@ class HybridSAC(CanSaveModels):
 
     @all_t_dtype_in(method=True)
     def actor_gradient_step(self, state):
-        cont_action, cont_log_probs, disc_action, disc_log_probs, disc_probs = self.actor.sample(state, reparameterize=True)  
+        cont_action, cont_log_probs, disc_action, disc_log_probs, disc_probs = self.actor.sample(state)  
         q = T.min(self.critic_1(state, cont_action), self.critic_2(state, cont_action))
 
         actor_loss_c = T.sum(disc_probs * (self.log_alpha.exp() * cont_log_probs - q), dim=1).mean()  # - policy_prior_log_probs

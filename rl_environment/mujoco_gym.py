@@ -22,6 +22,8 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
 
     def __init__(
         self,
+        hybrid: bool,
+        reward_function: int,
         mujoco_model_path,
         frame_skip,
         baseline_controller,
@@ -46,7 +48,13 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
         self.observation_space = Box(low=-np.inf * np.ones(_EC.NUM_OBSERVABLE_STATES),
                                      high=np.inf * np.ones(_EC.NUM_OBSERVABLE_STATES),
                                      dtype=NP_DTYPE)  # type: ignore
-        self.action_space = Box(low=np.array(_EC.A_MIN), high=np.array(_EC.A_MAX), dtype=NP_DTYPE)  # type: ignore
+        
+        # Allow for hybrid or continuous action spaces
+        self.hybrid = hybrid
+        if hybrid:
+            self.action_space = Box(low=np.array([*_EC.A_MIN, 0]), high=np.array([*_EC.A_MAX, 1]), dtype=NP_DTYPE)  # type: ignore
+        else:
+            self.action_space = Box(low=np.array([*_EC.A_MIN, -1]), high=np.array([*_EC.A_MAX, 1]), dtype=NP_DTYPE)  # type: ignore
 
         # Set final rendering options
         self.render_mode = render_mode
@@ -72,7 +80,7 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
              disc_action: int) -> tuple[np.ndarray, NP_DTYPE, np.uint8, Dict[str, NP_DTYPE]]:
 
         qpos_ref = action
-        release = bool(disc_action)
+        release = bool(disc_action) if self.hybrid else bool(disc_action >= 0)
 
         self.dart_release(release)
         (joint_angs, joint_ang_vels, *_) = self.decompose_state(self.state)
@@ -126,6 +134,7 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
         return (joint_angs, joint_ang_vels, remaining_time, released, releasing, goal, launch_pt, launch_vel,
                 dart_pos, dart_vel)
 
+    # TODO: make reward function depend on self.reward_function
     @typechecked
     def reward(self, state: NP_ARRTYPE) -> tuple[bool, NP_DTYPE]:
         (_, joint_ang_vels, remaining_time, released, releasing, goal, launch_pt, launch_vel, dart_pos,
