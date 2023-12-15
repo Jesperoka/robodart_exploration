@@ -56,6 +56,9 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
         else:
             self.action_space = Box(low=np.array([*_EC.A_MIN, -1]), high=np.array([*_EC.A_MAX, 1]), dtype=NP_DTYPE)  # type: ignore
 
+        # Allow for different reward functions
+        self.reward_function = [self.reward, self.sparse_reward][reward_function]
+
         # Set final rendering options
         self.render_mode = render_mode
         self.metadata["render_fps"] = int(np.round(1.0 / self.dt))
@@ -88,7 +91,7 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
         self.do_simulation(torques, self.frame_skip)
 
         self.state = self.observe()
-        done, reward = self.reward(self.state)
+        done, reward = self.reward_function(self.state)
 
         (*_, dart_pos, _) = self.decompose_state(self.state)
         info = {"distance": reward_functions.distance(dart_pos, self.goal), "reward": reward}
@@ -96,7 +99,6 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
         return self.state, reward, np.uint8(done), info
 
     # TODO: add noise
-    # TODO: normalize observations?
     @typechecked
     def observe(self) -> NP_ARRTYPE:
         idxs = self.state_indices
@@ -134,10 +136,9 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
         return (joint_angs, joint_ang_vels, remaining_time, released, releasing, goal, launch_pt, launch_vel,
                 dart_pos, dart_vel)
 
-    # TODO: make reward function depend on self.reward_function
     @typechecked
     def reward(self, state: NP_ARRTYPE) -> tuple[bool, NP_DTYPE]:
-        (_, joint_ang_vels, remaining_time, released, releasing, goal, launch_pt, launch_vel, dart_pos,
+        (_, joint_ang_vels, _, released, releasing, goal, launch_pt, launch_vel, dart_pos,
          dart_vel) = self.decompose_state(state)
 
         reward = 0.0
@@ -154,11 +155,6 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
             reward += 0.6 / (1.0 + reward_functions.abs_norm_diff(dart_vel, launch_vel))
             reward -= 0.01*np.linalg.norm(joint_ang_vels[np.where(np.abs(joint_ang_vels) > _EC.Q_DOT_MAX)], ord=2)
                             
-            # if dart_pos[1] < launch_pt[1]:
-            #     penalty -= 100.0
-
-        # TODO: what happens if I reduct std_dev of actions
-
         if releasing:
             bonus += 10.0 / (1.0 + reward_functions.ts_ss_similarity(dart_pos, launch_pt) + reward_functions.ts_ss_similarity(dart_vel, launch_vel))
             penalty -= 0.1*reward_functions.distance(dart_pos, launch_pt)
@@ -181,6 +177,23 @@ class FrankaEmikaDartThrowEnv(MujocoEnv, EzPickle):
             terminal_reward = 2.5 * np.tanh(0.01 * terminal_reward)
 
         return (terminal, NP_DTYPE(reward + bonus + penalty + fail_penalty + terminal_reward))
+
+    @typechecked
+    def sparse_reward(self, state: NP_ARRTYPE) -> tuple[bool, NP_DTYPE]:
+        (_, _, _, _, releasing, goal, launch_pt, launch_vel, dart_pos,
+         dart_vel) = self.decompose_state(state)
+
+        reward = -1.0 
+
+        if releasing:
+            reward += reward_functions.close_enough(dart_pos, launch_pt)*reward_functions.close_enough(dart_vel, launch_vel)
+
+        terminal, _ = self.terminal(dart_pos)
+        if terminal:
+            reward += reward_functions.close_enough(dart_pos, goal)
+
+        return terminal, NP_DTYPE(reward)
+
 
     def terminal(self, dart_pos):
         terminal = True

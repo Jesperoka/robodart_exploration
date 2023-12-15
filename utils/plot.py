@@ -35,12 +35,13 @@ def load_and_aggregate_data(filenames_per_config, label):
 
 if __name__ == "__main__":
     # Example filenames grouped by configuration
-    filenames_per_config = [
-        ['logs/baseline_run0.h5py', 'logs/baseline_run1.h5py', "logs/baseline_run2.h5py"],
-        ['logs/munch_r0_run0.h5py', 'logs/munch_r0_run1.h5py', "logs/munch_r0_run2.h5py"],
-        ['logs/hybrid_her_r0_run0.h5py', 'logs/hybrid_her_r0_run1.h5py', "logs/hybrid_her_r0_run2.h5py"],
-    ]
-    config_labels = ['Config 1', 'Config 2', "Config 2"]
+    # filenames_per_config = [
+    #     ['logs/baseline_run0.h5py', 'logs/baseline_run1.h5py', "logs/baseline_run2.h5py"],
+    #     ['logs/munch_r0_run0.h5py', 'logs/munch_r0_run1.h5py', "logs/munch_r0_run2.h5py"],
+    #     ['logs/hybrid_her_r0_run0.h5py', 'logs/hybrid_her_r0_run1.h5py', "logs/hybrid_her_r0_run2.h5py"],
+    # ]
+    filenames_per_config = [["logs/hybrid_munch_laber_large_snorm_run0_D231215_T2236.h5py"]]
+    config_labels = ['Config 1']
     data_label = 'final distance' 
 
     aggregated_data = load_and_aggregate_data(filenames_per_config, data_label)

@@ -1,6 +1,7 @@
+from typing import Callable
 import numpy as np
-from gymnasium import Env
 from typeguard import typechecked
+from rl_environment.mujoco_gym import FrankaEmikaDartThrowEnv
 
 from utils.common import all_finite_in, all_finite_out
 from utils.dtypes import NP_ARRTYPE, NP_DTYPE
@@ -14,6 +15,7 @@ class ReplayBuffer():
     def __init__(self, replay_buffer_size: int, state_size: int, action_size: int):
         self.mem_size = replay_buffer_size
         self.mem_cntr = 0
+        self.filled_once = False
         self.state_memory = np.zeros((self.mem_size, state_size), dtype=NP_DTYPE)
         self.next_state_memory = np.zeros((self.mem_size, state_size), dtype=NP_DTYPE)
         self.action_memory = np.zeros((self.mem_size, action_size), dtype=NP_DTYPE)
@@ -34,13 +36,11 @@ class ReplayBuffer():
         self.terminal_memory[index] = done
 
         self.mem_cntr += 1
+        self.filled_once = False if (not self.filled_once and self.mem_cntr != self.mem_size) else True 
 
     @all_finite_out
     def sample_buffer(self, batch_size: int):
-
-        max_mem = min(self.mem_cntr,
-                      self.mem_size)  # WARNING: with this impl., when mem_cntr loops we kind of reset sampling
-        # min_mem = max_mem -
+        max_mem = min(self.mem_cntr, self.mem_size) if not self.filled_once else self.mem_size 
 
         batch = np.random.choice(max_mem, batch_size)
 
@@ -52,46 +52,47 @@ class ReplayBuffer():
 
         return states, actions, rewards, new_states, done
 
-    # WARNING: Currently broken
-    def hindsight_experience_replay(self, num_episode_steps: int, env: Env, k: int = 4):
-        assert (False), "HER not fixed yet"
+    def hindsight_experience_replay(self, num_episode_steps: int, reward_function: Callable, decompose_state: Callable, k: int = 4):
         episode_start = self.get_episode_start_index(num_episode_steps)
         episode_end = episode_start + num_episode_steps
 
         # Calculate indices as if infinite memory
         start_indices = np.arange(episode_start + 1, episode_end)
         end_indices = episode_end * np.ones_like(start_indices)
-        new_goal_indices = rng.integers(start_indices,
-                                        end_indices,
-                                        size=(k, max(start_indices.shape)),
-                                        endpoint=True)
+        new_goal_indices = rng.integers(start_indices, end_indices, size=(k, max(start_indices.shape)), endpoint=True)
 
         # Correct any indices past memory size
         new_goal_indices = np.mod(new_goal_indices.flatten(), self.mem_size)
 
         # Perform hindsight replay
         for goal_mem_idx in new_goal_indices:
-            if self.reward_memory[goal_mem_idx - 1] == NP_DTYPE(0): continue  # Filtered HER
-
             state = self.state_memory[goal_mem_idx].copy()
-            # env.reward_or_terminate()
-
-            goal_idx = 16  # WARNING: hardcoded for now
-            dart_idx = 19
-
-            # TODO:
-            # if dart is released, skip?
-            # if dart is not released,
-            #   compute reward as if launch point was the reached point
-            #   compute reward as if launch velocity was the reached dart velocity vector
-
-            state[goal_idx:goal_idx + 3] = state[dart_idx:dart_idx + 3]
-            action = self.action_memory[goal_mem_idx].copy()
             next_state = self.next_state_memory[goal_mem_idx].copy()
-            next_state[goal_idx:goal_idx + 3] = next_state[dart_idx:dart_idx + 3]
+
+            # Decompose state and next_state to easily change goals
+            (joint_angs, joint_ang_vels, remaining_time, released, releasing, _, NEW_launch_pt, NEW_launch_vel,
+                dart_pos, dart_vel) = decompose_state(state)
+
+            (next_joint_angs, next_joint_ang_vels, next_remaining_time, next_released, next_releasing, _, _, _,
+                next_dart_pos, next_dart_vel) = decompose_state(next_state)
+
+            # Assign new goals to the dart positions and velocities
+            NEW_goal = next_dart_pos.copy()              
+            if next_releasing:
+                NEW_launch_pt = next_dart_pos.copy()              
+                NEW_launch_vel = next_dart_vel.copy()              
+
+            # Recombine into state and next state with new goals
+            state = np.concatenate((joint_angs, joint_ang_vels, remaining_time, released, releasing, NEW_goal, NEW_launch_pt, NEW_launch_vel, dart_pos, dart_vel), axis=0) 
+            next_state = np.concatenate((next_joint_angs, next_joint_ang_vels, next_remaining_time, next_released, next_releasing, NEW_goal, NEW_launch_pt, NEW_launch_vel, dart_pos, dart_vel), axis=0) 
+
+            _, reward = reward_function(next_state)
+            if self.reward_memory[goal_mem_idx] == reward: continue # Filtered HER for bias reduction
+
+            action = self.action_memory[goal_mem_idx].copy()
             done = self.terminal_memory[goal_mem_idx].copy()
 
-            self.store_transition(state, action, NP_DTYPE(1), next_state, done)
+            self.store_transition(state, action, reward, next_state, done)
 
     def get_episode_start_index(self, num_episode_steps: int):
         return (self.mem_cntr - (num_episode_steps-1)) % self.mem_size

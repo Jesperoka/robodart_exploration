@@ -23,15 +23,15 @@ class HybridSAC(CanSaveModels):
         min_action,
         max_action,
         state_size,
-        action_size, # TODO: rename to continuous 
-        discrete_action_size,
+        cont_action_size, # TODO: rename to continuous 
+        disc_action_size,
         config_name,
         munchausen=False,       # not yet toggleable
-        HER=False,              # not yet toggleable
-        LaBER=False,            # not yet toggleable
+        HER=False, 
+        LaBER=False,            
         tune_alpha=True,        # not yet toggleable
-        larger_nn=False,        # not yet toggleable
-        spectral_norm=False,    # not yet toggleable
+        larger_nn=False, 
+        spectral_norm=False, 
         lr_actor=0.0003,
         lr_critic_1=0.0001,
         lr_critic_2=0.0001,
@@ -47,29 +47,38 @@ class HybridSAC(CanSaveModels):
         num_gradient_steps_per_episode=1,
         batch_size=512,
         replay_buffer_size=1000000,
+        large_batch_factor=4,
+        fc1_size=256,
+        fc2_size=256,
         device = T.device('cuda:0' if T.cuda.is_available() else 'cpu')
     ):
         self.device = device
 
         # Config
+        self.munchausen = munchausen
+        self.HER = HER
         self.LaBER = LaBER
+        self.tune_alpha = tune_alpha
+        self.larger_nn = larger_nn 
+        self.spec_norm = spectral_norm 
+        
 
         self.max_action = T.tensor(max_action, device=device)
         self.min_action = T.tensor(min_action, device=device)
 
-        self.target_alpha = T.tensor(-action_size, device=device).detach()
-        self.target_alpha_d = T.tensor(-discrete_action_size, device=device).detach()
+        self.target_alpha = T.tensor(-cont_action_size, device=device).detach()
+        self.target_alpha_d = T.tensor(-disc_action_size, device=device).detach()
 
         self.log_alpha = T.tensor([0.0], requires_grad=True, device=device)
         self.log_alpha_d = T.tensor([0.0], requires_grad=True, device=device)
 
-        self.alpha = self.log_alpha.exp().detach()
-        self.alpha_d = self.log_alpha_d.exp().detach()
+        self.alpha = self.log_alpha.exp().detach() if self.tune_alpha else alpha
+        self.alpha_d = self.log_alpha_d.exp().detach() if self.tune_alpha else alpha_d
 
         self.alpha_optimizer = T.optim.Adam(params=[self.log_alpha], lr=lr_actor)
         self.alpha_d_optimizer = T.optim.Adam(params=[self.log_alpha_d], lr=lr_actor)
 
-        self.action_split_index = action_size
+        self.action_split_index = cont_action_size
 
         self.gamma = T.tensor(gamma, device=device)
         self.tau = tau
@@ -81,15 +90,20 @@ class HybridSAC(CanSaveModels):
         self.num_gradient_steps_per_episode = num_gradient_steps_per_episode
 
         self.batch_size = batch_size
-        self.replay_buffer = ReplayBuffer(replay_buffer_size, state_size, action_size + discrete_action_size//2)
+        self.large_batch_factor = large_batch_factor
+        self.replay_buffer = ReplayBuffer(replay_buffer_size, state_size, cont_action_size + disc_action_size//2)
 
-        self.actor = HybridActorNetwork(lr_actor, weight_decay, state_size, action_size, discrete_action_size, device=device, name='actor', config_name=config_name)
+        if self.larger_nn:
+            fc1_size = 2*fc1_size
+            fc2_size = 2*fc2_size
 
-        self.critic_1 = HybridCriticNetwork(lr_critic_1, weight_decay, state_size, action_size, discrete_action_size, device=device, name='critic_1', config_name=config_name)
-        self.critic_2 = HybridCriticNetwork(lr_critic_2, weight_decay, state_size, action_size, discrete_action_size, device=device, name='critic_2', config_name=config_name)
+        self.actor = HybridActorNetwork(lr_actor, weight_decay, state_size, cont_action_size, disc_action_size, fc1_size=fc1_size, fc2_size=fc2_size, spec_norm=self.spec_norm, device=device, name='actor', config_name=config_name)
 
-        self.critic_1_target = HybridCriticNetwork(lr_critic_1, weight_decay, state_size, action_size, discrete_action_size, device=device, name='critic_1', config_name=config_name)
-        self.critic_2_target = HybridCriticNetwork(lr_critic_2, weight_decay, state_size, action_size, discrete_action_size, device=device, name='critic_2', config_name=config_name)
+        self.critic_1 = HybridCriticNetwork(lr_critic_1, weight_decay, state_size, cont_action_size, disc_action_size, fc1_size=fc1_size, fc2_size=fc2_size, spec_norm=self.spec_norm, device=device, name='critic_1', config_name=config_name)
+        self.critic_2 = HybridCriticNetwork(lr_critic_2, weight_decay, state_size, cont_action_size, disc_action_size, fc1_size=fc1_size, fc2_size=fc2_size, spec_norm=self.spec_norm, device=device, name='critic_2', config_name=config_name)
+
+        self.critic_1_target = HybridCriticNetwork(lr_critic_1, weight_decay, state_size, cont_action_size, disc_action_size, fc1_size=fc1_size, fc2_size=fc2_size, spec_norm=self.spec_norm, device=device, name='critic_1', config_name=config_name)
+        self.critic_2_target = HybridCriticNetwork(lr_critic_2, weight_decay, state_size, cont_action_size, disc_action_size, fc1_size=fc1_size, fc2_size=fc2_size, spec_norm=self.spec_norm, device=device, name='critic_2', config_name=config_name)
         self.update_target_networks(1.0)
 
 
@@ -135,19 +149,20 @@ class HybridSAC(CanSaveModels):
 
     def learn(self, step_index: int):
         if self.replay_buffer.mem_cntr < self.batch_size: return
+        if self.LaBER and self.replay_buffer.mem_cntr < self.large_batch_factor*self.batch_size: return
 
         # Perform stochastic batch gradient based optimization num_gradient_steps_per_update times
         for _ in range(self.num_gradient_steps_per_episode):
-            # Sample replay buffer
-            state, action, reward, next_state, done = self.replay_buffer.sample_buffer(self.batch_size)
+            batch_size = self.large_batch_factor*self.batch_size if self.LaBER else self.batch_size
+
+            state, action, reward, next_state, done = self.replay_buffer.sample_buffer(batch_size)
             state, action, reward, next_state, done = self.numpy_to_tensor_on_device(state, action, reward, next_state, done)
 
             cont_action, disc_action = self.separate_continuous_discrete(action)
-            
-            # TODO: impl. LaBER 
-            if self.LaBER
 
             self.critic_gradient_step(state, cont_action, disc_action, reward, next_state, done)
+
+            state = state[np.random.choice(batch_size, size=self.batch_size)] if self.LaBER else state
 
             if step_index % self.update_actor_every == 0:
                 self.actor_gradient_step(state)
@@ -166,26 +181,23 @@ class HybridSAC(CanSaveModels):
             next_q2_target = self.critic_2_target(next_state, next_cont_action)
             next_q_target = T.min(next_q1_target, next_q2_target)
 
-            # TODO: check performance with the other formulation
-            expected_next_q_target = T.sum(next_disc_probs * (next_q_target - self.alpha * next_cont_log_probs - self.alpha_d * next_disc_log_probs), dim=1)
+            expected_next_q_target = T.sum(next_disc_probs * (next_q_target - self.alpha * next_disc_probs * next_cont_log_probs - self.alpha_d * next_disc_log_probs), dim=1)
 
-            # TODO: impl. munchausen 
+            scaled_log_policy = 0.0
+            if self.munchausen: # using assumption of independent distributions here
+                _, cont_log_probs, _, disc_log_probs, _ = self.actor.sample(state)
+                scaled_log_policy = self.m_scale * self.alpha * T.clamp((cont_log_probs + disc_log_probs).mean(dim=1), min=self.l_zero, max=0)
 
-            # Munchausen Reinforcement Learning
-            # _, log_probs = self.actor.sample(state)
-            scaled_log_policy = 0 #self.m_scale * self.alpha * T.clamp(log_probs, min=self.l_zero, max=0)
-
-            # Temporal Difference
             q_target = (reward + scaled_log_policy + self.gamma * (1 - done) * (expected_next_q_target)).view(-1)
-            # q_target = (reward + scaled_log_policy + self.gamma * (1 - done) * (next_q_target - self.alpha * next_cont_log_prob)).detach()
 
-        # Compute critic loss
-        q1 = self.critic_1(state, cont_action).gather(1, disc_action.long().view(-1, 1)).view(-1)
-        q2 = self.critic_2(state, cont_action).gather(1, disc_action.long().view(-1, 1)).view(-1)
-        q1_loss = F.mse_loss(q1, q_target)
-        q2_loss = F.mse_loss(q2, q_target)
-        q_loss = q1_loss + q2_loss
-        # TODO: prioritized experience replay
+        if self.LaBER:
+            q_loss = self.LaBER_critic_loss(state, cont_action, disc_action, q_target)
+        else:
+            q1 = self.critic_1(state, cont_action).gather(1, disc_action.long().view(-1, 1)).view(-1)
+            q2 = self.critic_2(state, cont_action).gather(1, disc_action.long().view(-1, 1)).view(-1)
+            q1_loss = F.mse_loss(q1, q_target)
+            q2_loss = F.mse_loss(q2, q_target)
+            q_loss = q1_loss + q2_loss
 
         # Backpropagate critic networks
         self.critic_1.zero_grad(set_to_none=True)
@@ -194,13 +206,12 @@ class HybridSAC(CanSaveModels):
         self.critic_1.optimizer.step()
         self.critic_1.optimizer.step()
 
-
     @all_t_dtype_in(method=True)
     def actor_gradient_step(self, state):
         cont_action, cont_log_probs, disc_action, disc_log_probs, disc_probs = self.actor.sample(state)  
         q = T.min(self.critic_1(state, cont_action), self.critic_2(state, cont_action))
 
-        actor_loss_c = T.sum(disc_probs * (self.log_alpha.exp() * cont_log_probs - q), dim=1).mean()  # - policy_prior_log_probs
+        actor_loss_c = T.sum(disc_probs * (self.log_alpha.exp() * disc_probs * cont_log_probs - q), dim=1).mean()  # - policy_prior_log_probs
         actor_loss_d = T.sum(disc_probs * (self.log_alpha_d.exp() * disc_log_probs - q), dim=1).mean()
 
         self.actor.zero_grad(set_to_none=True)
@@ -212,7 +223,7 @@ class HybridSAC(CanSaveModels):
     def alpha_gradient_step(self, state):
         with T.no_grad():
             _, cont_log_probs, _, disc_log_probs, disc_probs = self.actor.sample(state)
-        alpha_c_loss = -T.sum(self.log_alpha * (disc_probs * (cont_log_probs + self.target_alpha)).detach(), dim=1).mean()
+        alpha_c_loss = -T.sum(self.log_alpha * (disc_probs * (disc_log_probs * cont_log_probs + self.target_alpha)).detach(), dim=1).mean()
         alpha_d_loss = -T.sum(self.log_alpha_d * (disc_probs * (disc_log_probs + self.target_alpha_d)).detach(), dim=1).mean()
 
         self.alpha_optimizer.zero_grad(set_to_none=True)
@@ -224,3 +235,45 @@ class HybridSAC(CanSaveModels):
         alpha_d_loss.backward()
         self.alpha_d_optimizer.step()
         self.alpha_d = self.log_alpha_d.exp().detach()
+
+
+    def LaBER_critic_loss(self, state, cont_action, disc_action, q_target):
+        q1 = self.critic_1(state, cont_action).gather(1, disc_action.long().view(-1, 1)).view(-1)
+        q2 = self.critic_2(state, cont_action).gather(1, disc_action.long().view(-1, 1)).view(-1)
+
+        td_err_1 = (q1 - q_target).abs().view(-1) 
+        td_err_2 = (q2 - q_target).abs().view(-1) 
+
+        probs_1 = td_err_1 / T.sum(td_err_1)
+        probs_2 = td_err_2 / T.sum(td_err_2)
+
+        idxs_1 = T.multinomial(probs_1, self.batch_size, replacement=True)
+        idxs_2 = T.multinomial(probs_2, self.batch_size, replacement=True)
+
+        sampled_td_err_1 = td_err_1[idxs_1]
+        sampled_td_err_2 = td_err_2[idxs_2]
+
+        state_1 = state[idxs_1]
+        state_2 = state[idxs_2]
+
+        cont_action_1 = cont_action[idxs_1]
+        cont_action_2 = cont_action[idxs_2]
+
+        disc_action_1 = disc_action[idxs_1]
+        disc_action_2 = disc_action[idxs_2]
+        
+        q_target_1 = q_target[idxs_1]
+        q_target_2 = q_target[idxs_2]
+
+        loss_weights_1 = (1.0/sampled_td_err_1) * td_err_1.mean() 
+        loss_weights_2 = (1.0/sampled_td_err_2) * td_err_2.mean() 
+
+        q1 = self.critic_1(state_1, cont_action_1).gather(1, disc_action_1.long().view(-1, 1)).view(-1)
+        q2 = self.critic_2(state_2, cont_action_2).gather(1, disc_action_2.long().view(-1, 1)).view(-1)
+
+        q1_loss = (F.mse_loss(q1, q_target_1) * loss_weights_1).mean()
+        q2_loss = (F.mse_loss(q2, q_target_2) * loss_weights_2).mean()
+
+        q_loss = q1_loss + q2_loss
+
+        return q_loss

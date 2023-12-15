@@ -30,7 +30,7 @@ if __name__ == "__main__":
         "display_corners": False,
     }
 
-    experiments.run(experiments.configs[0:2+1], simulator_config)
+    experiments.run(experiments.configs[-1:], simulator_config)
     
     # TODO: create simulator config
     # TODO: organize reward functions to test

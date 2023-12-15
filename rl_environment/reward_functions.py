@@ -8,7 +8,7 @@ def distance(d_pos, g_pos) -> NP_DTYPE:
     return np.linalg.norm(d_pos - g_pos, ord=2)
 
 def close_enough(d_pos, g_pos) -> NP_DTYPE:
-    if distance(d_pos, g_pos) <= 0.1: 
+    if distance(d_pos, g_pos) <= 0.05: 
         return NP_DTYPE(1)
     return NP_DTYPE(0)
 

@@ -13,6 +13,7 @@ from utils.dtypes import T_DTYPE
 CHECKPOINT_DIR = "./nn_models/sac"
 
 # TODO: change to explicit use of reparameterization trick: a = mu(phi) + sigma(phi)*epsilon
+# TODO: try out hybrid action space formulation 2 
 
 # Object oriented programming, yuck!
 class CanSaveWeights(nn.Module):
@@ -34,6 +35,7 @@ class CriticNetwork(CanSaveWeights):
                  fc1_size=256,
                  fc2_size=256,
                  device=T.device("cpu"),
+                 spec_norm=False,
                  name='critic',
                  config_name="NONE",
                  chkpt_dir=CHECKPOINT_DIR):
@@ -46,8 +48,11 @@ class CriticNetwork(CanSaveWeights):
 
         self.fc1 = nn.Linear(state_size + action_size, fc1_size)
         self.fc2 = nn.Linear(fc1_size, fc2_size)
-        self.q_hat = nn.Linear(fc2_size, 1)
+        if spec_norm:
+            self.fc1 = nn.utils.spectral_norm(self.fc1)
+            self.fc2 = nn.utils.spectral_norm(self.fc2)
 
+        self.q_hat = nn.Linear(fc2_size, 1)
         self.optimizer = optim.Adam(self.parameters(), lr=lr, weight_decay=weight_decay)
         self.to(device)
         self.register_grad_clip_hooks()
@@ -79,6 +84,7 @@ class ActorNetwork(CanSaveWeights):
                  fc1_size=256,
                  fc2_size=256,
                  device=T.device("cpu"),
+                 spec_norm=False,
                  name='actor',
                  config_name="NONE",
                  chkpt_dir=CHECKPOINT_DIR):
@@ -91,6 +97,10 @@ class ActorNetwork(CanSaveWeights):
 
         self.fc1 = nn.Linear(state_size, fc1_size)
         self.fc2 = nn.Linear(fc1_size, fc2_size)
+        if spec_norm:
+            self.fc1 = nn.utils.spectral_norm(self.fc1)
+            self.fc2 = nn.utils.spectral_norm(self.fc2)
+
         self.mu = nn.Linear(fc2_size, action_size)
         self.sigma = nn.Linear(fc2_size, action_size)
 
@@ -147,6 +157,7 @@ class HybridActorNetwork(CanSaveWeights):
                  discrete_action_size,
                  fc1_size=256,
                  fc2_size=256,
+                 spec_norm=False,
                  device=T.device("cpu"),
                  name='actor',
                  config_name="NONE",
@@ -163,6 +174,10 @@ class HybridActorNetwork(CanSaveWeights):
 
         self.fc1 = nn.Linear(state_size, fc1_size)
         self.fc2 = nn.Linear(fc1_size, fc2_size)
+        if spec_norm:
+            self.fc1 = nn.utils.spectral_norm(self.fc1)
+            self.fc2 = nn.utils.spectral_norm(self.fc2)
+
         self.mu = nn.Linear(fc2_size, discrete_action_size*continuous_action_size)
         self.log_sigma = nn.Linear(fc2_size, discrete_action_size*continuous_action_size)
         self.log_pi_d = nn.Linear(fc2_size, discrete_action_size)
@@ -238,6 +253,7 @@ class HybridCriticNetwork(CanSaveWeights):
                  disc_action_size,
                  fc1_size=256,
                  fc2_size=256,
+                 spec_norm=False,
                  device=T.device("cpu"),
                  name='critic',
                  config_name="NONE",
@@ -251,6 +267,10 @@ class HybridCriticNetwork(CanSaveWeights):
 
         self.fc1 = nn.Linear(state_size + cont_action_size, fc1_size)
         self.fc2 = nn.Linear(fc1_size, fc2_size)
+        if spec_norm:
+            self.fc1 = nn.utils.spectral_norm(self.fc1)
+            self.fc2 = nn.utils.spectral_norm(self.fc2)
+
         self.q_hat = nn.Linear(fc2_size, disc_action_size)
 
         self.optimizer = optim.Adam(self.parameters(), lr=lr, weight_decay=weight_decay)
