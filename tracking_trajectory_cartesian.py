@@ -53,12 +53,22 @@ if __name__ == '__main__':
     axis = 0  # Axis along which to interpolate
     concatenated_interpolated_poses = create_interpolation(poses, num_samples, axis)
 
+    with open("trajectory_pos.txt") as f:
+        traj = np.array(load(f))
 
-    demo_y = concatenated_interpolated_poses
+    poses2 = np.zeros_like(traj)
+    for i, pose in enumerate(traj):
+        b = transformation_matrix_to_cartesian_pose(panda_py.fk(pose))
+        poses2[i] = b
+
+
+    #demo_y = concatenated_interpolated_poses
+    demo_y = poses2
+    
     N = max(demo_y.shape)
-    execution_time = 15
+    execution_time = 25
     dt = execution_time / N
-    n_weights_per_dim = 5
+    n_weights_per_dim = 15
     T = np.linspace(0, execution_time, N)   
 
     dmp = DMPWithFinalVelocity(n_dims=7, execution_time=execution_time, dt=dt, n_weights_per_dim=n_weights_per_dim)
@@ -95,7 +105,7 @@ if __name__ == '__main__':
     T, dmp_y = dmp.open_loop(run_t=execution_time)
     dmp_yd = (1.0/dmp.dt_)*np.gradient(dmp_y, axis=0)
 
-    plot_dmp(execution_time, dt, demo_y, dmp_y, dmp_yd, filename="cartesian_dmp.pdf")
+    plot_dmp(execution_time, dt, demo_y, dmp_y, dmp_yd, filename="cartesian_dmp_result.pdf")
 
 
     # Generate trajectory in joint space for control purpose
@@ -105,7 +115,7 @@ if __name__ == '__main__':
     # I do not konw what alpha should be
     alpha = 0.1
     print("alpha = ", alpha)
-
+    epsilon = 1
     for index, pose in enumerate(dmp_y):
         if index > 0:
 
@@ -123,8 +133,9 @@ if __name__ == '__main__':
 
 #############################################
             q_next = q
-            print(index)
-            while np.linalg.norm(delta_x) > 0.1:
+            # print(index)
+            # while np.linalg.norm(delta_x) > epsilon:
+            for i in range(25):
                 q_next = q_next + alpha*(pseudo_J @ delta_x)
                 q_next = limit_joint_position(q_next)
                 J = get_jacobian(q_next)
@@ -143,14 +154,15 @@ if __name__ == '__main__':
 
 
     # Calculate q_dot of the end pose
-    q_dot = np.linalg.pinv(get_jacobian_3_joints(joint_trajectory[-1])) @ np.append(translational_goal_vel, [0, 0, angular_goal_vel])
+    q_dot = np.linalg.pinv(get_jacobian_3_joints(joint_trajectory[-1])) @ np.append(translational_goal_vel, [0, 0, np.linalg.norm(diff)/1.44])
     q_dot = limit_joint_velocity(q_dot)
 
     concatenated_interpolated_poses = create_interpolation(joint_poses, num_samples, axis)
 
-    new_traj = joint_trajectory
+    new_traj = concatenated_interpolated_poses
     N = max(new_traj.shape)
-    n_weights_per_dim = 5
+    n_weights_per_dim = 15
+    # execution_time = 25
     T = np.linspace(0, execution_time, N)   
 
     dmp = DMPWithFinalVelocity(n_dims=7, execution_time=execution_time, dt=dt, n_weights_per_dim=n_weights_per_dim)
@@ -162,7 +174,7 @@ if __name__ == '__main__':
 
 
     # Plot target trajectory and calculated DMP in joint space
-    plot_dmp(execution_time, dt, new_traj, joint_dmp_y, joint_dmp_yd, filename="joint_space_dmp.pdf")
+    plot_dmp(execution_time, dt, new_traj, joint_dmp_y, joint_dmp_yd, filename="joint_space_dmp_result.pdf", space="joint")
 
 
     # panda.move_to_joint_position(joint_dmp_y[0])

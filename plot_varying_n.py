@@ -63,7 +63,7 @@ if __name__ == '__main__':
     N = max(demo_y.shape)
     execution_time = 15
     dt1 = execution_time / N
-    n_weights_per_dim = 15
+    n_weights_per_dim = 5
     T = np.linspace(0, execution_time, N)
 
     demo_t = np.linspace(0, execution_time, max(demo_y.shape))
@@ -74,7 +74,7 @@ if __name__ == '__main__':
     dmp.imitate(T, demo_y)
 
     # Set target endpoint of trajectory
-    dmp.configure(goal_y=np.array([0,-0.5,0,0,0,0,0]), goal_yd=np.array([0, 0, 0, 0, 0, 0, 0]))
+    dmp.configure(goal_y=np.array(demo_y[-1,:]), goal_yd=np.array([0, 0, 0, 0, 0, 0, 0]))
 
     dmp_t, dmp_y = dmp.open_loop(run_t=execution_time)
     dmp_yd = (1.0/dmp.dt_)*np.gradient(dmp_y, axis=0)
@@ -94,7 +94,7 @@ if __name__ == '__main__':
     dmp_2.imitate(T, demo_y)
 
     # Set target endpoint of trajectory
-    dmp_2.configure(goal_y=np.array([0,-1,0,0,0,0,0]), goal_yd=np.array([0, 0, 0, 0, 0, 0, 0]))
+    dmp_2.configure(goal_y=np.array(demo_y[-1,:]), goal_yd=np.array([0, 0, 0, 0, 0, 0, 0]))
 
     dmp_t_2, dmp_y_2 = dmp_2.open_loop(run_t=execution_time)
     dmp_yd_2 = (1.0/dmp_2.dt_)*np.gradient(dmp_y_2, axis=0)
@@ -104,7 +104,7 @@ if __name__ == '__main__':
     N = max(demo_y.shape)
     execution_time = 15
     dt = execution_time / N
-    n_weights_per_dim = 15
+    n_weights_per_dim = 50
     T = np.linspace(0, execution_time, N)
 
     # Initialize DMP
@@ -112,7 +112,7 @@ if __name__ == '__main__':
     dmp_3.imitate(T, demo_y)
 
     # Set target endpoint of trajectory
-    dmp_3.configure(goal_y=np.array([0,-1.5,0,0,0,0,0]), goal_yd=np.array([0, 0, 0, 0, 0, 0, 0]))
+    dmp_3.configure(goal_y=np.array(demo_y[-1,:]), goal_yd=np.array([0, 0, 0, 0, 0, 0, 0]))
 
     dmp_t_3, dmp_y_3 = dmp_3.open_loop(run_t=execution_time)
     dmp_yd_3 = (1.0/dmp_3.dt_)*np.gradient(dmp_y_3, axis=0)
@@ -120,7 +120,7 @@ if __name__ == '__main__':
 
 
     plt.figure(figsize=(10,6))
-    plt.suptitle(r"DMP for single joint with different end position g")
+    plt.suptitle(r"DMP for single joint with different N")
     ax1 = plt.subplot(2,1,1)
     ax1.set_xlabel(r"$t [s]$")
     ax1.set_ylabel(r"$q_2 [rad]$")
@@ -131,18 +131,18 @@ if __name__ == '__main__':
 
 
     ax1.plot(demo_t, demo_y[:, 1], label=r"Demo")
-    ax1.plot(dmp_t, dmp_y[:, 1], label=r"DMP with g = -0.5")
-    ax1.plot(dmp_t_2, dmp_y_2[:, 1], label=r"DMP with g = -1")
-    ax1.plot(dmp_t_3, dmp_y_3[:, 1], label=r"DMP with g = -1.5")
+    ax1.plot(dmp_t_3, dmp_y_3[:, 1], label=r"DMP with N = 50")
+    ax1.plot(dmp_t_2, dmp_y_2[:, 1], label=r"DMP with N = 15")
+    ax1.plot(dmp_t, dmp_y[:, 1], label=r"DMP with N = 5")
 
     ax2.plot(demo_t, np.gradient(demo_y[:, 1]) / dt1, label=r"Demo")
-    ax2.plot(dmp_t, dmp_yd[:, 1], label=r"DMP with $\dot{g} = -0.1$")
-    ax2.plot(dmp_t_2, dmp_yd_2[:, 1], label=r"DMP with $\dot{g} = -0.2$")
     ax2.plot(dmp_t_3, dmp_yd_3[:, 1], label=r"DMP with $\dot{g} = -0.3$")
+    ax2.plot(dmp_t_2, dmp_yd_2[:, 1], label=r"DMP with $\dot{g} = -0.2$")
+    ax2.plot(dmp_t, dmp_yd[:, 1], label=r"DMP with $\dot{g} = -0.1$")
 
     ax1.legend()
     plt.tight_layout()
-    plt.savefig("varying_target_pos.pdf")
+    plt.savefig("varying_n.pdf")
     plt.show()
 
 

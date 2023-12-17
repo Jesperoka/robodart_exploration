@@ -2,70 +2,131 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def plot_dmp(execution_time, dt, demo_y, dmp_y, dmp_yd, result_y=np.array([0]), result_yd=np.array([0]), filename="test.pdf"):
-    plt.figure(figsize=(20, 15))
-    ax1 = plt.subplot(2,7,1)
-    ax1.set_title("Dimension 1")
-    ax1.set_xlabel("Time")
-    ax1.set_ylabel("Position")
+def plot_dmp(execution_time, dt, demo_y, dmp_y, dmp_yd, result_y=np.array([0]), result_yd=np.array([0]), filename="test.pdf", space="cartesian"):
+    plt.figure(figsize=(12, 16))
+    if space == "cartesian":
+        plt.suptitle(r"Cartesian trajectory with $N = 15, \tau = 15$")
+        ax1 = plt.subplot(7,2,1)
+        ax1.set_xlabel(r"$t [s]$")
+        ax1.set_ylabel(r"$x [m]$")
 
-    ax2 = plt.subplot(2,7,2)
-    ax2.set_title("Dimension 2")
-    ax2.set_xlabel("Time")
-    ax2.set_ylabel("Position")
+        ax2 = plt.subplot(7,2,3)
+        ax2.set_xlabel(r"$t [s]$")
+        ax2.set_ylabel(r"$y [m]$")
 
-    ax3 = plt.subplot(2,7,3)
-    ax3.set_title("Dimension 3")
-    ax3.set_xlabel("Time")
-    ax3.set_ylabel("Position")
+        ax3 = plt.subplot(7,2,5)
+        ax3.set_xlabel(r"$t [s]$")
+        ax3.set_ylabel(r"$z [m]$")
 
-    ax4 = plt.subplot(2,7,4)
-    ax4.set_title("Dimension 4")
-    ax4.set_xlabel("Time")
-    ax4.set_ylabel("Position")
+        ax4 = plt.subplot(7,2,7)
+        ax4.set_xlabel(r"$t [s]$")
+        ax4.set_ylabel(r"$q_x$")
 
-    ax5 = plt.subplot(2,7,5)
-    ax5.set_title("Dimension 5")
-    ax5.set_xlabel("Time")
-    ax5.set_ylabel("Position")
+        ax5 = plt.subplot(7,2,9)
+        ax5.set_xlabel(r"$t [s]$")
+        ax5.set_ylabel(r"$q_y$")
 
-    ax6 = plt.subplot(2,7,6)
-    ax6.set_title("Dimension 6")
-    ax6.set_xlabel("Time")
-    ax6.set_ylabel("Position")
+        ax6 = plt.subplot(7,2,11)
+        ax6.set_xlabel(r"$t [s]$")
+        ax6.set_ylabel(r"$q_z$")
 
-    ax7 = plt.subplot(2,7,7)
-    ax7.set_title("Dimension 7")
-    ax7.set_xlabel("Time")
-    ax7.set_ylabel("Position")
+        ax7 = plt.subplot(7,2,13)
+        ax7.set_xlabel(r"$t [s]$")
+        ax7.set_ylabel(r"$q_w$")
 
-    ax8 = plt.subplot(2,7,8)
-    ax8.set_xlabel("Time")
-    ax8.set_ylabel("Velocity")
+        ax8 = plt.subplot(7,2,2)
+        ax8.set_xlabel(r"$t [s]$")
+        ax8.set_ylabel(r"$\dot{x} [\frac{m}{s}]$")
 
-    ax9 = plt.subplot(2,7,9)
-    ax9.set_xlabel("Time")
-    ax9.set_ylabel("Velocity")
+        ax9 = plt.subplot(7,2,4)
+        ax9.set_xlabel(r"$t [s]$")
+        ax9.set_ylabel(r"$\dot{y} [\frac{m}{s}]$")
 
-    ax10 = plt.subplot(2,7,10)
-    ax10.set_xlabel("Time")
-    ax10.set_ylabel("Velocity")
+        ax10 = plt.subplot(7,2,6)
+        ax10.set_xlabel(r"$t [s]$")
+        ax10.set_ylabel(r"$\dot{z} [\frac{m}{s}]$")
 
-    ax11 = plt.subplot(2,7,11)
-    ax11.set_xlabel("Time")
-    ax11.set_ylabel("Velocity")
+        ax11 = plt.subplot(7,2,8)
+        ax11.set_xlabel(r"$t [s]$")
+        ax11.set_ylabel(r"$\dot{q}_x$")
 
-    ax12 = plt.subplot(2,7,12)
-    ax12.set_xlabel("Time")
-    ax12.set_ylabel("Velocity")
+        ax12 = plt.subplot(7,2,10)
+        ax12.set_xlabel(r"$t [s]$")
+        ax12.set_ylabel(r"$\dot{q}_y$")
 
-    ax13 = plt.subplot(2,7,13)
-    ax13.set_xlabel("Time")
-    ax13.set_ylabel("Velocity")
+        ax13 = plt.subplot(7,2,12)
+        ax13.set_xlabel(r"$t [s]$")
+        ax13.set_ylabel(r"$\dot{q}_z$")
 
-    ax14 = plt.subplot(2,7,14)
-    ax14.set_xlabel("Time")
-    ax14.set_ylabel("Velocity")
+        ax14 = plt.subplot(7,2,14)
+        ax14.set_xlabel(r"$t [s]$")
+        ax14.set_ylabel(r"$\dot{q}_w$")
+
+    if space == "joint":
+        plt.suptitle(r"Joint space trajectory with $N = 15, \tau = 25$")
+        ax1 = plt.subplot(7,2,1)
+        # ax1.set_title("Dimension 1")
+        ax1.set_xlabel(r"$t [s]$")
+        ax1.set_ylabel(r"$q_1 [rad]$")
+
+        ax2 = plt.subplot(7,2,3)
+        # ax2.set_title("Dimension 2")
+        ax2.set_xlabel(r"$t [s]$")
+        ax2.set_ylabel(r"$q_2 [rad]$")
+
+        ax3 = plt.subplot(7,2,5)
+        # ax3.set_title("Dimension 3")
+        ax3.set_xlabel(r"$t [s]$")
+        ax3.set_ylabel(r"$q_3 [rad]$")
+
+        ax4 = plt.subplot(7,2,7)
+        # ax4.set_title("Dimension 4")
+        ax4.set_xlabel(r"$t [s]$")
+        ax4.set_ylabel(r"$q_4 [rad]$")
+
+        ax5 = plt.subplot(7,2,9)
+        # ax5.set_title("Dimension 5")
+        ax5.set_xlabel(r"$t [s]$")
+        ax5.set_ylabel(r"$q_5 [rad]$")
+
+        ax6 = plt.subplot(7,2,11)
+        # ax6.set_title("Dimension 6")
+        ax6.set_xlabel(r"$t [s]$")
+        ax6.set_ylabel(r"$q_6 [rad]$")
+
+        ax7 = plt.subplot(7,2,13)
+        # ax7.set_title("Dimension 7")
+        ax7.set_xlabel(r"$t [s]$")
+        ax7.set_ylabel(r"$q_7 [rad]$")
+
+        ax8 = plt.subplot(7,2,2)
+        ax8.set_xlabel(r"$t [s]$")
+        ax8.set_ylabel(r"$\dot{q}_1 [\frac{rad}{s}]$")
+
+        ax9 = plt.subplot(7,2,4)
+        ax9.set_xlabel(r"$t [s]$")
+        ax9.set_ylabel(r"$\dot{q}_2 [\frac{rad}{s}]$")
+
+        ax10 = plt.subplot(7,2,6)
+        ax10.set_xlabel(r"$t [s]$")
+        ax10.set_ylabel(r"$\dot{q}_3 [\frac{rad}{s}]$")
+
+        ax11 = plt.subplot(7,2,8)
+        ax11.set_xlabel(r"$t [s]$")
+        ax11.set_ylabel(r"$\dot{q}_4 [\frac{rad}{s}]$")
+
+        ax12 = plt.subplot(7,2,10)
+        ax12.set_xlabel(r"$t [s]$")
+        ax12.set_ylabel(r"$\dot{q}_5 [\frac{rad}{s}]$")
+
+        ax13 = plt.subplot(7,2,12)
+        ax13.set_xlabel(r"$t [s]$")
+        ax13.set_ylabel(r"$\dot{q}_6 [\frac{rad}{s}]$")
+
+        ax14 = plt.subplot(7,2,14)
+        ax14.set_xlabel(r"$t [s]$")
+        ax14.set_ylabel(r"$\dot{q}_7 [\frac{rad}{s}]$")
+
 
     if len(result_y) > 1:
         result_t = np.linspace(0, execution_time, max(result_y.shape))
@@ -124,13 +185,13 @@ def plot_dmp(execution_time, dt, demo_y, dmp_y, dmp_yd, result_y=np.array([0]), 
     ax13.plot(dmp_t, dmp_yd[:, 5])
     ax14.plot(dmp_t, dmp_yd[:, 6])
 
-    ax8.scatter([dmp_t[-1]], [dmp_yd[-1, 0]])
-    ax9.scatter([dmp_t[-1]], [dmp_yd[-1, 1]])
-    ax10.scatter([dmp_t[-1]], [dmp_yd[-1, 2]])
-    ax11.scatter([dmp_t[-1]], [dmp_yd[-1, 3]])
-    ax12.scatter([dmp_t[-1]], [dmp_yd[-1, 4]])
-    ax13.scatter([dmp_t[-1]], [dmp_yd[-1, 5]])
-    ax14.scatter([dmp_t[-1]], [dmp_yd[-1, 6]])
+    # ax8.scatter([dmp_t[-1]], [dmp_yd[-1, 0]])
+    # ax9.scatter([dmp_t[-1]], [dmp_yd[-1, 1]])
+    # ax10.scatter([dmp_t[-1]], [dmp_yd[-1, 2]])
+    # ax11.scatter([dmp_t[-1]], [dmp_yd[-1, 3]])
+    # ax12.scatter([dmp_t[-1]], [dmp_yd[-1, 4]])
+    # ax13.scatter([dmp_t[-1]], [dmp_yd[-1, 5]])
+    # ax14.scatter([dmp_t[-1]], [dmp_yd[-1, 6]])
 
     ax1.legend()
     plt.tight_layout()
